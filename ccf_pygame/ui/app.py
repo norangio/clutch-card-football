@@ -42,7 +42,7 @@ class PygameApp:
             print(f"[display] fallback: {exc}")
             self.screen = pygame.display.set_mode((INTERNAL_W, INTERNAL_H))
         self.clock = pygame.time.Clock()
-        self.crt = CRTEffect(INTERNAL_W, INTERNAL_H)
+        self.crt = None if IS_WEB else CRTEffect(INTERNAL_W, INTERNAL_H)
 
         self.state_machine = GameStateMachine()
         self.setup_screen = SetupScreen()
@@ -116,8 +116,9 @@ class PygameApp:
         else:
             self.play_screen.draw(self.internal)
 
-        # Apply CRT effects
-        self.crt.apply(self.internal)
+        # Apply CRT effects on desktop; browser builds skip this post-process step.
+        if self.crt is not None:
+            self.crt.apply(self.internal)
 
         # Blit to display — pygame.SCALED handles GPU scaling
         self.screen.blit(self.internal, (0, 0))
