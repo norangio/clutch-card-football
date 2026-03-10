@@ -1,5 +1,22 @@
 # Add this block to /etc/caddy/Caddyfile on the VPS.
+# Password hash helper: caddy hash-password --plaintext "yourpassword"
 ccf.norangio.dev {
-  encode gzip zstd
-  reverse_proxy 127.0.0.1:8605
+  basic_auth {
+    nick REPLACE_WITH_BCRYPT_HASH
+  }
+
+  # noVNC websocket tunnel
+  handle /websockify* {
+    reverse_proxy 127.0.0.1:8605
+  }
+
+  # noVNC static client files
+  handle_path /vnc/* {
+    reverse_proxy 127.0.0.1:8605
+  }
+
+  # Launcher UI + session API
+  reverse_proxy 127.0.0.1:8606 {
+    header_up X-Remote-User {http.auth.user.id}
+  }
 }

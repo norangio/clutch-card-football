@@ -1,6 +1,5 @@
 """PygameApp — main loop with internal resolution and GPU-scaled display."""
 
-import asyncio
 import sys
 import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -19,30 +18,21 @@ import ui.sounds as sounds
 INTERNAL_W = 960
 INTERNAL_H = 720
 FPS = 60
-IS_WEB = sys.platform == "emscripten"
 
 
 class PygameApp:
     def __init__(self):
         pygame.init()
-        try:
-            pygame.mixer.init(frequency=44100, size=-16, channels=2, buffer=512)
-            sounds.init_sounds()
-        except Exception as exc:
-            # Browser/headless environments may not expose or fully support audio.
-            print(f"[audio] disabled: {exc}")
+        pygame.mixer.init(frequency=44100, size=-16, channels=2, buffer=512)
+        sounds.init_sounds()
         pygame.display.set_caption("Clutch Card Football")
 
         self.internal = pygame.Surface((INTERNAL_W, INTERNAL_H))
-        display_flags = 0 if IS_WEB else (pygame.SCALED | pygame.RESIZABLE)
-        try:
-            self.screen = pygame.display.set_mode((INTERNAL_W, INTERNAL_H), display_flags)
-        except Exception as exc:
-            # Browser canvas backends can reject desktop display flags.
-            print(f"[display] fallback: {exc}")
-            self.screen = pygame.display.set_mode((INTERNAL_W, INTERNAL_H))
+        self.screen = pygame.display.set_mode(
+            (INTERNAL_W, INTERNAL_H), pygame.SCALED | pygame.RESIZABLE
+        )
         self.clock = pygame.time.Clock()
-        self.crt = None if IS_WEB else CRTEffect(INTERNAL_W, INTERNAL_H)
+        self.crt = CRTEffect(INTERNAL_W, INTERNAL_H)
 
         self.state_machine = GameStateMachine()
         self.setup_screen = SetupScreen()
@@ -50,22 +40,12 @@ class PygameApp:
         self.game_over_screen = GameOverScreen()
         self.running = True
 
-    def _tick(self):
-        self._handle_events()
-        self._update()
-        self._draw()
-        self.clock.tick(FPS)
-
     def run(self):
         while self.running:
-            self._tick()
-        pygame.quit()
-
-    async def run_async(self):
-        """Browser-friendly async loop used by pygbag."""
-        while self.running:
-            self._tick()
-            await asyncio.sleep(0)
+            self._handle_events()
+            self._update()
+            self._draw()
+            self.clock.tick(FPS)
         pygame.quit()
 
     def _handle_events(self):
@@ -116,9 +96,8 @@ class PygameApp:
         else:
             self.play_screen.draw(self.internal)
 
-        # Apply CRT effects on desktop; browser builds skip this post-process step.
-        if self.crt is not None:
-            self.crt.apply(self.internal)
+        # Apply CRT effects
+        self.crt.apply(self.internal)
 
         # Blit to display — pygame.SCALED handles GPU scaling
         self.screen.blit(self.internal, (0, 0))

@@ -25,26 +25,17 @@ git fetch origin "$BRANCH"
 git checkout "$BRANCH"
 git pull --ff-only origin "$BRANCH"
 
-if ! command -v python3 >/dev/null 2>&1; then
-  echo "→ Installing Python runtime..."
-  apt-get update
-  apt-get install -y python3 python3-venv python3-pip
-fi
+echo "→ Installing system packages..."
+apt-get update
+apt-get install -y python3 python3-venv python3-pip xvfb x11vnc websockify novnc
 
 echo "→ Installing Python dependencies..."
 python3 -m venv venv
 venv/bin/pip install -q --upgrade pip
-venv/bin/pip install -q pygbag
+venv/bin/pip install -q -r requirements-server.txt -r requirements-desktop.txt
 
-echo "→ Building browser bundle with pygbag..."
-rm -rf ccf_pygame/build/web
-mkdir -p ccf_pygame/build/web ccf_pygame/build/web-cache
-venv/bin/python -m pygbag --build ccf_pygame
-
-if [[ ! -f ccf_pygame/build/web/index.html ]]; then
-  echo "Browser build failed: missing ccf_pygame/build/web/index.html" >&2
-  exit 1
-fi
+echo "→ Preparing runtime directories..."
+install -d -m 755 -o www-data -g www-data "$APP_DIR/run" "$APP_DIR/logs"
 
 echo "→ Updating systemd service..."
 cp deploy/clutch-card-football.service /etc/systemd/system/clutch-card-football.service

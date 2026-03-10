@@ -1,13 +1,13 @@
 # Clutch Card Football
 
-Retro-styled college football card game built with `pygame-ce`, now deployable in desktop mode and browser mode.
+Retro college football card game built with `pygame-ce`, deployed as a native streamed session (not wasm/browser-transpiled).
 
 ## Latest upstream source included
 
 This repo was migrated from `sorangio/CodeDev` branch `scott/pygame-ui`.
 The most recent upstream update included here is commit `e217617` from **March 8, 2026 4:51:42 PM PT**.
 
-## Run locally (desktop)
+## Local development (desktop game)
 
 ```bash
 python3 -m venv venv
@@ -16,62 +16,64 @@ pip install -r requirements-desktop.txt
 python3 ccf_pygame/game.py
 ```
 
-## Browser build (local)
+## Deployment model (native stream)
 
-```bash
-python3 -m venv .venv-web
-source .venv-web/bin/activate
-pip install pygbag
-python -m pygbag --build ccf_pygame
-```
+Users open `https://ccf.norangio.dev`, click **Start Session**, and play through a streamed noVNC view of the real desktop game running on the VPS.
 
-Build output:
-- `ccf_pygame/build/web/index.html`
+Runtime stack on VPS:
+- `Xvfb` virtual display (`:99`)
+- native `pygame` process (`ccf_pygame/game.py`)
+- `x11vnc` exposing the display locally
+- `websockify` + noVNC files for browser transport
+- `FastAPI` launcher API/UI on `127.0.0.1:8606`
+- `Caddy` reverse proxy + basic auth on `ccf.norangio.dev`
+
+Session behavior:
+- one active session at a time
+- session stops automatically if the game exits
+- session stops automatically after viewer disconnect (`x11vnc -once`)
+- manual stop available from launcher UI
 
 ## Deploy (Hetzner + GitHub Actions)
 
-Deploys follow the same GitHub-source-of-truth pattern as other norangio.dev apps.
+Push to `main` to auto-deploy.
 
 ### Required GitHub Actions secrets
 
-- `VPS_HOST` (example: `5.78.109.38`)
-- `VPS_USER` (example: `root`)
-- `VPS_SSH_KEY` (private key content used by Actions)
+- `VPS_HOST`
+- `VPS_USER`
+- `VPS_SSH_KEY`
 
 ### One-time VPS setup
 
-1. Add domain A record in Cloudflare:
+1. Add DNS A record in Cloudflare:
    - `ccf.norangio.dev -> <your-vps-ip>`
 2. Add Caddy block from `deploy/Caddyfile.snippet` to `/etc/caddy/Caddyfile`
 3. Reload Caddy:
    - `sudo systemctl reload caddy`
 
-### Automatic deploy
-
-- Push to `main` to trigger `.github/workflows/deploy.yml`
-- Workflow SSHes to VPS, syncs `/opt/clutch-card-football`, runs `deploy/server-deploy.sh`
-- Server script builds browser assets with `pygbag`, then restarts `clutch-card-football` systemd service
-
 ### Manual deploy
 
 ```bash
 ./deploy.sh
-```
-
-or for a specific branch:
-
-```bash
+# or
 ./deploy.sh main
 ```
 
-## Services
+## Service operations
 
-- App dir: `/opt/clutch-card-football`
-- Service: `systemctl status clutch-card-football`
-- Logs: `journalctl -u clutch-card-football -f`
-- URL: `https://ccf.norangio.dev`
+```bash
+systemctl status clutch-card-football
+journalctl -u clutch-card-football -f
+```
+
+Session logs:
+- `/opt/clutch-card-football/logs/xvfb.log`
+- `/opt/clutch-card-football/logs/game.log`
+- `/opt/clutch-card-football/logs/x11vnc.log`
+- `/opt/clutch-card-football/logs/websockify.log`
 
 ## Notes
 
-- GUI field now flips direction by offense team: human offense drives left-to-right, AI offense drives right-to-left.
-- Game logic is unchanged; this is a rendering-direction update only.
+- GUI field direction is team-based: human offense renders left-to-right, AI offense right-to-left.
+- This deployment path prioritizes gameplay fidelity over perfect browser-native performance.

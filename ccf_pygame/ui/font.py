@@ -29,23 +29,12 @@ def get_font(size: int = 8) -> pygame.font.Font:
     if size in _font_cache:
         return _font_cache[size]
 
-    if not pygame.font.get_init():
-        pygame.font.init()
-
-    font = None
     path = _find_font()
     if path:
-        try:
-            font = pygame.font.Font(path, size)
-        except Exception:
-            font = None
-
-    if font is None:
-        # Browser builds may not have system fonts; default pygame font is safest.
-        try:
-            font = pygame.font.Font(None, size + 4)
-        except Exception:
-            font = pygame.font.Font(None, size)
+        font = pygame.font.Font(path, size)
+    else:
+        # Fallback to a monospace system font
+        font = pygame.font.SysFont("courier", size + 4)
 
     _font_cache[size] = font
     return font

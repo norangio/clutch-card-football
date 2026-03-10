@@ -1,2 +1,1 @@
-# Keep this file empty for pygbag web builds.
-# Desktop dependencies live in requirements-desktop.txt.
+pygame-ce
