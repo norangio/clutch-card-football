@@ -10,11 +10,10 @@ The most recent upstream update included here is commit `e217617` from **March 8
 ## Run locally (desktop)
 
 ```bash
-cd ccf_pygame
 python3 -m venv venv
 source venv/bin/activate
-pip install -r requirements.txt
-python3 game.py
+pip install -r requirements-desktop.txt
+python3 ccf_pygame/game.py
 ```
 
 ## Browser build (local)

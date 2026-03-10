@@ -34,7 +34,7 @@ fi
 echo "→ Installing Python dependencies..."
 python3 -m venv venv
 venv/bin/pip install -q --upgrade pip
-venv/bin/pip install -q -r ccf_pygame/requirements.txt pygbag
+venv/bin/pip install -q pygbag
 
 echo "→ Building browser bundle with pygbag..."
 rm -rf ccf_pygame/build/web

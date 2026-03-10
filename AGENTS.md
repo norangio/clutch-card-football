@@ -6,6 +6,8 @@
 - `ccf_pygame/ui/` contains rendering, input handling, and screen composition
 - `ccf_pygame/game.py` is desktop entrypoint
 - `ccf_pygame/main.py` is browser entrypoint used by `pygbag`
+- `requirements-desktop.txt` is for local desktop installs
+- `ccf_pygame/requirements.txt` remains web-safe (no runtime wheel installs)
 
 ## Deployment model
 
