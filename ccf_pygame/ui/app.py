@@ -19,6 +19,7 @@ import ui.sounds as sounds
 INTERNAL_W = 960
 INTERNAL_H = 720
 FPS = 60
+IS_WEB = sys.platform == "emscripten"
 
 
 class PygameApp:
@@ -27,15 +28,19 @@ class PygameApp:
         try:
             pygame.mixer.init(frequency=44100, size=-16, channels=2, buffer=512)
             sounds.init_sounds()
-        except pygame.error as exc:
-            # Browser/headless environments may not expose an audio device.
+        except Exception as exc:
+            # Browser/headless environments may not expose or fully support audio.
             print(f"[audio] disabled: {exc}")
         pygame.display.set_caption("Clutch Card Football")
 
         self.internal = pygame.Surface((INTERNAL_W, INTERNAL_H))
-        self.screen = pygame.display.set_mode(
-            (INTERNAL_W, INTERNAL_H), pygame.SCALED | pygame.RESIZABLE
-        )
+        display_flags = 0 if IS_WEB else (pygame.SCALED | pygame.RESIZABLE)
+        try:
+            self.screen = pygame.display.set_mode((INTERNAL_W, INTERNAL_H), display_flags)
+        except Exception as exc:
+            # Browser canvas backends can reject desktop display flags.
+            print(f"[display] fallback: {exc}")
+            self.screen = pygame.display.set_mode((INTERNAL_W, INTERNAL_H))
         self.clock = pygame.time.Clock()
         self.crt = CRTEffect(INTERNAL_W, INTERNAL_H)
 
