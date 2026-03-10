@@ -38,6 +38,7 @@ venv/bin/pip install -q -r ccf_pygame/requirements.txt pygbag
 
 echo "→ Building browser bundle with pygbag..."
 rm -rf ccf_pygame/build/web
+mkdir -p ccf_pygame/build/web ccf_pygame/build/web-cache
 venv/bin/python -m pygbag --build ccf_pygame
 
 if [[ ! -f ccf_pygame/build/web/index.html ]]; then
