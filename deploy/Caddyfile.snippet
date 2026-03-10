@@ -1,0 +1,5 @@
+# Add this block to /etc/caddy/Caddyfile on the VPS.
+ccf.norangio.dev {
+  encode gzip zstd
+  reverse_proxy 127.0.0.1:8605
+}

@@ -1,0 +1,15 @@
+[Unit]
+Description=Clutch Card Football Browser App
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+WorkingDirectory=/opt/clutch-card-football
+Environment=PATH=/opt/clutch-card-football/venv/bin:/usr/bin
+ExecStart=/opt/clutch-card-football/venv/bin/python -m http.server 8605 --bind 127.0.0.1 --directory /opt/clutch-card-football/ccf_pygame/build/web
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

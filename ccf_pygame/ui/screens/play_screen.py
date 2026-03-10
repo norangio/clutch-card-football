@@ -157,7 +157,17 @@ class PlayScreen:
         # Field view
         field_y = self.SCORE_H
         off_name = snap.offense.name if snap.offense else ""
-        self.field_view.draw(surface, snap.ball_pos, right_x, field_y, right_w, self.FIELD_H, off_name)
+        offense_ltr = snap.offense is snap.human
+        self.field_view.draw(
+            surface,
+            snap.ball_pos,
+            right_x,
+            field_y,
+            right_w,
+            self.FIELD_H,
+            off_name,
+            offense_left_to_right=offense_ltr,
+        )
 
         # Card battle
         battle_y = field_y + self.FIELD_H

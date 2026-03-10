@@ -1,0 +1,68 @@
+name: Deploy to Hetzner
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: deploy-production
+      cancel-in-progress: false
+    env:
+      VPS_HOST: ${{ secrets.VPS_HOST }}
+      VPS_USER: ${{ secrets.VPS_USER }}
+      VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+      APP_DIR: /opt/clutch-card-football
+      DEPLOY_BRANCH: main
+      REPO_URL: https://github.com/${{ github.repository }}.git
+    steps:
+      - name: Validate required secrets
+        run: |
+          test -n "$VPS_HOST"
+          test -n "$VPS_USER"
+          test -n "$VPS_SSH_KEY"
+
+      - name: Configure SSH
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$VPS_SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H "$VPS_HOST" >> ~/.ssh/known_hosts
+
+      - name: Deploy
+        run: |
+          ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=yes "$VPS_USER@$VPS_HOST" \
+            "APP_DIR='$APP_DIR' DEPLOY_BRANCH='$DEPLOY_BRANCH' REPO_URL='$REPO_URL' bash -s" <<'EOF_SSH'
+          set -euo pipefail
+
+          mkdir -p "$APP_DIR"
+
+          if [ ! -d "$APP_DIR/.git" ]; then
+            git -C "$APP_DIR" init
+          fi
+
+          if git -C "$APP_DIR" remote get-url origin >/dev/null 2>&1; then
+            git -C "$APP_DIR" remote set-url origin "$REPO_URL"
+          else
+            git -C "$APP_DIR" remote add origin "$REPO_URL"
+          fi
+
+          git config --global --add safe.directory "$APP_DIR"
+          git -C "$APP_DIR" fetch origin "$DEPLOY_BRANCH"
+
+          if git -C "$APP_DIR" show-ref --verify --quiet "refs/heads/$DEPLOY_BRANCH"; then
+            git -C "$APP_DIR" checkout "$DEPLOY_BRANCH"
+          else
+            git -C "$APP_DIR" checkout -b "$DEPLOY_BRANCH" "origin/$DEPLOY_BRANCH"
+          fi
+
+          git -C "$APP_DIR" reset --hard "origin/$DEPLOY_BRANCH"
+          bash "$APP_DIR/deploy/server-deploy.sh" "$DEPLOY_BRANCH"
+          EOF_SSH

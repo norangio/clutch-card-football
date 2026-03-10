@@ -1,5 +1,6 @@
 """PygameApp — main loop with internal resolution and GPU-scaled display."""
 
+import asyncio
 import sys
 import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -23,8 +24,12 @@ FPS = 60
 class PygameApp:
     def __init__(self):
         pygame.init()
-        pygame.mixer.init(frequency=44100, size=-16, channels=2, buffer=512)
-        sounds.init_sounds()
+        try:
+            pygame.mixer.init(frequency=44100, size=-16, channels=2, buffer=512)
+            sounds.init_sounds()
+        except pygame.error as exc:
+            # Browser/headless environments may not expose an audio device.
+            print(f"[audio] disabled: {exc}")
         pygame.display.set_caption("Clutch Card Football")
 
         self.internal = pygame.Surface((INTERNAL_W, INTERNAL_H))
@@ -40,12 +45,22 @@ class PygameApp:
         self.game_over_screen = GameOverScreen()
         self.running = True
 
+    def _tick(self):
+        self._handle_events()
+        self._update()
+        self._draw()
+        self.clock.tick(FPS)
+
     def run(self):
         while self.running:
-            self._handle_events()
-            self._update()
-            self._draw()
-            self.clock.tick(FPS)
+            self._tick()
+        pygame.quit()
+
+    async def run_async(self):
+        """Browser-friendly async loop used by pygbag."""
+        while self.running:
+            self._tick()
+            await asyncio.sleep(0)
         pygame.quit()
 
     def _handle_events(self):
