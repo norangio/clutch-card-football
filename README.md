@@ -29,7 +29,7 @@ Runtime stack on VPS:
 - `Caddy` reverse proxy + basic auth on `ccf.norangio.dev`
 
 Routing note:
-- keep `/websockify*` outside `basic_auth` in Caddy so noVNC websocket upgrade is reliable across browsers
+- use a `route { ... }` block in Caddy and place `/websockify*` before `basic_auth` so noVNC websocket upgrade is reliable across browsers
 
 Session behavior:
 - one active session at a time

@@ -17,8 +17,9 @@
   - native `pygame` game process
   - `x11vnc` on `127.0.0.1:5900` (`-once`)
   - `websockify` on `127.0.0.1:8605` (serves noVNC static + websocket bridge)
-- Caddy routes:
-  - `/websockify*` -> `127.0.0.1:8605` (outside basic auth for reliable websocket upgrade)
+- Caddy routes (inside an ordered `route { ... }` block):
+  - `/websockify*` -> `127.0.0.1:8605` (before basic auth for reliable websocket upgrade)
+  - basic auth applies to launcher UI/API and `/vnc/*`
   - `/vnc/*` -> `127.0.0.1:8605`
   - all other paths -> `127.0.0.1:8606`
 
