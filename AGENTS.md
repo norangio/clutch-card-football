@@ -18,7 +18,7 @@
   - `x11vnc` on `127.0.0.1:5900` (`-once`)
   - `websockify` on `127.0.0.1:8605` (serves noVNC static + websocket bridge)
 - Caddy routes:
-  - `/websockify*` -> `127.0.0.1:8605`
+  - `/websockify*` -> `127.0.0.1:8605` (outside basic auth for reliable websocket upgrade)
   - `/vnc/*` -> `127.0.0.1:8605`
   - all other paths -> `127.0.0.1:8606`
 
@@ -28,6 +28,7 @@
 - Launcher monitor thread shuts down all subprocesses when any session subprocess exits.
 - Viewer disconnect triggers `x11vnc -once` exit, which tears down the session.
 - Session timeout defaults to 90 minutes (`CCF_SESSION_TIMEOUT_SECONDS`).
+- Websocket bridge idle timeout defaults to 5 minutes (`CCF_WS_IDLE_TIMEOUT_SECONDS`).
 
 ## Gameplay/UI conventions
 

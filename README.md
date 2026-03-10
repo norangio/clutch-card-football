@@ -28,11 +28,15 @@ Runtime stack on VPS:
 - `FastAPI` launcher API/UI on `127.0.0.1:8606`
 - `Caddy` reverse proxy + basic auth on `ccf.norangio.dev`
 
+Routing note:
+- keep `/websockify*` outside `basic_auth` in Caddy so noVNC websocket upgrade is reliable across browsers
+
 Session behavior:
 - one active session at a time
 - session stops automatically if the game exits
 - session stops automatically after viewer disconnect (`x11vnc -once`)
 - manual stop available from launcher UI
+- websocket bridge idle timeout defaults to 5 minutes (`CCF_WS_IDLE_TIMEOUT_SECONDS=300`)
 
 ## Deploy (Hetzner + GitHub Actions)
 

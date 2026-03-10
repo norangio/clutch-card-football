@@ -1,13 +1,15 @@
 # Add this block to /etc/caddy/Caddyfile on the VPS.
 # Password hash helper: caddy hash-password --plaintext "yourpassword"
 ccf.norangio.dev {
-  basic_auth {
-    nick REPLACE_WITH_BCRYPT_HASH
+  # Keep websocket bridge outside basic_auth so noVNC can always establish
+  # the browser websocket after the launcher page loads.
+  @ccf_ws path /websockify*
+  handle @ccf_ws {
+    reverse_proxy 127.0.0.1:8605
   }
 
-  # noVNC websocket tunnel
-  handle /websockify* {
-    reverse_proxy 127.0.0.1:8605
+  basic_auth {
+    nick REPLACE_WITH_BCRYPT_HASH
   }
 
   # noVNC static client files
