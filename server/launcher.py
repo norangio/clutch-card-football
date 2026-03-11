@@ -29,7 +29,7 @@ GAME_WIDTH = int(os.environ.get("CCF_GAME_WIDTH", "1280"))
 GAME_HEIGHT = int(os.environ.get("CCF_GAME_HEIGHT", "720"))
 VENV_PYTHON = ROOT / "venv" / "bin" / "python"
 GAME_ENTRY = ROOT / "ccf_pygame" / "game.py"
-VNC_URL = "/vnc/vnc.html?autoconnect=true&resize=remote&reconnect=true&path=websockify"
+VNC_URL = "/vnc/vnc_lite.html?autoconnect=true&resize=remote&reconnect=true&view_only=false&path=websockify"
 
 
 @dataclass
@@ -78,8 +78,8 @@ INDEX_HTML = """<!doctype html>
         <button id=\"stopBtn\">Stop Session</button>
       </div>
       <div id=\"status\">Checking session status...</div>
-      <div class=\"hint\">One active session at a time. Closing the browser tab should end the stream automatically.</div>
-      <iframe id=\"viewer\" title=\"Clutch Card Football Stream\"></iframe>
+      <div class=\"hint\">One active session at a time. Click once inside the game view to lock keyboard input.</div>
+      <iframe id=\"viewer\" title=\"Clutch Card Football Stream\" tabindex=\"0\"></iframe>
     </div>
   </div>
 
@@ -102,6 +102,34 @@ INDEX_HTML = """<!doctype html>
       }
     }
 
+    function focusViewerInput() {
+      if (viewer.style.display !== 'block') return;
+      try {
+        viewer.focus();
+        const win = viewer.contentWindow;
+        if (!win) return;
+        win.focus();
+
+        // noVNC global UI object exists in vnc_lite and can refocus RFB keyboard capture.
+        if (win.UI && win.UI.rfb && typeof win.UI.rfb.focus === 'function') {
+          win.UI.rfb.focus();
+        }
+
+        const doc = win.document;
+        if (!doc) return;
+        const canvas = doc.getElementById('noVNC_canvas');
+        if (canvas) {
+          canvas.tabIndex = 0;
+          canvas.focus();
+        } else if (doc.body) {
+          doc.body.tabIndex = -1;
+          doc.body.focus();
+        }
+      } catch (_) {
+        // Keep UX stable if iframe content isn't accessible yet.
+      }
+    }
+
     async function fetchStatus() {
       const res = await fetch('/api/status', { cache: 'no-store' });
       const data = await res.json();
@@ -111,6 +139,7 @@ INDEX_HTML = """<!doctype html>
           viewer.src = `${vncUrl}&t=${Date.now()}`;
         }
         showViewer(true);
+        setTimeout(focusViewerInput, 200);
       } else {
         setStatus(data.stop_reason ? `Idle (${data.stop_reason})` : 'Idle');
         showViewer(false);
@@ -129,6 +158,7 @@ INDEX_HTML = """<!doctype html>
         setStatus('Session started. Connecting viewer...');
         viewer.src = `${data.vnc_url}&t=${Date.now()}`;
         showViewer(true);
+        setTimeout(focusViewerInput, 250);
       } catch (err) {
         setStatus(`Start error: ${err.message}`, true);
       } finally {
@@ -149,6 +179,22 @@ INDEX_HTML = """<!doctype html>
 
     startBtn.addEventListener('click', startSession);
     stopBtn.addEventListener('click', stopSession);
+    viewer.addEventListener('load', () => {
+      setTimeout(focusViewerInput, 150);
+      setTimeout(focusViewerInput, 700);
+    });
+    viewer.addEventListener('click', focusViewerInput);
+    viewer.addEventListener('mouseenter', focusViewerInput);
+    document.addEventListener('keydown', (event) => {
+      if (!['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
+        return;
+      }
+      if (viewer.style.display !== 'block') {
+        return;
+      }
+      event.preventDefault();
+      focusViewerInput();
+    });
 
     fetchStatus().catch(() => setStatus('Unable to check status', true));
     setInterval(() => { fetchStatus().catch(() => {}); }, 5000);

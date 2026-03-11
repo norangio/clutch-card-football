@@ -27,9 +27,9 @@ class CardHand:
         if not self._selectable or not self._cards:
             return None
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP:
+            if event.key in (pygame.K_UP, pygame.K_w, pygame.K_k, pygame.K_KP8):
                 self.selected = max(0, self.selected - 1)
-            elif event.key == pygame.K_DOWN:
+            elif event.key in (pygame.K_DOWN, pygame.K_s, pygame.K_j, pygame.K_KP2):
                 self.selected = min(len(self._cards) - 1, self.selected + 1)
             elif event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
                 return self.selected

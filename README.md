@@ -27,6 +27,7 @@ Runtime stack on VPS:
 - `websockify` + noVNC files for browser transport
 - `FastAPI` launcher API/UI on `127.0.0.1:8606`
 - `Caddy` reverse proxy + basic auth on `ccf.norangio.dev`
+- noVNC uses `vnc_lite.html` for cleaner keyboard capture in-browser
 
 Routing note:
 - use a `route { ... }` block in Caddy and place `/websockify*` before `basic_auth` so noVNC websocket upgrade is reliable across browsers
@@ -81,4 +82,5 @@ Session logs:
 ## Notes
 
 - GUI field direction is team-based: human offense renders left-to-right, AI offense right-to-left.
+- Keyboard controls include arrows, `WASD`, `HJKL`, and keypad directions for stream compatibility.
 - This deployment path prioritizes gameplay fidelity over perfect browser-native performance.

@@ -27,9 +27,9 @@ class SetupScreen:
 
     def handle_event(self, event: pygame.event.Event):
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_TAB or event.key == pygame.K_DOWN:
+            if event.key in (pygame.K_TAB, pygame.K_DOWN, pygame.K_s, pygame.K_j, pygame.K_KP2):
                 self.selected = (self.selected + 1) % (len(self.fields) + 1)
-            elif event.key == pygame.K_UP:
+            elif event.key in (pygame.K_UP, pygame.K_w, pygame.K_k, pygame.K_KP8):
                 self.selected = (self.selected - 1) % (len(self.fields) + 1)
             elif event.key == pygame.K_RETURN:
                 if self.selected == len(self.fields):
@@ -47,10 +47,10 @@ class SetupScreen:
             elif event.unicode and event.unicode.isprintable() and len(f["value"]) < 12:
                 f["value"] += event.unicode
         elif f["type"] == "int":
-            if event.key == pygame.K_LEFT:
+            if event.key in (pygame.K_LEFT, pygame.K_a, pygame.K_h, pygame.K_KP4):
                 v = int(f["value"]) - 1
                 f["value"] = str(max(f["min"], v))
-            elif event.key == pygame.K_RIGHT:
+            elif event.key in (pygame.K_RIGHT, pygame.K_d, pygame.K_l, pygame.K_KP6):
                 v = int(f["value"]) + 1
                 f["value"] = str(min(f["max"], v))
             elif event.unicode and event.unicode.isdigit():
@@ -58,7 +58,17 @@ class SetupScreen:
                 if f["min"] <= v <= f["max"]:
                     f["value"] = str(v)
         elif f["type"] == "choice":
-            if event.key in (pygame.K_LEFT, pygame.K_RIGHT, pygame.K_SPACE):
+            if event.key in (
+                pygame.K_LEFT,
+                pygame.K_RIGHT,
+                pygame.K_a,
+                pygame.K_d,
+                pygame.K_h,
+                pygame.K_l,
+                pygame.K_KP4,
+                pygame.K_KP6,
+                pygame.K_SPACE,
+            ):
                 idx = f["choices"].index(f["value"])
                 f["value"] = f["choices"][(idx + 1) % len(f["choices"])]
 
@@ -157,5 +167,5 @@ class SetupScreen:
         surface.blit(start_text, (480 - start_text.get_width() // 2, btn_y + 9))
 
         # Instructions
-        inst = self.font.render("TAB/ARROWS: Navigate  ENTER: Start", True, DIM_TEXT)
+        inst = self.font.render("TAB/ARROWS/WASD: Navigate  ENTER: Start", True, DIM_TEXT)
         surface.blit(inst, (480 - inst.get_width() // 2, 660))

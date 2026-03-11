@@ -18,6 +18,7 @@
   - `x11vnc` on `127.0.0.1:5900` (`-once`)
   - `websockify` on `127.0.0.1:8605` (serves noVNC static + websocket bridge)
 - Launcher blocks `start` response until `x11vnc` and `websockify` listener ports are reachable.
+- Launcher embeds `/vnc/vnc_lite.html` and aggressively refocuses viewer keyboard capture.
 - Caddy routes (inside an ordered `route { ... }` block):
   - `/websockify*` -> `127.0.0.1:8605` (before basic auth for reliable websocket upgrade)
   - basic auth applies to launcher UI/API and `/vnc/*`
@@ -37,4 +38,5 @@
 - Visual field direction is offense-team based:
   - human offense: left-to-right
   - AI offense: right-to-left
+- Input supports arrows plus `WASD`/`HJKL`/keypad directions for remote-stream key compatibility.
 - Core game rules and scoring logic are unchanged.
