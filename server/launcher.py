@@ -5,6 +5,7 @@ from __future__ import annotations
 import os
 import shutil
 import signal
+import socket
 import subprocess
 import threading
 import time
@@ -192,6 +193,20 @@ def _open_log(name: str) -> IO[str]:
     return log
 
 
+def _wait_for_tcp(host: str, port: int, timeout_sec: float = 8.0):
+    deadline = time.time() + timeout_sec
+    last_error: Exception | None = None
+    while time.time() < deadline:
+        try:
+            with socket.create_connection((host, port), timeout=0.4):
+                return
+        except OSError as exc:
+            last_error = exc
+            time.sleep(0.15)
+    detail = f": {last_error}" if last_error else ""
+    raise RuntimeError(f"Timed out waiting for {host}:{port}{detail}")
+
+
 def _spawn(name: str, cmd: list[str], env: dict[str, str], logs: list[IO[str]]) -> subprocess.Popen:
     handle = _open_log(name)
     logs.append(handle)
@@ -339,6 +354,7 @@ def _start_session_locked(owner: str) -> SessionState:
             env,
             logs,
         )
+        _wait_for_tcp("127.0.0.1", VNC_PORT)
 
         procs["websockify"] = _spawn(
             "websockify",
@@ -354,6 +370,7 @@ def _start_session_locked(owner: str) -> SessionState:
             env,
             logs,
         )
+        _wait_for_tcp("127.0.0.1", WS_PORT)
 
         state = SessionState(owner=owner, started_at=time.time(), processes=procs, log_handles=logs)
         _session = state

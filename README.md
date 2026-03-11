@@ -37,6 +37,7 @@ Session behavior:
 - session stops automatically after viewer disconnect (`x11vnc -once`)
 - manual stop available from launcher UI
 - websocket bridge idle timeout defaults to 5 minutes (`CCF_WS_IDLE_TIMEOUT_SECONDS=300`)
+- launcher start waits for `x11vnc` and `websockify` ports before returning, to avoid first-load `502` races
 
 ## Deploy (Hetzner + GitHub Actions)
 
