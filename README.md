@@ -85,3 +85,9 @@ Session logs:
 - Current control mode is mouse-first for stream reliability.
 - Keyboard entry is kept for team-name text fields only during setup.
 - This deployment path prioritizes gameplay fidelity over perfect browser-native performance.
+
+## Security TODO
+
+- Move all app deploy workflows to a dedicated non-root VPS user.
+- Use one dedicated GitHub Actions deploy keypair only (not personal workstation keys).
+- After migration, remove deploy access from `root` and disable root SSH login.

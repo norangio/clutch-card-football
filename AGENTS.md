@@ -42,3 +42,9 @@
 - Stream input is mouse-first for game flow (card selection, decisions, continue screens).
 - Keyboard input is reserved for setup text entry (team names) to avoid key-focus flakiness.
 - Core game rules and scoring logic are unchanged.
+
+## TODO (security hardening)
+
+- Migrate deploy SSH access to a dedicated non-root VPS user across all apps.
+- Keep one dedicated deploy keypair for GitHub Actions only (no personal key reuse).
+- Remove deploy key(s) from `root` and disable root SSH login after migration verification.
