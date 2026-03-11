@@ -29,7 +29,7 @@ GAME_WIDTH = int(os.environ.get("CCF_GAME_WIDTH", "1280"))
 GAME_HEIGHT = int(os.environ.get("CCF_GAME_HEIGHT", "720"))
 VENV_PYTHON = ROOT / "venv" / "bin" / "python"
 GAME_ENTRY = ROOT / "ccf_pygame" / "game.py"
-VNC_URL = "/vnc/vnc_lite.html?autoconnect=true&resize=remote&reconnect=true&view_only=false&path=websockify"
+VNC_URL = "/vnc/vnc_lite.html?path=websockify&scale=true"
 
 
 @dataclass
@@ -110,13 +110,18 @@ INDEX_HTML = """<!doctype html>
         if (!win) return;
         win.focus();
 
-        // noVNC global UI object exists in vnc_lite and can refocus RFB keyboard capture.
+        // Full noVNC UI object is present in vnc.html mode.
         if (win.UI && win.UI.rfb && typeof win.UI.rfb.focus === 'function') {
           win.UI.rfb.focus();
         }
 
         const doc = win.document;
         if (!doc) return;
+        const liteScreen = doc.getElementById('screen');
+        if (liteScreen) {
+          liteScreen.tabIndex = 0;
+          liteScreen.focus();
+        }
         const canvas = doc.getElementById('noVNC_canvas');
         if (canvas) {
           canvas.tabIndex = 0;

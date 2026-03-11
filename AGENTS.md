@@ -19,6 +19,7 @@
   - `websockify` on `127.0.0.1:8605` (serves noVNC static + websocket bridge)
 - Launcher blocks `start` response until `x11vnc` and `websockify` listener ports are reachable.
 - Launcher embeds `/vnc/vnc_lite.html` and aggressively refocuses viewer keyboard capture.
+- `vnc_lite` URL params must avoid `view_only=false` (string coercion in lite mode can disable keyboard/mouse input).
 - Caddy routes (inside an ordered `route { ... }` block):
   - `/websockify*` -> `127.0.0.1:8605` (before basic auth for reliable websocket upgrade)
   - basic auth applies to launcher UI/API and `/vnc/*`
