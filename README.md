@@ -82,5 +82,6 @@ Session logs:
 ## Notes
 
 - GUI field direction is team-based: human offense renders left-to-right, AI offense right-to-left.
-- Keyboard controls include arrows, `WASD`, `HJKL`, and keypad directions for stream compatibility.
+- Current control mode is mouse-first for stream reliability.
+- Keyboard entry is kept for team-name text fields only during setup.
 - This deployment path prioritizes gameplay fidelity over perfect browser-native performance.

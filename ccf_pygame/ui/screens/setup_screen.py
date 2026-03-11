@@ -26,16 +26,18 @@ class SetupScreen:
         self._result = None
 
     def handle_event(self, event: pygame.event.Event):
-        if event.type == pygame.KEYDOWN:
-            if event.key in (pygame.K_TAB, pygame.K_DOWN, pygame.K_s, pygame.K_j, pygame.K_KP2):
-                self.selected = (self.selected + 1) % (len(self.fields) + 1)
-            elif event.key in (pygame.K_UP, pygame.K_w, pygame.K_k, pygame.K_KP8):
-                self.selected = (self.selected - 1) % (len(self.fields) + 1)
-            elif event.key == pygame.K_RETURN:
-                if self.selected == len(self.fields):
-                    self._submit()
-            else:
-                self._edit_field(event)
+        if event.type != pygame.KEYDOWN:
+            return
+
+        # Mouse-first mode: keyboard is only for text entry in name fields.
+        if self.selected == len(self.fields):
+            if event.key == pygame.K_RETURN:
+                self._submit()
+            return
+
+        field = self.fields[self.selected]
+        if field["type"] == "text":
+            self._edit_field(event)
 
     def _edit_field(self, event):
         if self.selected >= len(self.fields):
@@ -167,5 +169,5 @@ class SetupScreen:
         surface.blit(start_text, (480 - start_text.get_width() // 2, btn_y + 9))
 
         # Instructions
-        inst = self.font.render("TAB/ARROWS/WASD: Navigate  ENTER: Start", True, DIM_TEXT)
+        inst = self.font.render("MOUSE: Select fields/buttons  TYPE: team names", True, DIM_TEXT)
         surface.blit(inst, (480 - inst.get_width() // 2, 660))

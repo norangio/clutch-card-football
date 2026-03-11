@@ -39,5 +39,6 @@
 - Visual field direction is offense-team based:
   - human offense: left-to-right
   - AI offense: right-to-left
-- Input supports arrows plus `WASD`/`HJKL`/keypad directions for remote-stream key compatibility.
+- Stream input is mouse-first for game flow (card selection, decisions, continue screens).
+- Keyboard input is reserved for setup text entry (team names) to avoid key-focus flakiness.
 - Core game rules and scoring logic are unchanged.

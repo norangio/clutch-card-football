@@ -72,8 +72,6 @@ class PygameApp:
             elif phase == GamePhase.GAME_OVER:
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     self.game_over_screen.handle_click(event.pos)
-                else:
-                    self.game_over_screen.handle_event(event)
                 if self.game_over_screen.play_again:
                     self._restart()
             else:

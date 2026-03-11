@@ -53,30 +53,10 @@ class PlayScreen:
         self._prev_ball_pos: str = "1"
 
     def handle_event(self, event: pygame.event.Event):
-        snap = self.sm.snapshot()
-        phase = snap.phase
-
-        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-            self._handle_click(event.pos, snap)
+        if event.type != pygame.MOUSEBUTTONDOWN or event.button != 1:
             return
-
-        if phase in (GamePhase.WAITING_OFFENSE_CARD, GamePhase.WAITING_DEFENSE_CARD):
-            result = self.card_hand.handle_event(event)
-            if result is not None:
-                self.sm.provide_card(result)
-
-        elif phase == GamePhase.WAITING_POST_MOVE:
-            choice = self.decision_panel.handle_event(event)
-            if choice:
-                self.sm.provide_post_move(choice)
-
-        elif phase == GamePhase.WAITING_EXTRA_POINT_CHOICE:
-            choice = self.decision_panel.handle_event(event)
-            if choice:
-                self.sm.provide_extra_point_choice(choice)
-
-        elif event.type == pygame.KEYDOWN:
-            self.sm.click_advance()
+        snap = self.sm.snapshot()
+        self._handle_click(event.pos, snap)
 
     def _handle_click(self, pos, snap):
         phase = snap.phase
