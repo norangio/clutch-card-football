@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """Retro 8-bit synthesized sounds using stdlib array (no numpy required)."""
 
 import array

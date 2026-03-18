@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """Top scoreboard bar."""
 
 import pygame

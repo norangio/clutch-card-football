@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """Drive chart panel — shows card movement lookup for current offense team."""
 
 import pygame

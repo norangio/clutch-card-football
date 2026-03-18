@@ -1,1 +1,2 @@
-pygame-ce
+# Desktop: pip install -r requirements-desktop.txt (repo root)
+# Browser: pygame-ce is bundled in pygbag's WASM runtime — no wheel needed.

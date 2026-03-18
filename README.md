@@ -1,6 +1,6 @@
 # Clutch Card Football
 
-Retro college football card game built with `pygame-ce`, deployed as a native streamed session (not wasm/browser-transpiled).
+Retro college football card game built with `pygame-ce`. The repo now supports both the native desktop runtime and a browser-native wasm build via `pygbag`.
 
 ## Latest upstream source included
 
@@ -16,29 +16,44 @@ pip install -r requirements-desktop.txt
 python3 ccf_pygame/game.py
 ```
 
-## Deployment model (native stream)
+## Local development (browser build with pygbag)
 
-Users open `https://ccf.norangio.dev`, click **Start Session**, and play through a streamed noVNC view of the real desktop game running on the VPS.
+Official `pygbag` docs currently require a root `main.py` with an async game loop, and the latest PyPI release is `0.9.3` from February 12, 2026.
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements-desktop.txt
+pip install "pygbag>=0.9.3,<1"
+python3 -m pygbag --ume_block 0 ccf_pygame
+```
+
+Build artifacts are emitted under `ccf_pygame/build/web/`. For a build-only pass:
+
+```bash
+./scripts/build_browser.sh
+```
+
+Browser runtime notes:
+- `ccf_pygame/main.py` is the wasm/browser entrypoint packaged by `pygbag`
+- `ccf_pygame/ui/app.py` now exposes a shared async-safe loop for desktop and browser runs
+- Production uses the embedded `pygbag --html` build and copies `ccf_pygame.html` to `index.html`
+- CRT post-processing is disabled in browser mode by default to preserve frame budget
+- Audio initialization is best-effort so the game still runs if the browser blocks mixer startup
+- Browser builds use `--ume_block 0` so the setup screen can render immediately without a preload click gate
+
+## Production deployment (browser-native)
+
+Users open `https://ccf.norangio.dev` and load the static `pygbag` bundle directly in the browser.
 
 Runtime stack on VPS:
-- `Xvfb` virtual display (`:99`)
-- native `pygame` process (`ccf_pygame/game.py`)
-- `x11vnc` exposing the display locally
-- `websockify` + noVNC files for browser transport
-- `FastAPI` launcher API/UI on `127.0.0.1:8606`
-- `Caddy` reverse proxy + basic auth on `ccf.norangio.dev`
-- noVNC uses `vnc_lite.html` for cleaner keyboard capture in-browser (query args must stay minimal; avoid `view_only=false` because lite mode parses it as a truthy string)
+- `pygbag` embedded HTML build step on deploy (`ccf_pygame/build/web/`)
+- static `index.html` served directly by `Caddy`
+- `Caddy` basic auth on `ccf.norangio.dev`
+- runtime JS/wasm loaded from the official `pygame-web.github.io` CDN referenced by the generated `index.html`
 
-Routing note:
-- use a `route { ... }` block in Caddy and place `/websockify*` before `basic_auth` so noVNC websocket upgrade is reliable across browsers
-
-Session behavior:
-- one active session at a time
-- session stops automatically if the game exits
-- session stops automatically after viewer disconnect (`x11vnc -once`)
-- manual stop available from launcher UI
-- websocket bridge idle timeout defaults to 5 minutes (`CCF_WS_IDLE_TIMEOUT_SECONDS=300`)
-- launcher start waits for `x11vnc` and `websockify` ports before returning, to avoid first-load `502` races
+Behavior note:
+- there is no remote desktop session anymore; the game logic and rendering now execute in-browser via wasm
 
 ## Deploy (Hetzner + GitHub Actions)
 
@@ -66,25 +81,22 @@ Push to `main` to auto-deploy.
 ./deploy.sh main
 ```
 
-## Service operations
+## Build operations
 
 ```bash
-systemctl status clutch-card-football
-journalctl -u clutch-card-football -f
+./scripts/build_browser.sh
 ```
 
-Session logs:
-- `/opt/clutch-card-football/logs/xvfb.log`
-- `/opt/clutch-card-football/logs/game.log`
-- `/opt/clutch-card-football/logs/x11vnc.log`
-- `/opt/clutch-card-football/logs/websockify.log`
+Built assets:
+- `/opt/clutch-card-football/ccf_pygame/build/web/index.html`
+- `/opt/clutch-card-football/ccf_pygame/build/web/ccf_pygame.html`
 
 ## Notes
 
 - GUI field direction is team-based: human offense renders left-to-right, AI offense right-to-left.
-- Current control mode is mouse-first for stream reliability.
+- Current control mode is mouse-first for browser reliability.
 - Keyboard entry is kept for team-name text fields only during setup.
-- This deployment path prioritizes gameplay fidelity over perfect browser-native performance.
+- Production no longer relies on Xvfb, x11vnc, or noVNC.
 
 ## Security TODO
 

@@ -1,8 +1,11 @@
+from __future__ import annotations
+
 """Team setup screen."""
 
 import pygame
 from ui.colors import *
 from ui.font import get_font
+from ui.keycodes import A, BACKSPACE, D, H, KP4, KP6, L, LEFT, RETURN, RIGHT, SPACE
 
 
 class SetupScreen:
@@ -31,7 +34,7 @@ class SetupScreen:
 
         # Mouse-first mode: keyboard is only for text entry in name fields.
         if self.selected == len(self.fields):
-            if event.key == pygame.K_RETURN:
+            if event.key == RETURN:
                 self._submit()
             return
 
@@ -44,15 +47,15 @@ class SetupScreen:
             return
         f = self.fields[self.selected]
         if f["type"] == "text":
-            if event.key == pygame.K_BACKSPACE:
+            if event.key == BACKSPACE:
                 f["value"] = f["value"][:-1]
             elif event.unicode and event.unicode.isprintable() and len(f["value"]) < 12:
                 f["value"] += event.unicode
         elif f["type"] == "int":
-            if event.key in (pygame.K_LEFT, pygame.K_a, pygame.K_h, pygame.K_KP4):
+            if event.key in (LEFT, A, H, KP4):
                 v = int(f["value"]) - 1
                 f["value"] = str(max(f["min"], v))
-            elif event.key in (pygame.K_RIGHT, pygame.K_d, pygame.K_l, pygame.K_KP6):
+            elif event.key in (RIGHT, D, L, KP6):
                 v = int(f["value"]) + 1
                 f["value"] = str(min(f["max"], v))
             elif event.unicode and event.unicode.isdigit():
@@ -61,15 +64,15 @@ class SetupScreen:
                     f["value"] = str(v)
         elif f["type"] == "choice":
             if event.key in (
-                pygame.K_LEFT,
-                pygame.K_RIGHT,
-                pygame.K_a,
-                pygame.K_d,
-                pygame.K_h,
-                pygame.K_l,
-                pygame.K_KP4,
-                pygame.K_KP6,
-                pygame.K_SPACE,
+                LEFT,
+                RIGHT,
+                A,
+                D,
+                H,
+                L,
+                KP4,
+                KP6,
+                SPACE,
             ):
                 idx = f["choices"].index(f["value"])
                 f["value"] = f["choices"][(idx + 1) % len(f["choices"])]
@@ -94,8 +97,9 @@ class SetupScreen:
 
     def handle_click(self, pos):
         x, y = pos
-        # Check START button
-        btn_y = 480
+        # Check START button (must match draw calculation)
+        start_y = 150
+        btn_y = start_y + len(self.fields) * 39 + 30
         btn_rect = pygame.Rect(390, btn_y, 180, 36)
         if btn_rect.collidepoint(x, y):
             self._submit()

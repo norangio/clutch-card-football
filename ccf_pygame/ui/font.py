@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """Pixel font loader — Press Start 2P or fallback."""
 
 import os

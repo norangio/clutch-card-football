@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """Offense vs Defense card comparison display."""
 
 import pygame

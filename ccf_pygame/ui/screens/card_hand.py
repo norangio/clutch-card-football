@@ -1,9 +1,12 @@
+from __future__ import annotations
+
 """Player hand display with card selection."""
 
 import pygame
 from ui.colors import *
 from ui.font import get_font
 from ccf.models import Card, Color
+from ui.keycodes import DOWN, J, K, KP2, KP8, RETURN, SPACE, UP, W
 
 
 class CardHand:
@@ -27,11 +30,11 @@ class CardHand:
         if not self._selectable or not self._cards:
             return None
         if event.type == pygame.KEYDOWN:
-            if event.key in (pygame.K_UP, pygame.K_w, pygame.K_k, pygame.K_KP8):
+            if event.key in (UP, W, K, KP8):
                 self.selected = max(0, self.selected - 1)
-            elif event.key in (pygame.K_DOWN, pygame.K_s, pygame.K_j, pygame.K_KP2):
+            elif event.key in (DOWN, J, KP2):
                 self.selected = min(len(self._cards) - 1, self.selected + 1)
-            elif event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
+            elif event.key in (RETURN, SPACE):
                 return self.selected
             elif event.unicode and event.unicode.isdigit():
                 idx = int(event.unicode)

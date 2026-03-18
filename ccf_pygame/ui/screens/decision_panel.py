@@ -1,21 +1,24 @@
+from __future__ import annotations
+
 """Post-move decision buttons: Punt, FG, Clutch, Short Punt. Also extra point choice."""
 
 import pygame
 from ui.colors import *
 from ui.font import get_font
+from ui.keycodes import K, ONE, TWO, THREE, FOUR
 
 
 class DecisionPanel:
     BUTTONS = [
-        {"key": "P", "label": "PUNT", "shortcut": pygame.K_1},
-        {"key": "F", "label": "FIELD GOAL", "shortcut": pygame.K_2},
-        {"key": "C", "label": "CLUTCH", "shortcut": pygame.K_3},
-        {"key": "S", "label": "SHORT PUNT", "shortcut": pygame.K_4},
+        {"key": "P", "label": "PUNT", "shortcut": ONE},
+        {"key": "F", "label": "FIELD GOAL", "shortcut": TWO},
+        {"key": "C", "label": "CLUTCH", "shortcut": THREE},
+        {"key": "S", "label": "SHORT PUNT", "shortcut": FOUR},
     ]
 
     EP_BUTTONS = [
-        {"key": "K", "label": "KICK ", "shortcut": pygame.K_k},
-        {"key": "2", "label": "GO FOR 2 (d6>=5)", "shortcut": pygame.K_2},
+        {"key": "K", "label": "KICK ", "shortcut": K},
+        {"key": "2", "label": "GO FOR 2 (d6>=5)", "shortcut": TWO},
     ]
 
     # Map ball positions to context descriptions

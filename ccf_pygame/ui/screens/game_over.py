@@ -1,9 +1,12 @@
+from __future__ import annotations
+
 """Game over screen with final score and play again button."""
 
 import pygame
 from ui.colors import *
 from ui.font import get_font
 from ccf.states import GameSnapshot
+from ui.keycodes import RETURN
 
 
 class GameOverScreen:
@@ -15,7 +18,7 @@ class GameOverScreen:
         self._btn_rect = pygame.Rect(360, 510, 240, 45)
 
     def handle_event(self, event: pygame.event.Event):
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+        if event.type == pygame.KEYDOWN and event.key == RETURN:
             self.play_again = True
 
     def handle_click(self, pos):

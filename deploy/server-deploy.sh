@@ -4,8 +4,8 @@
 set -euo pipefail
 
 APP_DIR="/opt/clutch-card-football"
-SERVICE="clutch-card-football"
 BRANCH="${1:-main}"
+BROWSER_BUILD_CMD=(venv/bin/python -m pygbag --build --archive --ume_block 0 --width 960 --height 720 --title "Clutch Card Football" ccf_pygame)
 
 if [[ "${EUID:-$(id -u)}" -ne 0 ]]; then
   echo "This script must run as root." >&2
@@ -26,23 +26,24 @@ git checkout "$BRANCH"
 git pull --ff-only origin "$BRANCH"
 
 echo "→ Installing system packages..."
+export DEBIAN_FRONTEND=noninteractive
 apt-get update
-apt-get install -y python3 python3-venv python3-pip xvfb x11vnc websockify novnc
+apt-get install -y python3 python3-venv python3-pip
 
 echo "→ Installing Python dependencies..."
 python3 -m venv venv
 venv/bin/pip install -q --upgrade pip
-venv/bin/pip install -q -r requirements-server.txt -r requirements-desktop.txt
+venv/bin/pip install -q -r requirements-desktop.txt "pygbag>=0.9.3,<1"
 
-echo "→ Preparing runtime directories..."
-install -d -m 755 -o www-data -g www-data "$APP_DIR/run" "$APP_DIR/logs"
+echo "→ Building browser bundle..."
+"${BROWSER_BUILD_CMD[@]}"
 
-echo "→ Updating systemd service..."
-cp deploy/clutch-card-football.service /etc/systemd/system/clutch-card-football.service
-systemctl daemon-reload
-systemctl enable "$SERVICE" >/dev/null 2>&1 || true
+echo "→ Preparing static asset permissions..."
+chown -R www-data:www-data "$APP_DIR/ccf_pygame/build"
+find "$APP_DIR/ccf_pygame/build" -type d -exec chmod 755 {} +
+find "$APP_DIR/ccf_pygame/build" -type f -exec chmod 644 {} +
 
-echo "→ Restarting service..."
-systemctl restart "$SERVICE"
+echo "→ Disabling legacy launcher service..."
+systemctl disable --now clutch-card-football >/dev/null 2>&1 || true
 
 echo "✓ VPS deploy complete"

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """CRT retro post-processing: scanlines + vignette."""
 
 import pygame

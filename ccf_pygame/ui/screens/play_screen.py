@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """Main game composite screen — wires field, hand, scoreboard, log, decisions, card battle."""
 
 import pygame
