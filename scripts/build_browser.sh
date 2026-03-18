@@ -11,3 +11,6 @@ if ! python3 -m pygbag --help >/dev/null 2>&1; then
 fi
 
 python3 -m pygbag --build --archive --ume_block 0 --width 960 --height 720 --title "Clutch Card Football" "$@" ccf_pygame
+
+# pygbag hardcodes fb_ar to 1.77 (1280/720); fix to 1.33 (960/720)
+sed -i'' 's/fb_ar   :  1\.77/fb_ar   :  1.33/' "$ROOT_DIR/ccf_pygame/build/web/index.html"

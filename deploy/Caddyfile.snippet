@@ -9,10 +9,9 @@ ccf.norangio.dev {
 
   # Proxy pygame-ce WASM wheel requests to the pygbag CDN.
   # The pygbag runtime fetches /cdn/cp312/*.whl at page load.
-  handle_path /cdn/* {
+  handle /cdn/* {
     reverse_proxy https://pygame-web.github.io {
       header_up Host pygame-web.github.io
-      rewrite * /cdn{uri}
     }
   }
 
