@@ -34,20 +34,24 @@ Build artifacts are emitted under `ccf_pygame/build/web/`. For a build-only pass
 ./scripts/build_browser.sh
 ```
 
+That build now runs `scripts/postprocess_browser_build.py`, which patches pygbag's generated `index.html` to keep the 960x720 aspect ratio fix and add visible loader-stage diagnostics for remote browser debugging.
+
 Browser runtime notes:
 - `ccf_pygame/main.py` is the wasm/browser entrypoint packaged by `pygbag`
 - `ccf_pygame/ui/app.py` now exposes a shared async-safe loop for desktop and browser runs
-- Production uses the embedded `pygbag --html` build and copies `ccf_pygame.html` to `index.html`
+- Production uses the standard `pygbag --build --archive` output and then post-processes the generated `index.html`
 - CRT post-processing is disabled in browser mode by default to preserve frame budget
 - Audio initialization is best-effort so the game still runs if the browser blocks mixer startup
 - Browser builds use `--ume_block 0` so the setup screen can render immediately without a preload click gate
+- The generated loader now reports each pre-`main.py` stage on screen so remote testers can send the exact failure point instead of a generic stuck loading screenshot
 
 ## Production deployment (browser-native)
 
 Users open `https://ccf.norangio.dev` and load the static `pygbag` bundle directly in the browser.
 
 Runtime stack on VPS:
-- `pygbag` embedded HTML build step on deploy (`ccf_pygame/build/web/`)
+- `pygbag` archive build step on deploy (`ccf_pygame/build/web/`)
+- `scripts/postprocess_browser_build.py` patches the generated loader for aspect-ratio and debug diagnostics
 - static `index.html` served directly by `Caddy`
 - `Caddy` basic auth on `ccf.norangio.dev`
 - runtime JS/wasm loaded from the official `pygame-web.github.io` CDN referenced by the generated `index.html`
@@ -89,7 +93,8 @@ Push to `main` to auto-deploy.
 
 Built assets:
 - `/opt/clutch-card-football/ccf_pygame/build/web/index.html`
-- `/opt/clutch-card-football/ccf_pygame/build/web/ccf_pygame.html`
+- `/opt/clutch-card-football/ccf_pygame/build/web/ccf_pygame.tar.gz`
+- `/opt/clutch-card-football/ccf_pygame/build/web/ccf_pygame.apk`
 
 ## Notes
 

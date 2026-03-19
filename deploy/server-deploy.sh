@@ -38,8 +38,8 @@ venv/bin/pip install -q -r requirements-desktop.txt "pygbag>=0.9.3,<1"
 echo "→ Building browser bundle..."
 "${BROWSER_BUILD_CMD[@]}"
 
-# pygbag hardcodes fb_ar to 1.77 (1280/720); fix to 1.33 (960/720)
-sed -i 's/fb_ar   :  1\.77/fb_ar   :  1.33/' "$APP_DIR/ccf_pygame/build/web/index.html"
+echo "→ Post-processing browser bundle..."
+python3 "$APP_DIR/scripts/postprocess_browser_build.py"
 
 echo "→ Preparing static asset permissions..."
 chown -R www-data:www-data "$APP_DIR/ccf_pygame/build"

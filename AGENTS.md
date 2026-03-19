@@ -17,6 +17,7 @@
 - The `--html` flag should NOT be used — it produces incorrect embedded output.
 - `ccf_pygame/requirements.txt` must NOT list `pygame-ce` (it's bundled in the WASM runtime; listing it causes a failed wheel fetch from localhost:8000 proxy).
 - Desktop deps go in `requirements-desktop.txt` at repo root.
+- Always run `scripts/postprocess_browser_build.py` after a pygbag build. It applies the 960x720 aspect-ratio patch and injects visible loader-stage diagnostics into the generated `build/web/index.html`.
 
 ## Root causes of prior blank-gray-canvas bug
 
@@ -32,6 +33,7 @@
 - CRT effect and audio are disabled in browser mode by default.
 - `from __future__ import annotations` across UI modules prevents eager `pygame.Surface`/`pygame.Rect` resolution at import time.
 - `ccf_pygame/ui/keycodes.py` provides fallback key constants for WASM where `pygame.K_*` may not be available.
+- The generated pygbag loader now shows explicit stages like archive fetch, extract, preload, and `main.py` handoff so cross-device bootstrap failures can be diagnosed from screenshots alone.
 
 ## Gameplay/UI conventions
 
