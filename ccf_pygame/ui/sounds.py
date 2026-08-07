@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 """Retro 8-bit synthesized sounds using stdlib array (no numpy required)."""
 
 import array
@@ -9,6 +7,13 @@ import pygame
 _SAMPLE_RATE = 44100
 _sounds: dict = {}
 _initialized = False
+_muted = False
+
+
+def set_muted(muted: bool):
+    """Globally mute/unmute sound effects."""
+    global _muted
+    _muted = muted
 
 
 def _make_tone(freq: float, duration_ms: int, volume: float = 0.25) -> pygame.mixer.Sound:
@@ -64,7 +69,7 @@ def init_sounds():
 
 def play(name: str):
     """Play a named sound effect if available."""
-    if not _initialized:
+    if not _initialized or _muted:
         return
     sound = _sounds.get(name)
     if sound:

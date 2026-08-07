@@ -1,17 +1,19 @@
-from __future__ import annotations
-
-"""Team setup screen."""
+"""Broadcast team setup screen with mouse and keyboard controls."""
 
 import pygame
-from ui.colors import *
-from ui.font import get_font
-from ui.keycodes import A, BACKSPACE, D, H, KP4, KP6, L, LEFT, RETURN, RIGHT, SPACE
+
+from ui import draw as d
+from ui.layout import W
+from ui.theme import BG, BORDER, DIM, GOLD, MUTED, PANEL, PANEL_HI, TEXT
 
 
 class SetupScreen:
+    COLUMN = pygame.Rect(200, 84, 560, 484)
+    ROW_H = 38
+    ROW_STEP = 44
+    START_RECT = pygame.Rect(370, 584, 220, 48)
+
     def __init__(self):
-        self.font = get_font(12)
-        self.title_font = get_font(18)
         self.fields = [
             {"label": "TEAM NAME", "value": "Bulldogs", "type": "text"},
             {"label": "RATING", "value": "6", "type": "int", "min": 1, "max": 12},
@@ -22,60 +24,67 @@ class SetupScreen:
             {"label": "AI RATING", "value": "6", "type": "int", "min": 1, "max": 12},
             {"label": "AI KICK", "value": "2", "type": "int", "min": 1, "max": 3},
             {"label": "AI CLUTCH", "value": "3", "type": "int", "min": 0, "max": 5},
+            {"label": "AI DIFFICULTY", "value": "MEDIUM", "type": "choice",
+             "choices": ["EASY", "MEDIUM", "HARD"]},
+            {"label": "MODE", "value": "HUMAN vs AI", "type": "choice",
+             "choices": ["HUMAN vs AI", "AI vs AI"]},
         ]
         self.selected = 0
         self.cursor_blink = 0
         self.ready = False
         self._result = None
+        self._row_rects = [
+            pygame.Rect(self.COLUMN.x, self.COLUMN.y + index * self.ROW_STEP,
+                        self.COLUMN.w, self.ROW_H)
+            for index in range(len(self.fields))
+        ]
+        self._left_rects = [pygame.Rect(row.right - 170, row.y, 38, row.h)
+                            for row in self._row_rects]
+        self._right_rects = [pygame.Rect(row.right - 38, row.y, 38, row.h)
+                             for row in self._row_rects]
 
     def handle_event(self, event: pygame.event.Event):
         if event.type != pygame.KEYDOWN:
             return
-
-        # Mouse-first mode: keyboard is only for text entry in name fields.
-        if self.selected == len(self.fields):
-            if event.key == RETURN:
+        if event.key in (pygame.K_TAB, pygame.K_DOWN):
+            self.selected = (self.selected + 1) % (len(self.fields) + 1)
+        elif event.key == pygame.K_UP:
+            self.selected = (self.selected - 1) % (len(self.fields) + 1)
+        elif event.key == pygame.K_RETURN:
+            if self.selected == len(self.fields):
                 self._submit()
-            return
-
-        field = self.fields[self.selected]
-        if field["type"] == "text":
+        else:
             self._edit_field(event)
+
+    def _adjust(self, field, direction):
+        if field["type"] == "int":
+            value = int(field["value"]) + direction
+            field["value"] = str(max(field["min"], min(field["max"], value)))
+        elif field["type"] == "choice":
+            choices = field["choices"]
+            index = choices.index(field["value"])
+            field["value"] = choices[(index + direction) % len(choices)]
 
     def _edit_field(self, event):
         if self.selected >= len(self.fields):
             return
-        f = self.fields[self.selected]
-        if f["type"] == "text":
-            if event.key == BACKSPACE:
-                f["value"] = f["value"][:-1]
-            elif event.unicode and event.unicode.isprintable() and len(f["value"]) < 12:
-                f["value"] += event.unicode
-        elif f["type"] == "int":
-            if event.key in (LEFT, A, H, KP4):
-                v = int(f["value"]) - 1
-                f["value"] = str(max(f["min"], v))
-            elif event.key in (RIGHT, D, L, KP6):
-                v = int(f["value"]) + 1
-                f["value"] = str(min(f["max"], v))
-            elif event.unicode and event.unicode.isdigit():
-                v = int(event.unicode)
-                if f["min"] <= v <= f["max"]:
-                    f["value"] = str(v)
-        elif f["type"] == "choice":
-            if event.key in (
-                LEFT,
-                RIGHT,
-                A,
-                D,
-                H,
-                L,
-                KP4,
-                KP6,
-                SPACE,
-            ):
-                idx = f["choices"].index(f["value"])
-                f["value"] = f["choices"][(idx + 1) % len(f["choices"])]
+        field = self.fields[self.selected]
+        if field["type"] == "text":
+            if event.key == pygame.K_BACKSPACE:
+                field["value"] = field["value"][:-1]
+            elif (event.unicode and event.unicode.isascii()
+                  and event.unicode.isprintable()
+                  and len(field["value"]) < 12):
+                field["value"] += event.unicode
+        elif event.key == pygame.K_LEFT:
+            self._adjust(field, -1)
+        elif event.key in (pygame.K_RIGHT, pygame.K_SPACE):
+            self._adjust(field, 1)
+        elif field["type"] == "int" and event.unicode.isdigit():
+            # Keep the original single-key quick entry behavior.
+            value = int(event.unicode)
+            if field["min"] <= value <= field["max"]:
+                field["value"] = str(value)
 
     def _submit(self):
         from ccf.models import Color
@@ -83,12 +92,15 @@ class SetupScreen:
             "human_name": self.fields[0]["value"] or "Player",
             "human_rating": int(self.fields[1]["value"]),
             "human_kick": int(self.fields[2]["value"]),
-            "human_color": Color.RED if self.fields[3]["value"] == "RED" else Color.BLACK,
+            "human_color": (Color.RED if self.fields[3]["value"] == "RED"
+                            else Color.BLACK),
             "human_clutch": int(self.fields[4]["value"]),
             "ai_name": self.fields[5]["value"] or "Rivals",
             "ai_rating": int(self.fields[6]["value"]),
             "ai_kick": int(self.fields[7]["value"]),
             "ai_clutch": int(self.fields[8]["value"]),
+            "difficulty": self.fields[9]["value"].lower(),
+            "ai_vs_ai": self.fields[10]["value"] == "AI vs AI",
         }
         self.ready = True
 
@@ -96,82 +108,76 @@ class SetupScreen:
         return self._result
 
     def handle_click(self, pos):
-        x, y = pos
-        # Check START button (must match draw calculation)
-        start_y = 150
-        btn_y = start_y + len(self.fields) * 39 + 30
-        btn_rect = pygame.Rect(390, btn_y, 180, 36)
-        if btn_rect.collidepoint(x, y):
+        if self.START_RECT.collidepoint(pos):
+            self.selected = len(self.fields)
             self._submit()
             return
-
-        # Check field rows
-        start_y = 150
-        for i in range(len(self.fields)):
-            row_y = start_y + i * 39
-            if row_y <= y < row_y + 36:
-                self.selected = i
-                f = self.fields[i]
-                if f["type"] == "int":
-                    if x < 600:
-                        v = int(f["value"]) - 1
-                        f["value"] = str(max(f["min"], v))
-                    else:
-                        v = int(f["value"]) + 1
-                        f["value"] = str(min(f["max"], v))
-                elif f["type"] == "choice":
-                    idx = f["choices"].index(f["value"])
-                    f["value"] = f["choices"][(idx + 1) % len(f["choices"])]
-                break
+        for index, row in enumerate(self._row_rects):
+            if not row.collidepoint(pos):
+                continue
+            self.selected = index
+            field = self.fields[index]
+            if field["type"] in ("int", "choice"):
+                if self._left_rects[index].collidepoint(pos):
+                    self._adjust(field, -1)
+                elif self._right_rects[index].collidepoint(pos):
+                    self._adjust(field, 1)
+            return
 
     def draw(self, surface: pygame.Surface):
-        surface.fill(BG_DARK)
+        surface.fill(BG)
         self.cursor_blink = (self.cursor_blink + 1) % 60
+        d.text(surface, "CLUTCH CARD FOOTBALL", (W // 2, 36),
+               d.font("cond", 42, "bold"), GOLD,
+               anchor="center", tracking=1, tight=True)
+        d.text(surface, "TEAM SETUP", (W // 2, 66),
+               d.font("inter", 10, "bold"), DIM,
+               anchor="center", tracking=3, tight=True)
 
-        # Title
-        title = self.title_font.render("CLUTCH CARD FOOTBALL", True, AMBER)
-        surface.blit(title, (480 - title.get_width() // 2, 45))
+        for index, (field, row) in enumerate(zip(self.fields, self._row_rects)):
+            selected = index == self.selected
+            d.rrect(surface, row, PANEL_HI if selected else PANEL, radius=8)
+            d.rrect(surface, row, GOLD if selected else BORDER,
+                    radius=8, width=1)
+            d.text(surface, field["label"], (row.x + 16, row.centery),
+                   d.font("inter", 13, "semibold"), MUTED,
+                   anchor="midleft", tight=True)
 
-        subtitle = self.font.render("TEAM SETUP", True, WHITE)
-        surface.blit(subtitle, (480 - subtitle.get_width() // 2, 90))
+            value = field["value"]
+            if (field["type"] == "text" and selected
+                    and self.cursor_blink < 30):
+                value += "_"
+            if field["type"] in ("int", "choice"):
+                chevron_color = GOLD if selected else DIM
+                d.chevron(surface, self._left_rects[index].centerx + 4,
+                          self._left_rects[index].centery, 6,
+                          chevron_color, direction=-1, width=2)
+                d.chevron(surface, self._right_rects[index].centerx - 4,
+                          self._right_rects[index].centery, 6,
+                          chevron_color, direction=1, width=2)
+                value_center = ((self._left_rects[index].right
+                                 + self._right_rects[index].left) // 2,
+                                row.centery)
+                d.text(surface, value, value_center,
+                       d.font("inter", 15, "bold"), TEXT,
+                       anchor="center", tight=True)
+            else:
+                d.text(surface, value, (row.right - 16, row.centery),
+                       d.font("inter", 15, "bold"), TEXT,
+                       anchor="midright", tight=True)
 
-        # Fields
-        start_y = 150
-        for i, f in enumerate(self.fields):
-            y = start_y + i * 39
-            is_sel = (i == self.selected)
-            color = AMBER if is_sel else GRAY
-
-            # Label
-            label = self.font.render(f["label"], True, color)
-            surface.blit(label, (150, y + 6))
-
-            # Value
-            val_text = f["value"]
-            if f["type"] == "int":
-                val_text = f"< {f['value']} >"
-            elif f["type"] == "choice":
-                val_text = f"< {f['value']} >"
-
-            if f["type"] == "text" and is_sel and self.cursor_blink < 30:
-                val_text += "_"
-
-            val_surf = self.font.render(val_text, True, WHITE if not is_sel else HIGHLIGHT)
-            surface.blit(val_surf, (525, y + 6))
-
-            if is_sel:
-                pygame.draw.rect(surface, color, (135, y, 690, 30), 1)
-
-        # START button
-        btn_y = start_y + len(self.fields) * 39 + 30
-        is_start_sel = (self.selected == len(self.fields))
-        btn_color = AMBER if is_start_sel else BUTTON_BORDER
-        btn_rect = pygame.Rect(390, btn_y, 180, 36)
-        pygame.draw.rect(surface, BUTTON_BG if not is_start_sel else BUTTON_HOVER, btn_rect)
-        pygame.draw.rect(surface, btn_color, btn_rect, 2)
-        start_text = self.font.render("START", True, AMBER)
-        surface.blit(start_text, (480 - start_text.get_width() // 2, btn_y + 9))
-
-        # Instructions
-        inst = self.font.render("MOUSE: Select fields/buttons  TYPE: team names", True, DIM_TEXT)
-        surface.blit(inst, (480 - inst.get_width() // 2, 660))
+        selected_start = self.selected == len(self.fields)
+        if selected_start:
+            d.shadow(surface, self.START_RECT, radius=10, spread=8,
+                     a=100, offset=(0, 3))
+        d.rrect(surface, self.START_RECT, GOLD, radius=10)
+        d.rrect(surface, self.START_RECT,
+                TEXT if selected_start else d.shade(GOLD, -0.18),
+                radius=10, width=2 if selected_start else 1)
+        d.text(surface, "START GAME", self.START_RECT.center,
+               d.font("cond", 24, "bold"), (26, 22, 6),
+               anchor="center", tracking=1, tight=True)
+        d.text(surface,
+               "TAB / ↑ ↓ navigate  ·  LEFT / RIGHT edit  ·  ENTER start",
+               (W // 2, 674), d.font("inter", 11, "regular"), DIM,
+               anchor="center", tight=True)

@@ -55,6 +55,8 @@ class GameSnapshot:
     turn: int = 0
     turns_in_quarter: int = 6
     ball_pos: str = "1"
+    difficulty: str = "medium"
+    ai_vs_ai: bool = False
 
     human: Optional[Team] = None
     ai: Optional[Team] = None

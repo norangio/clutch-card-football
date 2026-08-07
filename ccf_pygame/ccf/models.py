@@ -52,6 +52,10 @@ class Team:
     mojo: int = 0
     hand: List[Card] = field(default_factory=list)
     score: int = 0
+    segments: int = 0
+    fg_made: int = 0
+    fg_att: int = 0
+    punts: int = 0
 
     def play(self, idx: int) -> Card:
         return self.hand.pop(idx)
