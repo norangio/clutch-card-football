@@ -1,13 +1,12 @@
 # Clutch Card Football
 
-Retro college football card game built with `pygame-ce`. The repo now supports both the native desktop runtime and a browser-native wasm build via `pygbag`.
+Card-based football game. Two teams face off over four quarters, playing cards
+from their hands to drive the ball down a seven-segment field and score.
 
-## Latest upstream source included
+One Python rules engine drives every presentation layer. Today that is a Pygame
+desktop UI; a browser 3-D edition is in progress.
 
-This repo was migrated from `sorangio/CodeDev` branch `scott/pygame-ui`.
-The most recent upstream update included here is commit `e217617` from **March 8, 2026 4:51:42 PM PT**.
-
-## Local development (desktop game)
+## Play it
 
 ```bash
 python3 -m venv venv
@@ -16,95 +15,52 @@ pip install -r requirements-desktop.txt
 python3 ccf_pygame/game.py
 ```
 
-## Local development (browser build with pygbag)
+The game runs at 960x720. Mouse-first, with keyboard entry for team names during
+setup.
 
-Official `pygbag` docs currently require a root `main.py` with an async game loop, and the latest PyPI release is `0.9.3` from February 12, 2026.
-
-```bash
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements-desktop.txt
-pip install "pygbag>=0.9.3,<1"
-python3 -m pygbag --ume_block 0 ccf_pygame
-```
-
-Build artifacts are emitted under `ccf_pygame/build/web/`. For a build-only pass:
+## Tests
 
 ```bash
-./scripts/build_browser.sh
+cd ccf_pygame && python3 -m pytest test_ai.py test_ui.py -q
 ```
 
-That build now runs `scripts/postprocess_browser_build.py`, which patches pygbag's generated `index.html` to keep the 960x720 aspect ratio fix and add visible loader-stage diagnostics for remote browser debugging.
+Baseline is 59 passed, 2 skipped.
 
-Browser runtime notes:
-- `ccf_pygame/main.py` is the wasm/browser entrypoint packaged by `pygbag`
-- `ccf_pygame/ui/app.py` now exposes a shared async-safe loop for desktop and browser runs
-- Production uses the standard `pygbag --build --archive` output and then post-processes the generated `index.html`
-- CRT post-processing is disabled in browser mode by default to preserve frame budget
-- Audio initialization is best-effort so the game still runs if the browser blocks mixer startup
-- Browser builds use `--ume_block 0` so the setup screen can render immediately without a preload click gate
-- The generated loader now reports each pre-`main.py` stage on screen so remote testers can send the exact failure point instead of a generic stuck loading screenshot
+## Layout
 
-## Production deployment (browser-native)
-
-Users open `https://ccf.norangio.dev` and load the static `pygbag` bundle directly in the browser.
-
-Runtime stack on VPS:
-- `pygbag` archive build step on deploy (`ccf_pygame/build/web/`)
-- `scripts/postprocess_browser_build.py` patches the generated loader for aspect-ratio and debug diagnostics
-- static `index.html` served directly by `Caddy`
-- `Caddy` basic auth on `ccf.norangio.dev`
-- runtime JS/wasm loaded from the official `pygame-web.github.io` CDN referenced by the generated `index.html`
-
-Behavior note:
-- there is no remote desktop session anymore; the game logic and rendering now execute in-browser via wasm
-
-## Deploy (Hetzner + GitHub Actions)
-
-Push to `main` to auto-deploy.
-
-### Required GitHub Actions secrets
-
-- `VPS_HOST`
-- `VPS_USER`
-- `VPS_SSH_KEY`
-
-### One-time VPS setup
-
-1. Add DNS A record in Cloudflare:
-   - `ccf.norangio.dev -> <your-vps-ip>`
-2. Add Caddy block from `deploy/Caddyfile.snippet` to `/etc/caddy/Caddyfile`
-3. Reload Caddy:
-   - `sudo systemctl reload caddy`
-
-### Manual deploy
-
-```bash
-./deploy.sh
-# or
-./deploy.sh main
+```
+ccf_pygame/ccf/     rules engine, no Pygame imports
+ccf_pygame/ui/      Pygame broadcast presentation
+mockups/            design exploration (broadcast / minimal / neon)
+scripts/            original standalone scripts, pre-Pygame
 ```
 
-## Build operations
+## The 3-D web edition
 
-```bash
-./scripts/build_browser.sh
-```
+Planning is complete and Phase 0 has landed on the `web-edition` branch. The
+architecture keeps the Python engine authoritative, wraps it in a FastAPI
+service, and renders an ordered event stream in React and React Three Fiber.
 
-Built assets:
-- `/opt/clutch-card-football/ccf_pygame/build/web/index.html`
-- `/opt/clutch-card-football/ccf_pygame/build/web/ccf_pygame.tar.gz`
-- `/opt/clutch-card-football/ccf_pygame/build/web/ccf_pygame.apk`
+- [THREE_D_WEB_PLAN.md](THREE_D_WEB_PLAN.md) what is being built and why
+- [AGENT_WORK_SPLIT.md](AGENT_WORK_SPLIT.md) file ownership across the two agents
+- [CLAUDE.md](CLAUDE.md) project conventions and current state
+
+The first release runs locally. There is no hosted deployment.
+
+## History
+
+The repo carries two lineages. `main` holds the original CRT-styled UI and a
+`pygbag`/WASM browser build that was deployed behind a reverse proxy. The
+broadcast UI and the improved AI came from `sorangio/CodeDev` on a completely
+separate history.
+
+`web-edition` reconciles them. The `pygbag` build and its deploy pipeline were
+retired on 2026-08-07, since the hosted version was not being used and the
+broadcast UI was incompatible with the WASM entry point. Everything removed is
+recoverable from `main` at `c0f2f4a`.
 
 ## Notes
 
-- GUI field direction is team-based: human offense renders left-to-right, AI offense right-to-left.
-- Current control mode is mouse-first for browser reliability.
-- Keyboard entry is kept for team-name text fields only during setup.
-- Production no longer relies on Xvfb, x11vnc, or noVNC.
-
-## Security TODO
-
-- Move all app deploy workflows to a dedicated non-root VPS user.
-- Use one dedicated GitHub Actions deploy keypair only (not personal workstation keys).
-- After migration, remove deploy access from `root` and disable root SSH login.
+- Field direction is team-based: human offense renders left to right, AI offense
+  right to left.
+- `AGENTS.md` is a symlink to `CLAUDE.md`. Always edit `CLAUDE.md`.

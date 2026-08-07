@@ -9,4 +9,9 @@ build/
 .venv*/
 venv/
 env/
-CLAUDE.md
+
+# Generated mockup renders (regenerate with: python3 mockups/render.py)
+mockups/out/
+
+# Deploy target, if hosting is ever reintroduced. Never commit: public repo.
+.deploy-env

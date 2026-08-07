@@ -1,8 +1,25 @@
 # Clutch Card Football
 
-A retro-styled digital card football game built with Pygame. Two teams face off over 4 quarters, playing cards from their hands to drive the ball down the field and score touchdowns and field goals.
+A card football game built with Pygame. Two teams face off over four quarters,
+playing cards from their hands to drive the ball down the field and score
+touchdowns and field goals.
+
+![Broadcast game UI](docs/broadcast-ui.png)
+
+## Broadcast UI
+
+The 960×720 presentation is organized like a live sports broadcast: a compact
+score bar, a mirrored turf field, a two-column card hand, phase-aware play and
+log panels, a drive-chart rail, and a full-width action bar. Every choice can be
+made with either the mouse or keyboard, and the nine-card Q4 hand fits without
+overlapping its opponent-count footer.
 
 ## How to Launch
+
+This is a desktop build. The `pygbag`/WASM browser shell was retired on
+2026-08-07; see the root [README](../README.md). A browser edition is being
+rebuilt around a FastAPI service and a React frontend rather than WASM, so this
+Pygame UI stays desktop-only and shares the same `ccf/` engine.
 
 ### macOS
 
@@ -36,7 +53,9 @@ python game.py
 
 ### Overview
 
-Clutch Card Football is a card-based football game played over **4 quarters**. Each quarter has 6 plays (7 in Q4). One team is on offense, the other on defense. The offense tries to move the ball down the field to score; the defense tries to stop them.
+Clutch Card Football is a card-based football game played over **4 quarters**. Each quarter has 6 plays 
+(8 in Q4). One team is on offense, the other on defense. The offense tries to move the ball down the field to score; 
+the defense tries to stop them.
 
 ### Setup
 
@@ -49,6 +68,18 @@ Each team has three ratings:
 | **Clutch Coins** | 0-5 | Special plays that draw a bonus card from the deck |
 
 Each team also picks a **color** (Red or Black) which affects bonus movement when playing cards that match your team color.
+
+### AI Difficulty
+
+The setup screen has an **AI DIFFICULTY** selector that changes how smartly the robot plays (team ratings are unaffected):
+
+| Level | Behavior |
+|-------|----------|
+| **Easy** | Random card picks and wasteful decisions — punts in the red zone, burns clutch coins |
+| **Medium** | Solid heuristics: picks the best-movement card from the drive chart, plays high cards on defense to earn mojo, uses clutch/FG sensibly |
+| **Hard** | Monte Carlo search: simulates the remaining deck to pick the card/action with the best expected outcome, and makes smart extra-point calls |
+
+The current difficulty is shown in the top scoreboard bar.
 
 ### The Field
 
@@ -86,12 +117,14 @@ Higher-rated teams get more movement from the same cards. A rating-12 team playi
 - If it matches the defense's color: **Turnover!** Defense gets the ball at segment 3
 
 **Joker played by Offense**:
-- If defense card < 4: Automatic **Touchdown**
-- Otherwise: Big play using the "AH" drive chart entry
+- If defense card < 4 (2-3): Automatic **Touchdown**
+- If defense card < Jack (4-10): Advance **+3 segments**
+- If defense card is Jack through Ace (11-14): Advance **+1 segment**
 
 **Joker played by Defense**:
-- If offense card < Jack (11): **Turnover!**
-- Otherwise: Offense loses 1 segment
+- If offense card < 4 (2-3): Automatic **defensive Touchdown** (extra-point attempt follows)
+- If offense card < Jack (4-10): **Turnover!** Defense gets the ball at **Z3** (Red Zone)
+- If offense card is Jack through Ace (11-14): **No gain** — offense keeps the ball at the same spot
 
 ### Color Bonus
 
@@ -141,8 +174,8 @@ Each mojo event fills one of 2 mojo slots. When a team has **2 mojo AND exactly 
 |---------|------------|-------|---------|
 | Q1 | 7 (fresh deck) | 6 | Human |
 | Q2 | 6 (same deck) | 6 | AI |
-| Q3 | 6 (fresh deck) | 6 | Human |
-| Q4 | 8 (same deck) | 7 | AI |
+| Q3 | 7 (fresh deck) | 6 | Human |
+| Q4 | 8 (same deck) | 8 | AI |
 
 After a touchdown, extra points, or turnover, possession swaps. The ball resets to segment 1 (or segment 3 after a safety).
 
@@ -162,12 +195,25 @@ A fresh deck is shuffled at the start of Q1 and Q3. The same deck carries over i
 | **0-9 keys** | Quick-select a card by index |
 | **Enter / Space** | Confirm selection |
 | **1-4 keys** | Choose post-move action (Punt/FG/Clutch/Short Punt) |
+| **K / 2 keys** | Kick the PAT / attempt a two-point conversion |
 | **Click / Any key** | Advance through game events |
+
+Setup supports `Tab` or up/down to move between fields, left/right to change
+ratings and choices, and `Enter` on **Start Game**. The game-over screen accepts
+`Enter` or a click on **Play Again**.
+
+## Fonts
+
+The Broadcast UI ships small ASCII-focused subsets of **Inter** (Regular,
+SemiBold, and Bold) and **Barlow Condensed Bold**. Both families are licensed
+under the SIL Open Font License; the corresponding `OFL-Inter.txt` and
+`OFL-BarlowCondensed.txt` files are included beside the font assets.
 
 ### Tips
 
 - **High cards aren't always best on offense** — the drive chart determines movement based on the offense card's face value AND team rating, not the card battle result
 - **Save Jokers for offense** if possible — a Joker on offense against a low defense card is an automatic touchdown
+- **A defensive Joker vs a card below Jack** is a huge swing — a defensive TD or a Z3 turnover
 - **Clutch coins in the Red Zone** are valuable — an extra move from Z3 could reach the end zone
 - **Field goals from Z1** are nearly guaranteed with kick rating 2-3
 - **Watch your mojo** — if you have 1 clutch coin and are close to 2 mojo, it's worth letting defense win a card battle to convert
