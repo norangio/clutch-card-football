@@ -174,6 +174,8 @@ client. Only `serialize_snapshot(game, viewer_seat)` output crosses the wire.
 
 ### 8. Update the Pygame adapter  `[was 1.8]`
 
+**Status: complete — four-quarter adapter test green.**
+
 `ccf_pygame/ui/app.py` is the one UI file you own. Bring it onto the refactored
 contract. The desktop game must still play a full four quarters.
 

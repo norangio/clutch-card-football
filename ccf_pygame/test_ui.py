@@ -10,6 +10,7 @@ os.environ.setdefault("SDL_AUDIODRIVER", "dummy")
 import pygame
 import pytest
 
+from ccf.ai import Difficulty
 from ccf.models import Card, Color, Team
 from ccf.states import GamePhase, GameSnapshot
 from ui.app import PygameApp
@@ -239,3 +240,32 @@ def test_real_app_event_queue_start_card_action_pat_and_restart():
     pygame.event.post(key_event(pygame.K_RETURN, "\r"))
     app._handle_events()
     assert app.state_machine.phase == GamePhase.SETUP_TEAMS
+
+
+def test_pygame_adapter_plays_four_quarters_and_consumes_engine_events():
+    app = PygameApp()
+    app.state_machine.provide_setup(
+        "HOME",
+        2,
+        2,
+        Color.RED,
+        1,
+        "AWAY",
+        2,
+        2,
+        1,
+        Difficulty.MEDIUM,
+        ai_vs_ai=True,
+    )
+    app.state_machine._auto_advance_delay = 1
+    app.state_machine._ai_delay_frames = 1
+
+    for _ in range(500):
+        app._update()
+        assert app.state_machine._events == []
+        if app.state_machine.phase == GamePhase.GAME_OVER:
+            break
+
+    assert app.state_machine.phase == GamePhase.GAME_OVER
+    assert app.state_machine.quarter == 5
+    assert app.last_engine_events[-1].type == "game_ended"

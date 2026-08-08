@@ -39,6 +39,7 @@ class PygameApp:
         self.setup_screen = SetupScreen()
         self.play_screen = PlayScreen(self.state_machine)
         self.game_over_screen = GameOverScreen()
+        self.last_engine_events = []
         self.running = True
 
     def tick(self):
@@ -95,6 +96,10 @@ class PygameApp:
         if self.state_machine.phase not in (
                 GamePhase.SETUP_TEAMS, GamePhase.GAME_OVER):
             self.play_screen.update()
+        # The desktop presentation deliberately keeps frame-timed advance().
+        # It renders internal snapshots, so consume the parallel web event
+        # stream here rather than retaining a full game's events in memory.
+        self.last_engine_events = self.state_machine.drain_events()
 
     def _draw(self):
         self.internal.fill(BG)
@@ -115,6 +120,7 @@ class PygameApp:
         self.setup_screen = SetupScreen()
         self.play_screen = PlayScreen(self.state_machine)
         self.game_over_screen = GameOverScreen()
+        self.last_engine_events = []
         sounds.set_muted(False)
 
 
