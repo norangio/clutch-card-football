@@ -9,6 +9,7 @@ from __future__ import annotations
 
 from typing import Any
 
+from .events import CardPlayedEvent, GameEvent
 from .models import Card, Team
 from .states import GamePhase
 
@@ -82,6 +83,37 @@ def serialize_card(card: Card | None) -> dict[str, Any] | None:
         "color": card.color.value if card.color else None,
         "display": card.display,
     }
+
+
+def serialize_event(
+    event: GameEvent,
+    viewer_seat: str,
+    *,
+    seq: int,
+) -> dict[str, Any]:
+    """Serialize one event without exposing an opponent's played card.
+
+    The later ``cards_revealed`` event is public. Keeping the earlier
+    ``card_played`` event hidden preserves the chronology: an opponent's card
+    is face-down at the moment it is committed, even when both events arrive
+    in one response batch.
+    """
+    _validate_viewer(viewer_seat)
+    payload = event.to_dict(seq)
+    if isinstance(event, CardPlayedEvent) and event.seat != viewer_seat:
+        payload["card"] = None
+    return payload
+
+
+def serialize_events(
+    events: list[GameEvent],
+    viewer_seat: str,
+) -> list[dict[str, Any]]:
+    _validate_viewer(viewer_seat)
+    return [
+        serialize_event(event, viewer_seat, seq=seq)
+        for seq, event in enumerate(events)
+    ]
 
 
 def _validate_viewer(viewer_seat: str) -> None:

@@ -102,6 +102,8 @@ assert the result matches the final snapshot for every scoped field.
 
 ### 4. Event redaction
 
+**Status: complete — 180 passed, 2 skipped.**
+
 Section 5.2: redaction applies to events too, not just snapshots. A
 `card_played` for the opponent during `WAITING_DEFENSE_CARD` carries
 `card: null`; the card appears later in `cards_revealed`.

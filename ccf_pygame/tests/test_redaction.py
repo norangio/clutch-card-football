@@ -5,10 +5,12 @@ import json
 import pytest
 
 from ccf.ai import Difficulty
+from ccf.events import CardPlayedEvent, CardsRevealedEvent
 from ccf.models import Card, Color
 from ccf.serializers import (
     PLAY_CARDS_REVEALED_PHASES,
     serialize_card,
+    serialize_events,
     serialize_legal_actions,
     serialize_play_cards,
     serialize_snapshot,
@@ -100,6 +102,49 @@ def test_waiting_defense_payload_contains_no_ai_card_or_hand_anywhere():
     assert "QS" not in wire
     assert "K♠" not in wire
     assert "Q♠" not in wire
+
+
+def test_waiting_defense_event_json_contains_no_opponent_card_anywhere():
+    game = make_game()
+    game.drain_events()
+    set_ai_offense(game)
+    game.ai.hand = [Card("K", "S")]
+    game.phase = GamePhase.AI_PLAYING_CARD
+
+    game._ai_play_offense()
+    events = game.drain_events()
+    home_wire = json.dumps(
+        serialize_events(events, "home"), sort_keys=True, ensure_ascii=False
+    )
+    away_wire = json.dumps(
+        serialize_events(events, "away"), sort_keys=True, ensure_ascii=False
+    )
+
+    assert game.phase == GamePhase.WAITING_DEFENSE_CARD
+    assert events[0].card == Card("K", "S")
+    assert "KS" not in home_wire
+    assert "K♠" not in home_wire
+    assert "KS" in away_wire
+    assert "K♠" in away_wire
+
+
+def test_card_played_stays_hidden_until_public_reveal_event():
+    events = [
+        CardPlayedEvent("home", "offense", Card("A", "H"), 6),
+        CardPlayedEvent("away", "defense", Card("K", "S"), 6),
+        CardsRevealedEvent(
+            Card("A", "H"), Card("K", "S"), 14, 13, "offense"
+        ),
+    ]
+
+    payload = serialize_events(events, "home")
+    wire = json.dumps(payload, sort_keys=True)
+
+    assert payload[0]["card"]["id"] == "AH"
+    assert payload[1]["card"] is None
+    assert payload[2]["defense_card"]["id"] == "KS"
+    assert wire.count('"id": "KS"') == 1
+    assert [event["seq"] for event in payload] == [0, 1, 2]
 
 
 @pytest.mark.parametrize(
