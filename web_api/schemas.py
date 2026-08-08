@@ -4,26 +4,44 @@ from __future__ import annotations
 
 from typing import Annotated, Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
+
+from ccf_pygame.ccf.drive_chart import DRIVE_CHART
+from ccf_pygame.ccf.rules import TABLE_FG
+
+RATING_VALUES = tuple(sorted(int(value) for value in DRIVE_CHART))
+KICK_RATING_VALUES = tuple(sorted(TABLE_FG))
+MAX_STARTING_CLUTCH = 3
+MAX_TEAM_NAME_LENGTH = 40
 
 
 class StrictModel(BaseModel):
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(extra="forbid", strict=True)
 
 
-class HomeSetup(StrictModel):
-    name: str = Field(min_length=1)
-    rating: int
-    kick_rating: int
+class TeamSetup(StrictModel):
+    name: str = Field(min_length=1, max_length=MAX_TEAM_NAME_LENGTH)
+    rating: int = Field(ge=RATING_VALUES[0], le=RATING_VALUES[-1])
+    kick_rating: int = Field(
+        ge=KICK_RATING_VALUES[0], le=KICK_RATING_VALUES[-1]
+    )
+    clutch: int = Field(ge=0, le=MAX_STARTING_CLUTCH)
+
+    @field_validator("name")
+    @classmethod
+    def name_must_contain_text(cls, value: str) -> str:
+        stripped = value.strip()
+        if not stripped:
+            raise ValueError("name must contain non-whitespace characters")
+        return stripped
+
+
+class HomeSetup(TeamSetup):
     color: Literal["red", "black"]
-    clutch: int
 
 
-class AwaySetup(StrictModel):
-    name: str = Field(min_length=1)
-    rating: int
-    kick_rating: int
-    clutch: int
+class AwaySetup(TeamSetup):
+    pass
 
 
 class CreateGameRequest(StrictModel):

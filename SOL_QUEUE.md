@@ -250,6 +250,8 @@ except `web/src/api/__fixtures__/generated/`, contract changes go in
 
 ## 11. Validate setup input  `[real bug, highest priority]`
 
+**Status: complete — API boundary tests cover all valid and invalid edges.**
+
 `POST /api/games` accepts any `rating`. I sent 99, 0, and -5 and all three
 returned HTTP 200.
 
