@@ -161,6 +161,8 @@ This is the only permitted red-suite commit. Everything else stays green.
 
 ### 7. SQLite session store
 
+**Status: complete — close/reopen and concurrency coverage green.**
+
 One row per session: `game_id`, `seed`, `revision`, serialized engine state,
 event log, timestamps.
 

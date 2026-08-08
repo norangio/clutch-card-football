@@ -1,4 +1,5 @@
 import asyncio
+from concurrent.futures import ThreadPoolExecutor
 import json
 
 from ccf_pygame.ccf.states import GamePhase
@@ -146,6 +147,23 @@ def test_accepted_action_increments_once_and_duplicate_is_non_mutating_409():
     assert stale["events"] == []
     assert stale["snapshot"] == accepted["snapshot"]
     assert resumed["snapshot"] == accepted["snapshot"]
+
+
+def test_simultaneous_duplicate_actions_accept_exactly_once():
+    app, _ = make_app()
+    created = create_game(app)
+    game_id = created["snapshot"]["game_id"]
+    path = f"/api/games/{game_id}/actions"
+    action = {"revision": 0, "type": "play_card", "card_index": 0}
+
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        responses = list(
+            pool.map(lambda _index: request(app, "POST", path, action), range(2))
+        )
+
+    _, resumed = request(app, "GET", f"/api/games/{game_id}")
+    assert sorted(status for status, _ in responses) == [200, 409]
+    assert resumed["revision"] == 1
 
 
 def test_future_revision_illegal_phase_and_bad_card_have_contract_errors():

@@ -5,6 +5,9 @@ from __future__ import annotations
 import secrets
 import uuid
 from collections.abc import Callable
+import os
+from pathlib import Path
+from threading import RLock
 
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
@@ -17,7 +20,7 @@ from ccf_pygame.ccf.state_machine import GameStateMachine
 from ccf_pygame.ccf.states import GamePhase
 
 from .schemas import Action, CreateGameRequest, GameResponse, ReplayResponse
-from .store import GameSession, MemorySessionStore
+from .store import GameSession, MemorySessionStore, SQLiteSessionStore
 
 VIEWER_SEAT = "home"
 
@@ -84,6 +87,7 @@ def create_app(
     session_store = store or MemorySessionStore()
     next_seed = seed_factory or (lambda: secrets.randbits(63))
     next_id = id_factory or (lambda: uuid.uuid4().hex)
+    mutation_lock = RLock()
 
     api = FastAPI(title="Clutch Card Football API", version="2.1")
     api.state.session_store = session_store
@@ -160,8 +164,7 @@ def create_app(
         session = require_session(game_id)
         return response_for(session, [])
 
-    @api.post("/api/games/{game_id}/actions", response_model=GameResponse)
-    def apply_action(game_id: str, action: Action):
+    def apply_action_locked(game_id: str, action: Action):
         session = require_session(game_id)
         if action.revision < session.revision:
             raise ApiError(
@@ -235,6 +238,13 @@ def create_app(
         session_store.save(session)
         return response_for(session, events)
 
+    @api.post("/api/games/{game_id}/actions", response_model=GameResponse)
+    def apply_action(game_id: str, action: Action):
+        # FastAPI runs sync handlers in a thread pool. Keep revision check,
+        # mutation, and persistence atomic so two rapid taps cannot both win.
+        with mutation_lock:
+            return apply_action_locked(game_id, action)
+
     @api.post("/api/games/{game_id}/restart", response_model=GameResponse)
     def restart_game(game_id: str):
         old_session = require_session(game_id)
@@ -255,4 +265,10 @@ def create_app(
     return api
 
 
-app = create_app()
+_default_db = Path(
+    os.environ.get(
+        "CCF_DB_PATH",
+        Path(__file__).parent / "data" / "sessions.sqlite3",
+    )
+)
+app = create_app(store=SQLiteSessionStore(_default_db))

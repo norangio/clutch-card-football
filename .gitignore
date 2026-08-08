@@ -15,3 +15,6 @@ mockups/out/
 
 # Deploy target, if hosting is ever reintroduced. Never commit: public repo.
 .deploy-env
+
+# Local FastAPI session database
+web_api/data/
