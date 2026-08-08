@@ -15,6 +15,14 @@ from .ai import (Difficulty,
                  extra_point_choice as ai_extra_point)
 from .states import GamePhase, GameSnapshot
 
+DECISION_PHASES = {
+    GamePhase.WAITING_OFFENSE_CARD,
+    GamePhase.WAITING_DEFENSE_CARD,
+    GamePhase.WAITING_POST_MOVE,
+    GamePhase.WAITING_EXTRA_POINT_CHOICE,
+    GamePhase.GAME_OVER,
+}
+
 
 class GameStateMachine:
     def __init__(self, fps: int = 30, rng=None, seed: int | None = None):
@@ -60,6 +68,7 @@ class GameStateMachine:
         self._message = ""
 
         self.log: list[str] = []
+        self._events: list = []
 
         # Timer for auto-advance states (time-based, converted to frames at game FPS)
         self._timer = 0
@@ -222,20 +231,64 @@ class GameStateMachine:
             self._timer += 1
             if self._timer >= self._ai_delay_frames:
                 self._timer = 0
-                choice = ai_post_move(self.pos, self.offense.clutch, self.offense.clutch_used,
-                                      difficulty=self.difficulty,
-                                      team=self.offense,
-                                      opponent=self.defense,
-                                      deck_remaining=list(self.deck),
-                                      rng=self._rng)
-                self._log(f"AI chooses: {choice}")
-                self._execute_post_move(choice)
+                self._perform_ai_post_move()
 
         elif self._is_showing_phase():
             self._timer += 1
             if self._timer >= self._auto_advance_delay:
                 self._timer = 0
                 self._auto_transition()
+
+    def _perform_ai_post_move(self):
+        choice = ai_post_move(
+            self.pos,
+            self.offense.clutch,
+            self.offense.clutch_used,
+            difficulty=self.difficulty,
+            team=self.offense,
+            opponent=self.defense,
+            deck_remaining=list(self.deck),
+            rng=self._rng,
+        )
+        self._log(f"AI chooses: {choice}")
+        self._execute_post_move(choice)
+
+    def drain_events(self) -> list:
+        """Return and clear events accumulated since the previous drain."""
+        events = list(self._events)
+        self._events.clear()
+        return events
+
+    def pump(self, max_steps: int = 200) -> list:
+        """Run automatic transitions until a human decision is required.
+
+        Unlike :meth:`advance`, this path has no frame timers. It is used by
+        the web service, while Pygame keeps the existing timed presentation.
+        """
+        if max_steps < 1:
+            raise ValueError("max_steps must be at least 1")
+
+        steps = 0
+        while self.phase not in DECISION_PHASES:
+            if steps >= max_steps:
+                raise RuntimeError(
+                    f"pump exceeded max_steps={max_steps} in phase "
+                    f"{self.phase.name}"
+                )
+            steps += 1
+
+            if self.phase == GamePhase.AI_PLAYING_CARD:
+                self._ai_play_offense()
+            elif self.phase == GamePhase.AI_POST_MOVE:
+                self._perform_ai_post_move()
+            elif self._is_showing_phase():
+                self._auto_transition()
+            else:
+                raise RuntimeError(
+                    f"pump cannot advance phase {self.phase.name}"
+                )
+
+        return self.drain_events()
 
     def _is_showing_phase(self):
         return self.phase in (

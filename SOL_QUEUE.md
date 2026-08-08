@@ -51,6 +51,8 @@ cd ccf_pygame && python3 -m pytest test_ai.py test_ui.py test_transcripts.py tes
 
 ### 1. `pump()` and the decision-phase boundary  `[was task 1.1]`
 
+**Status: complete — 133 passed, 2 skipped.**
+
 Replace frame-timer advancement with a loop that runs every automatic
 transition until a human decision is required.
 
