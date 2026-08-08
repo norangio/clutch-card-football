@@ -42,12 +42,29 @@ def test_ai_vs_ai_create_completes_full_game_without_actions():
     assert replay["events"] == created["events"]
 
 
-def test_restart_preserves_ai_vs_ai_mode_with_new_seed_and_identity():
-    setup = deepcopy(SETUP)
-    setup["ai_vs_ai"] = True
+def test_restart_preserves_full_setup_with_new_seed_and_identity():
+    setup = {
+        "home": {
+            "name": "Black Knights",
+            "rating": 12,
+            "kick_rating": 3,
+            "color": "black",
+            "clutch": 3,
+        },
+        "away": {
+            "name": "Red Raiders",
+            "rating": 1,
+            "kick_rating": 1,
+            "clutch": 0,
+        },
+        "difficulty": "easy",
+        "ai_vs_ai": True,
+        "seed": 42,
+    }
     ids = iter(["first-ai-game", "second-ai-game"])
+    store = MemorySessionStore()
     app = create_app(
-        store=MemorySessionStore(),
+        store=store,
         seed_factory=lambda: 1001,
         id_factory=lambda: next(ids),
     )
@@ -64,6 +81,29 @@ def test_restart_preserves_ai_vs_ai_mode_with_new_seed_and_identity():
     assert restarted["snapshot"]["phase"] == "GAME_OVER"
     assert restarted["snapshot"]["seed"] == 1001
     assert restarted["events"][-1]["type"] == "game_ended"
+
+    old_session = store.get("first-ai-game")
+    new_session = store.get("second-ai-game")
+    expected_setup = deepcopy(setup)
+    expected_setup.pop("seed")
+    assert old_session.setup == new_session.setup == expected_setup
+    assert old_session.seed == 42
+    assert new_session.seed == 1001
+    assert new_session.revision == 0
+    assert new_session.game.difficulty.value == "easy"
+    assert new_session.game.ai_vs_ai is True
+    assert (
+        new_session.game.human.name,
+        new_session.game.human.rating,
+        new_session.game.human.kick_rating,
+        new_session.game.human.color.value,
+    ) == ("Black Knights", 12, 3, "black")
+    assert (
+        new_session.game.ai.name,
+        new_session.game.ai.rating,
+        new_session.game.ai.kick_rating,
+        new_session.game.ai.color.value,
+    ) == ("Red Raiders", 1, 1, "red")
 
 
 def test_ai_vs_ai_defaults_false_for_existing_create_payloads():

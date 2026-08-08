@@ -433,6 +433,9 @@ things:
 
 ## 21. Restart preserves setup
 
+**Status: complete — HTTP restart retains every setup field while resetting
+identity, seed and revision.**
+
 Contract 7.3 says restart reuses the prior setup with a new `game_id` and seed.
 Add a test that a restarted game keeps team names, ratings, colours, difficulty
 and `ai_vs_ai`, and that the new id differs and revision resets to 0.
