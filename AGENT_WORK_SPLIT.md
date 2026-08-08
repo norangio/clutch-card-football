@@ -59,9 +59,9 @@ ccf_pygame/ccf/events.py       NEW: event dataclasses
 ccf_pygame/ccf/serializers.py  NEW: redacting JSON serializers
 ccf_pygame/ui/app.py           the ONE UI file Sol touches (adapter update)
 ccf_pygame/test_*.py           existing engine tests
-ccf_pygame/tests/              NEW: contract, redaction, transcript tests
+ccf_pygame/tests/              NEW: contract, redaction, characterization tests
+ccf_pygame/test_transcripts.py golden transcript regression tests
 web_api/                       NEW: entire FastAPI package
-requirements-server.txt
 ```
 
 ### Claude owns
@@ -71,9 +71,10 @@ web/                           entire React + R3F app
 docs/CONTRACT.md               the frozen interface spec
 ccf_pygame/ui/  (except app.py)  broadcast UI
 .claude/launch.json
-deploy.sh, deploy/, .github/workflows/
+scripts/capture_transcripts.py the fixture generator
 CLAUDE.md, AGENTS.md, README.md, *_PLAN.md
 git history, branches, remotes, all merges
+any future deploy tooling (none exists; retired in Phase 0)
 ```
 
 ### Neither owns unilaterally
@@ -115,17 +116,29 @@ of truth; the document is.
 Naive sequencing serializes everything: Claude does Phase 0, Sol does Phase 1,
 then Claude does the frontend. That wastes most of the calendar.
 
-The unblock is **fixtures**. At the end of Phase 0, Claude captures seeded golden
-transcripts (possible today with `random.seed(N)`, see plan section 5.3) and
-commits them as static JSON at `web/src/api/__fixtures__/`. Claude then builds
-the entire frontend against a mock client that replays those fixtures. The real
-API gets swapped in behind the same interface at Phase 2 integration.
+The unblock is **fixtures**, but note which kind. Two different things share the
+name:
 
-**Consequence: Claude is never blocked on Sol after Phase 0.** The frontend is
+- `ccf_pygame/fixtures/transcripts/` are **engine-internal state fingerprints**,
+  captured in Phase 0. They are a regression net for Sol's refactor. They are
+  *not* contract-shaped and the frontend cannot replay them.
+- `web/src/api/__fixtures__/` are **contract-shaped snapshot and event
+  payloads**. These do not exist yet.
+
+Claude hand-authors the second set directly from `docs/CONTRACT.md`, then builds
+the frontend against a mock client that replays them. This has a useful side
+effect: if a realistic mock cannot be written from the contract alone, the
+contract is underspecified, and that surfaces before Sol has built anything
+against it.
+
+When Sol's serializers land in Phase 1, the hand-authored fixtures are replaced
+with generated ones and any divergence is a contract bug caught early.
+
+**Consequence: Claude is never blocked on Sol after H1.** The frontend is
 developed and tested end to end before the backend exists.
 
 ```
-Phase 0   Claude  ████  trunk merge, transcripts, contract draft
+Phase 0   Claude  ████  trunk merge, transcripts, contract draft  [DONE]
                         │
                   ┌─────┴─────┐
 Phase 1   Sol     │  ████████ │  engine: pump, events, seeding, redaction
@@ -156,7 +169,7 @@ wrong engine.
 | 1.6 | `serializers.py` with phase-driven redaction | See below. Highest-priority task in the phase. |
 | 1.7 | `tests/test_redaction.py` | For every phase, no card the viewer is not entitled to see appears anywhere in the payload |
 | 1.8 | Update `ui/app.py` to the new contract | Pygame plays a full game; 59 tests green |
-| 1.9 | Characterization fixtures for the section 3 defects | Current behavior pinned, including the orange/green non-award |
+| 1.9 | ~~Characterization fixtures for the section 3 defects~~ | **DONE.** `tests/test_engine_characterization.py`, 84 passed. |
 
 **Task 1.6 is the one to get right.** Two known leaks, both in plan section 3.1:
 `Team.hand` rides along inside the snapshot, and `_off_card` holds the AI's
@@ -195,7 +208,7 @@ bolted on afterward.
 | 0.2 | Keep `dad` fetch-only for now | Nothing pushed to `sorangio/CodeDev`. A matching `web-edition` branch goes there once Phase 2 is playable (plan 1.6). Documented in CLAUDE.md. |
 | 0.3 | Fix the docs symlinks | Real `CLAUDE.md`, `AGENTS.md` symlinked to it, per workspace convention |
 | 0.4 | Capture seeded golden transcripts | Full games at each difficulty, committed as fixtures |
-| 0.5 | Draft `docs/CONTRACT.md` | Sol reviews before freeze |
+| 0.5 | Draft `docs/CONTRACT.md` | **Done.** Version 0 committed. Section 0 lists the four things Sol must check. Freezes at Version 1 on sign-off. |
 | 0.6 | Verify 59 tests green on reconciled trunk | Green |
 
 ### Phase 1 (parallel with Sol): frontend against fixtures

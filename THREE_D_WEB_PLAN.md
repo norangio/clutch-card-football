@@ -528,15 +528,20 @@ in parallel and are listed separately.
 - [x] Fixed a pre-existing test-pollution bug that made seeds non-reproducible
       (see 3.5).
 - [x] 75 passed, 2 skipped, order-independent.
-- [ ] Draft `docs/CONTRACT.md`. **Next task.**
-- [ ] Raise the 3.2 orange/green question with the humans. **Open.**
+- [x] Sol's `tests/test_engine_characterization.py` landed and committed: all
+      five section 3 defects pinned. 84 passed, 2 skipped.
+- [x] `docs/CONTRACT.md` drafted at **Version 0**.
+- [ ] **H1: Sol reviews the contract.** It freezes at Version 1 on sign-off.
+      Phase 1 starts then, not before.
+- [ ] Raise the 3.2 orange/green question with the humans. **Open**, does not
+      block any phase.
 
 **Exit:** one branch holds the best engine and the best UI; tests green; golden
-transcripts committed and proven to catch regressions.
+transcripts committed and proven to catch regressions; the contract is drafted.
 
-**Handoff H1:** Sol reviews `docs/CONTRACT.md` and either signs off or requests
-changes. Phase 1 does not start until sign-off. **Blocked on the contract
-draft.**
+**Handoff H1: open.** `docs/CONTRACT.md` is at Version 0 and names four
+specific things for Sol to check in its section 0. Phase 1 starts when it says
+Version 1.
 
 ### Phase 1a: Presentation-independent engine &nbsp;&nbsp;`[Sol]`
 
