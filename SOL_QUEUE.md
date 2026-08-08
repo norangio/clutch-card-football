@@ -69,6 +69,8 @@ zero frame timers, and the transcripts still pass.
 
 ### 2. `events.py`: the 18 event dataclasses  `[was 1.2]`
 
+**Status: complete — 175 passed, 2 skipped.**
+
 One dataclass per type in CONTRACT.md section 5.1. All JSON round-trippable.
 
 Watch the two nullable rolls: `punt_resolved.roll` is `None` for `short_punt`,
