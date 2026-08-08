@@ -530,18 +530,20 @@ in parallel and are listed separately.
 - [x] 75 passed, 2 skipped, order-independent.
 - [x] Sol's `tests/test_engine_characterization.py` landed and committed: all
       five section 3 defects pinned. 84 passed, 2 skipped.
-- [x] `docs/CONTRACT.md` drafted at **Version 0**.
-- [ ] **H1: Sol reviews the contract.** It freezes at Version 1 on sign-off.
-      Phase 1 starts then, not before.
+- [x] `docs/CONTRACT.md` **frozen at Version 1**. Sol raised eight findings,
+      all valid, all applied. The serious one: an active snapshot exposed
+      `seed`, which reconstructs the entire deck.
+- [x] **H1 complete.** Phase 1a is unblocked.
+- [x] Seeded RNG **commit A** (behavior-neutral plumbing) landed.
 - [ ] Raise the 3.2 orange/green question with the humans. **Open**, does not
       block any phase.
 
 **Exit:** one branch holds the best engine and the best UI; tests green; golden
 transcripts committed and proven to catch regressions; the contract is drafted.
 
-**Handoff H1: open.** `docs/CONTRACT.md` is at Version 0 and names four
-specific things for Sol to check in its section 0. Phase 1 starts when it says
-Version 1.
+**Handoff H1: complete 2026-08-07.** `docs/CONTRACT.md` is frozen at Version 1.
+Its section 0 records the eight findings and their resolutions so they do not
+get re-litigated.
 
 ### Phase 1a: Presentation-independent engine &nbsp;&nbsp;`[Sol]`
 

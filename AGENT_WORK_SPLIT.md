@@ -164,7 +164,7 @@ wrong engine.
 | 1.1 | `pump()` + `DECISION_PHASES` set | AI vs AI game plays to completion with zero frame timers; `max_steps` guard trips cleanly rather than hanging |
 | 1.2 | `events.py` dataclasses for all 18 event types | Matches `CONTRACT.md` exactly; every type is JSON-round-trippable |
 | 1.3 | Emit events at every transition | Test: every score, ball position, possession, mojo, and clutch delta in a full game is explained by an event. No unexplained diffs. |
-| 1.4 | Seeded RNG, **commit A** (plumbing, `rng=None` default) | 59 existing tests green; golden transcripts byte-identical. Provably behavior-neutral. |
+| 1.4 | ~~Seeded RNG, **commit A**~~ | **DONE.** All call sites routed via `(rng or random)`. 84 green, transcripts byte-identical, and an injected `Random(42)` verified to reproduce global `seed(42)` exactly. |
 | 1.5 | Seeded RNG, **commit B** (activate per-game `Random(seed)`) | Same seed reproduces the same full game across processes |
 | 1.6 | `serializers.py` with phase-driven redaction | See below. Highest-priority task in the phase. |
 | 1.7 | `tests/test_redaction.py` | For every phase, no card the viewer is not entitled to see appears anywhere in the payload |
@@ -208,7 +208,7 @@ bolted on afterward.
 | 0.2 | Keep `dad` fetch-only for now | Nothing pushed to `sorangio/CodeDev`. A matching `web-edition` branch goes there once Phase 2 is playable (plan 1.6). Documented in CLAUDE.md. |
 | 0.3 | Fix the docs symlinks | Real `CLAUDE.md`, `AGENTS.md` symlinked to it, per workspace convention |
 | 0.4 | Capture seeded golden transcripts | Full games at each difficulty, committed as fixtures |
-| 0.5 | Draft `docs/CONTRACT.md` | **Done.** Version 0 committed. Section 0 lists the four things Sol must check. Freezes at Version 1 on sign-off. |
+| 0.5 | Draft `docs/CONTRACT.md` | **Done and frozen at Version 1.** Sol's eight findings all applied; section 0 records them. |
 | 0.6 | Verify 59 tests green on reconciled trunk | Green |
 
 ### Phase 1 (parallel with Sol): frontend against fixtures
