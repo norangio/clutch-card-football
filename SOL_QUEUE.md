@@ -400,6 +400,8 @@ do not tune the AI to make the test pass.
 
 ## 19. Soak test: 1000 games per difficulty
 
+**Status: complete — deterministic slow suite covers 3,000 full games.**
+
 `ai_vs_ai` makes this cheap now. Run it headless (not through HTTP) and assert:
 
 - no exceptions, and no game hits the `pump()` `max_steps` guard
