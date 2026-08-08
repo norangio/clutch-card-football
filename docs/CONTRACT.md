@@ -1,7 +1,7 @@
 # CCF Web Edition: Interface Contract
 
-**Status:** DRAFT, awaiting Sol's review (handoff H1).
-**Version:** 0 (unfrozen). Becomes 1 on sign-off.
+**Status:** FROZEN. Handoff H1 complete.
+**Version:** 1
 **Owner:** Claude drafts, Sol reviews, then both code against it.
 
 This is the only interface between the Python engine and the browser. Once
@@ -10,24 +10,33 @@ changes**. Never change a payload shape and a consumer in the same commit.
 
 ---
 
-## 0. Sol: what to check before signing off
+## 0. Review outcome (H1)
 
-The parts most likely to be wrong, because they were written from reading the
-engine rather than from implementing against it:
+Sol raised eight issues against v0. All eight were valid and all are fixed here.
+Recorded because several are non-obvious and worth not re-litigating.
 
-1. **Can `pump()` cleanly emit every event in section 5?** Some transitions
-   collapse several changes into one step (`_resolve_play` awards mojo, converts
-   mojo to clutch, computes movement, and may score, all before the phase
-   changes). If splitting those into ordered events is awkward, say so now.
-2. **Is `mojo_converted_to_clutch` distinguishable from `mojo_changed`?** The
-   conversion in `_resolve_play` and the second one in `_do_clutch` have
-   different triggers. Two events or one with a `reason`?
-3. **`legal_actions` disabled reasons** (section 4.4) are my guesses at the
-   engine's actual constraints. Correct them.
-4. **Anything in the snapshot that is expensive to compute** every request.
+| # | Issue | Resolution |
+| --- | --- | --- |
+| 1 | **`seed` in an active snapshot reconstructs the whole deck** | Fixed, 4.1. The most serious finding. |
+| 2 | `field_goal_resolved` lacked `score_after` | Fixed, 5.1. It violated my own rule in 5.2. |
+| 3 | `possession_changed.reason` undefined | Enumerated, 5.1. |
+| 4 | "every mutation is event-explained" was unachievable | Invariant scoped, 5.2. |
+| 5 | Short punt has no roll to report | `roll` nullable, 5.1. |
+| 6 | PAT kick discards its roll | `roll` nullable, 5.1. |
+| 7 | Clutch card visibility was ambiguous | Clarified, 6. |
+| 8 | Restart's id/revision behavior undefined | Specified, 7.3. |
 
-Reply with concrete edits, not approval-in-principle. Phase 1 starts when this
-says `Version: 1`.
+**On issue 1.** `create_deck()` shuffles a fixed, publicly known starting order.
+Given the seed, `random.Random(seed).shuffle(...)` reproduces the deck exactly:
+verified, `Random(42)` yields `9S 7C AD 4C 6H 7H AS JOKER ...` every time. Since
+hands are dealt off the top, a client with the seed can compute the AI's entire
+hand and every future draw. That is a total information leak and it defeats the
+entire redaction design in section 6. The repo is public, so the deck algorithm
+is not a secret either.
+
+**On issue 4.** The engine mutates cumulative stats (`segments`, `fg_made`,
+`fg_att`, `punts`) with no natural event boundary. Rather than invent events
+nobody animates, the invariant now covers presentation-relevant state only.
 
 ---
 
@@ -125,7 +134,6 @@ this.
 {
   "game_id": "b3f1c9e2",
   "revision": 13,
-  "seed": 42,
   "phase": "WAITING_POST_MOVE",
   "required_action": "post_move",
   "acting_seat": "home",
@@ -167,7 +175,17 @@ this.
 | --- | --- | --- |
 | `game_id` | string | Opaque. Stored in browser local storage. |
 | `revision` | int | Monotonic. Increments once per accepted action. |
-| `seed` | int | Echoed for debugging and replay. Not secret. |
+| `seed` | int \| **absent** | **Present only once `result` is non-null.** See below. |
+
+**`seed` must never appear while the game is live.** `create_deck()` shuffles a
+fixed, publicly known starting order, so `random.Random(seed).shuffle(...)`
+reproduces the deck exactly. Hands are dealt off the top, so a client holding the
+seed can compute the AI's entire hand and every future draw. It would defeat
+every rule in section 6. The repo is public, so the shuffle algorithm is not a
+secret either.
+
+Once `result` is non-null the game is decided and the seed is safe to send,
+which is what makes a shareable replay link possible.
 
 ### 4.2 Flow
 
@@ -200,8 +218,9 @@ For `required_action: "post_move"`:
 For `required_action: "play_card"`, one entry per card index in the viewer's
 hand, all enabled. For `extra_point`, `K` and `2`, both enabled.
 
-> **Sol:** these reasons are inferred from `_post_move_options()`. Correct the
-> strings and the conditions if they do not match.
+Verified against `_post_move_options()`: `F` and `S` both gate on
+`pos in ("Z1","Z2","Z3")`, `C` on `clutch > 0 and not clutch_used`, `P` is
+unconditional.
 
 ### 4.5 `result`
 
@@ -216,8 +235,17 @@ hand, all enabled. For `extra_point`, `K` and `2`, both enabled.
 ## 5. Events
 
 Ordered array. The frontend plays them in sequence, then reconciles to the
-snapshot. Every mutation the snapshot reflects **must** be explained by an
-event; the frontend never diffs snapshots to infer what happened.
+snapshot.
+
+**The invariant, scoped.** Every change to *presentation-relevant* state must be
+explained by an event, and the frontend never diffs snapshots to infer what
+happened. Presentation-relevant means: score, ball position, possession, mojo,
+clutch, hand contents and counts, phase, and game result.
+
+**Explicitly exempt:** the cumulative stats `segments`, `fg_made`, `fg_att`, and
+`punts`. The engine mutates these inline with no natural event boundary, and
+nothing animates them. They are snapshot-only; read them from the seat object.
+Inventing events for them would add work with no consumer.
 
 Common envelope:
 
@@ -241,12 +269,12 @@ Common envelope:
 | `mojo_changed` | `seat`, `from`, `to`, `reason` (`won_card_battle`\|`dominant_win`) |
 | `mojo_converted_to_clutch` | `seat`, `clutch_after`, `trigger` (`pre_play`\|`clutch_spend`) |
 | `clutch_used` | `seat`, `clutch_after`, `card` |
-| `possession_changed` | `from_seat`, `to_seat`, `ball`, `reason` |
-| `punt_resolved` | `seat`, `kind` (`punt`\|`short_punt`), `distance`, `roll`, `from`, `to`, `clamped` |
-| `field_goal_resolved` | `seat`, `success`, `roll`, `total`, `target`, `from`, `points` |
+| `possession_changed` | `from_seat`, `to_seat`, `ball`, `reason` (`punt`\|`short_punt`\|`field_goal_made`\|`field_goal_missed`\|`war_turnover`\|`joker_turnover`\|`touchdown`\|`safety`\|`quarter_start`) |
+| `punt_resolved` | `seat`, `kind` (`punt`\|`short_punt`), `distance`, `roll` (**null for `short_punt`**), `from`, `to`, `clamped` |
+| `field_goal_resolved` | `seat`, `success`, `roll`, `total`, `target`, `from`, `points`, `score_after` |
 | `touchdown_scored` | `seat`, `points`, `score_after`, `cause` (`drive`\|`joker`\|`clutch`\|`defensive_joker`) |
 | `safety_scored` | `seat` (the seat **awarded** the 2), `points`, `score_after` |
-| `extra_point_resolved` | `seat`, `choice` (`K`\|`2`), `success`, `roll`, `points`, `score_after` |
+| `extra_point_resolved` | `seat`, `choice` (`K`\|`2`), `success`, `roll` (**null when `choice` is `K`**), `points`, `score_after` |
 | `quarter_ended` | `quarter`, `home_score`, `away_score` |
 | `game_ended` | `winner`, `home_score`, `away_score`, `is_tie` |
 
@@ -261,7 +289,13 @@ Common envelope:
 - Ordering within a play: `card_played` (offense), `card_played` (defense),
   `cards_revealed`, then any of war/joker/mojo, then `ball_moved`, then scoring.
 - An event that changes a score must carry `score_after`, so the HUD never has
-  to wait for the snapshot.
+  to wait for the snapshot. That includes `field_goal_resolved`.
+- **Two rolls are unavailable and are `null` by contract**, not by oversight.
+  `short_punt_distance()` folds its `randint(0, 2)` straight into the returned
+  distance, and `pat_kick()` discards its `randint(1, 6)` entirely. Surfacing
+  them would mean changing those return signatures. That is a behavior-neutral
+  change and can happen later if we want dice animations on those two plays, but
+  it is **not** in Phase 1 scope. The frontend must render both without a die.
 
 ### 5.3 Known engine wrinkle
 
@@ -288,10 +322,10 @@ phase)`:
 | Own played card | once played |
 | Opponent's played card | **only from `SHOWING_CARD_BATTLE` onward**, never during `WAITING_DEFENSE_CARD` |
 | War card | from `SHOWING_WAR` onward |
-| Clutch card | from `SHOWING_CLUTCH` onward, and only for the drawing seat's own view until revealed |
+| Clutch card | from `SHOWING_CLUTCH` onward, visible to **both** seats. It is drawn and immediately revealed, so there is no hidden window. |
 | Deck contents | **never**, in any phase |
 | Deck count | allowed |
-| `seed` | allowed |
+| `seed` | **only once the game is over** (`result` non-null). See 4.1: it reconstructs the deck. |
 
 **The `WAITING_DEFENSE_CARD` case is the important one.** The AI plays offense
 first, so `_off_card` is set while the human is still choosing their defense. The
@@ -315,8 +349,8 @@ noted.
 | `POST` | `/games` | setup | Creates a game. `events` covers dealing and quarter start. |
 | `GET` | `/games/{id}` | | Resume. **`events` is always `[]`**; the snapshot is fully applied. |
 | `POST` | `/games/{id}/actions` | action | The main endpoint. |
-| `POST` | `/games/{id}/restart` | | New game, same setup, new seed. |
-| `GET` | `/games/{id}/replay` | | `{ seed, events: [...] }`, whole history. Debug only. |
+| `POST` | `/games/{id}/restart` | | New game, same setup. **Returns a new `game_id`.** See 7.3. |
+| `GET` | `/games/{id}/replay` | | `{ seed, events: [...] }`. **404 while the game is live**; only available once `result` is non-null. Same seed leak as 4.1. |
 | `GET` | `/healthz` | | `{ "status": "ok" }`. Not under `/api`. |
 
 There is deliberately **no `/advance`**. `pump()` runs every automatic transition
@@ -355,7 +389,21 @@ red and black. `seed: null` means the server picks one and returns it.
 
 This is what makes rapid tapping safe.
 
-### 7.3 Errors
+### 7.3 Restart
+
+`POST /games/{id}/restart` **creates a new game and returns a new `game_id`**,
+with a new seed and `revision` reset to 0. It does not reuse or reset the
+existing game.
+
+Rationale: reusing the id with a rewound revision is indistinguishable, from the
+client's point of view, from a stale-revision conflict, and it would make the
+409 rule in 7.2 ambiguous. A fresh id is unambiguous. The finished game also
+stays intact for `/replay`.
+
+The client must overwrite its stored `game_id` with the returned one. The old
+game is left to normal expiry.
+
+### 7.4 Errors
 
 ```json
 { "error": { "code": "illegal_action", "message": "...", "revision": 13 } }
@@ -396,4 +444,5 @@ hand), WebSocket push (same payloads, different transport).
 
 | Version | Date | Change |
 | --- | --- | --- |
-| 0 | 2026-08-07 | Initial draft. Awaiting Sol's review. |
+| 1 | 2026-08-07 | **Frozen.** All eight of Sol's review findings applied: seed withheld until game over (and `/replay` gated the same way), `score_after` on `field_goal_resolved`, `possession_changed.reason` enumerated, event invariant scoped to presentation-relevant state, `roll` nullable on short punt and PAT kick, clutch visibility clarified, restart returns a new `game_id`. |
+| 0 | 2026-08-07 | Initial draft. |
