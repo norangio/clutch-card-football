@@ -199,41 +199,30 @@ THREE_D_WEB_PLAN.md section 1.6.
 
 ---
 
-## Known issue: 3-D canvas blank after a page reload
+## Resolved: the "blank canvas after reload" was a harness artefact
 
-**Status: diagnosed, NOT fixed. 2026-08-08.**
+**2026-08-08. Not a product bug. Verified rendering correctly in real Safari.**
 
-Reproduction, with a freshly started dev server:
+While building the event choreography, the 3-D canvas repeatedly came back at
+the 300x150 HTML default after a page reload, with no console error. It looked
+like a genuine R3F container-measurement race and a lot of time went into it.
 
-1. Load `http://localhost:5173` → canvas is `1142x329`, scene renders correctly.
-2. Reload the page → canvas is `300x150` (the HTML default), scene never draws.
-3. Restart the dev server → correct again on first load.
+**It does not reproduce in a real browser window.** Every measurement had been
+taken through the automated browser pane, which was reported hidden during some
+runs, and a hidden window can legitimately report zero layout. Opening the app
+in an ordinary Safari window and reloading renders correctly every time.
 
-The game itself is unaffected: the HUD, the API, actions and resume all work.
-Only the 3-D panel goes blank.
+Two things worth keeping from the episode:
 
-**What is happening.** R3F sizes its canvas from `react-use-measure`, which
-reads the container once on mount. If that read returns zero the canvas keeps
-the 300x150 default, and because the container's size never subsequently
-*changes*, the ResizeObserver never fires again, so it never recovers. No
-console error is produced, which is what makes it look like a build problem.
+- **Vite HMR was serving stale bundles for much of that session.** Several
+  "still broken" readings were invalid, and a dev-server restart, not a code
+  change, was what actually altered the result. If a fix appears to do nothing,
+  restart the dev server before concluding anything.
+- **Verify visual behaviour in a real browser before declaring a bug.** An
+  automated pane is fine for reading DOM state and driving clicks; it is not
+  authoritative about layout or WebGL.
 
-**Ruled out** (each tested and reverted):
-
-- The scene effects. Bisected all four out; still reproduces.
-- The loading placeholder / wrapper div. Fully reverted; still reproduces.
-- `choreograph` breaking Fast Refresh. Real problem, now fixed by moving it to
-  `scene/choreograph.ts`, but not the cause.
-- Dispatching a synthetic `resize` after mount.
-- Gating the Canvas behind a measured size, keying it on those dimensions, and
-  `resize={{ debounce: 0, scroll: false }}`. **Note:** R3F's `style` prop styles
-  its outer div, *not* the canvas, so sizing that div does not size the canvas.
-
-**Important caveat.** Every measurement was taken through the automated browser
-pane, which was reported hidden during some runs. A hidden window can legitimately
-report zero layout, so this may be partly an artefact of the harness rather than
-something a person with a visible window would hit. **Check it in a normal
-Safari/Chrome window before spending more time on it.**
-
-**Next thing to try:** an explicit `<canvas>` handed to R3F via the `gl` prop, or
-forcing a remount keyed on `document.visibilityState`.
+`SizedCanvas` in `scene/StadiumScene.tsx` was added during this and is kept: it
+holds the Canvas back until the container reports real pixels, which is a
+legitimate guard for genuinely zero-size cases such as a collapsed or hidden
+container. It is defensive, not a fix for a bug that exists.

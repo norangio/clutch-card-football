@@ -67,16 +67,74 @@ function Football({ target, mode }: { target: number; mode: BallMode }) {
 
   return (
     <group ref={ref} position={[target, 0.3, 0]}>
-      {/* Lathe would be prettier; a squashed icosahedron reads correctly at
-          this scale and costs far less. */}
-      <mesh castShadow scale={[0.34, 0.21, 0.21]}>
-        <icosahedronGeometry args={[1, 2]} />
-        <meshStandardMaterial color="#7c431f" roughness={0.55} metalness={0.04} />
+      <FootballMesh />
+    </group>
+  );
+}
+
+/**
+ * A real football is a POINTED spheroid, not an ellipsoid. A scaled sphere
+ * reads as an egg (or a snack cake), because the giveaway is the silhouette:
+ * the tips have to come to a point rather than round off.
+ *
+ * Built from a lathed profile r(t) = R(1 - t^2)^0.72. The exponent is what
+ * sharpens the ends; at 0.5 it is a plain ellipse, and lower values get
+ * progressively more pointed.
+ */
+function FootballMesh() {
+  const profile = useMemo(() => {
+    const pts: THREE.Vector2[] = [];
+    const steps = 28;
+    for (let i = 0; i <= steps; i++) {
+      const t = -1 + (2 * i) / steps;
+      const r = 0.62 * Math.pow(Math.max(0, 1 - t * t), 0.72);
+      pts.push(new THREE.Vector2(r, t));
+    }
+    return pts;
+  }, []);
+
+  // Laces: a short row of stitches along the crown.
+  const laces = useMemo(
+    () => Array.from({ length: 7 }, (_, i) => (i - 3) * 0.052),
+    [],
+  );
+
+  return (
+    // Lathe builds around Y; lay the long axis along X so it travels nose-first.
+    <group scale={0.3} rotation={[0, 0, Math.PI / 2]}>
+      <mesh castShadow>
+        <latheGeometry args={[profile, 40]} />
+        <meshStandardMaterial
+          color="#6d3a1b"
+          roughness={0.62}
+          metalness={0.03}
+        />
       </mesh>
-      <mesh scale={[0.352, 0.06, 0.216]}>
-        <icosahedronGeometry args={[1, 2]} />
-        <meshStandardMaterial color="#f3ece1" roughness={0.4} />
+
+      {/* The two white bands near each tip. The ring radius must match the
+          profile at that height, r = 0.62(1 - y^2)^0.72, or the band sits
+          inside the mesh and is invisible. */}
+      {[0.5, -0.5].map((y) => {
+        const r = 0.62 * Math.pow(1 - y * y, 0.72);
+        return (
+          <mesh key={`band-${y}`} position={[0, y, 0]} rotation={[Math.PI / 2, 0, 0]}>
+            <torusGeometry args={[r, 0.028, 10, 40]} />
+            <meshStandardMaterial color="#efe9dc" roughness={0.55} />
+          </mesh>
+        );
+      })}
+
+      {/* Lace strip plus stitches, sitting proud of the crown. */}
+      <mesh position={[0.6, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
+        <boxGeometry args={[0.045, 0.42, 0.03]} />
+        <meshStandardMaterial color="#efe7d8" roughness={0.6} />
       </mesh>
+      {laces.map((y) => (
+        <mesh key={y} position={[0.625, y, 0]} rotation={[0, 0, Math.PI / 2]}>
+          <boxGeometry args={[0.035, 0.022, 0.075]} />
+          <meshStandardMaterial color="#f7f1e4" roughness={0.5} />
+        </mesh>
+      ))}
     </group>
   );
 }
@@ -238,14 +296,13 @@ export interface StadiumProps {
 /**
  * Measures the container and renders the Canvas at an explicit pixel size.
  *
- * R3F's own measurement (react-use-measure) reads once on mount. If that read
- * lands before layout settles it sees zero, and because the container's size
- * never subsequently CHANGES the observer never fires again: the canvas stays
- * at the 300x150 HTML default and the render loop never starts. It presents as
- * an intermittently blank panel, and a dev-server restart "fixing" it is what
- * makes it look like a build problem rather than a race.
+ * R3F measures its container once on mount. If that read returns zero the
+ * canvas keeps the 300x150 HTML default, and since the container's size never
+ * subsequently CHANGES, the observer never fires again and it never recovers.
  *
- * Holding the Canvas back until we have real pixels removes the race entirely.
+ * Real browsers do not hit this (see CLAUDE.md), but a genuinely zero-size
+ * container will: a collapsed panel, a hidden tab, a display:none ancestor.
+ * Holding the Canvas back until there are real pixels is cheap insurance.
  */
 function SizedCanvas({ children }: { children: React.ReactNode }) {
   const host = useRef<HTMLDivElement>(null);
