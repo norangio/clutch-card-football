@@ -255,3 +255,15 @@ body {
   .card { width: 56px; height: 80px; font-size: 18px; }
   .btn { min-width: 108px; }
 }
+
+/* 3-D stage. Fixed aspect so the broadcast framing holds across widths. */
+.stage {
+  padding: 0;
+  overflow: hidden;
+  height: min(46vh, 380px);
+  min-height: 240px;
+  background: #0e2b20;
+}
+@media (max-width: 720px) {
+  .stage { height: 34vh; min-height: 190px; }
+}

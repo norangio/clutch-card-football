@@ -2,7 +2,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { createMockClient, StaleRevisionError, type GameClient } from "../api/mockClient";
 import type { Action, GameResponse, LegalAction, UnversionedAction } from "../api/types";
-import { ActionBar, CardBattle, Field, GameLog, Hand, Scoreboard } from "../hud/components";
+import { ActionBar, CardBattle, GameLog, Hand, Scoreboard } from "../hud/components";
+import StadiumScene from "../scene/StadiumScene";
 import { useAnimationQueue, type Speed } from "./useAnimationQueue";
 
 const SPEEDS: Speed[] = ["normal", "fast", "instant"];
@@ -117,13 +118,30 @@ export default function GamePage({ client = defaultClient }: { client?: GameClie
     snapshot.offense_seat === "home" ? snapshot.home.color : snapshot.away.color;
   const locked = queue.isPlaying || busy;
 
+  // The scene follows the event stream, not the snapshot: during playback the
+  // ball should be where the CURRENT event says, so motion is visible rather
+  // than already applied. Contract 5.2 guarantees a ball_moved for every
+  // position change, which is what makes this the single animation path.
+  const playing = queue.current;
+  const sceneBall =
+    playing?.type === "ball_moved" ? playing.to : snapshot.ball;
+  const arc =
+    playing?.type === "punt_resolved" || playing?.type === "field_goal_resolved" ||
+    (playing?.type === "ball_moved" &&
+      (playing.reason === "punt" || playing.reason === "short_punt"));
+  const shot: "broadcast" | "endzone" | "wide" =
+    playing?.type === "field_goal_resolved" || playing?.type === "touchdown_scored"
+      ? "endzone"
+      : playing?.type === "punt_resolved"
+        ? "wide"
+        : "broadcast";
+
   return (
     <div className="app">
       <Scoreboard snapshot={snapshot} />
 
-      <div className="panel">
-        <Field ball={snapshot.ball}
-               offenseColor={offenseColor === "red" ? "#c8443c" : "#2b2b31"} />
+      <div className="panel stage">
+        <StadiumScene ball={sceneBall} offense={offenseColor} arc={arc} shot={shot} />
       </div>
 
       <div className="message" aria-live="polite">
