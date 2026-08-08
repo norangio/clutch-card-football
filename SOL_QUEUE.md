@@ -145,6 +145,8 @@ This is the only permitted red-suite commit. Everything else stays green.
 
 ### 6. FastAPI service  `[was 2.1-2.4]`
 
+**Status: complete — 7 API tests passed.**
+
 `web_api/` package. Six endpoints, exactly as CONTRACT.md section 7 specifies.
 
 - **No `/advance` endpoint.** `pump()` returns the whole batch; the client owns
