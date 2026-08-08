@@ -5,9 +5,12 @@ from __future__ import annotations
 import secrets
 import uuid
 from collections.abc import Callable
+import json
+import logging
 import os
 from pathlib import Path
 from threading import RLock
+from time import perf_counter
 
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
@@ -23,6 +26,7 @@ from .schemas import Action, CreateGameRequest, GameResponse, ReplayResponse
 from .store import GameSession, MemorySessionStore, SQLiteSessionStore
 
 VIEWER_SEAT = "home"
+ACTION_LOGGER = logging.getLogger("ccf.api.actions")
 
 
 class ApiError(Exception):
@@ -266,8 +270,48 @@ def create_app(
     def apply_action(game_id: str, action: Action):
         # FastAPI runs sync handlers in a thread pool. Keep revision check,
         # mutation, and persistence atomic so two rapid taps cannot both win.
-        with mutation_lock:
-            return apply_action_locked(game_id, action)
+        started = perf_counter()
+        phase_before = None
+        phase_after = None
+        event_count = 0
+        outcome = "internal_error"
+        try:
+            with mutation_lock:
+                existing = session_store.get(game_id)
+                if existing is not None:
+                    phase_before = existing.game.phase.name
+                response = apply_action_locked(game_id, action)
+                phase_after = response["snapshot"]["phase"]
+                event_count = len(response["events"])
+                outcome = "accepted"
+                return response
+        except ApiError as error:
+            outcome = error.code
+            if error.snapshot is not None:
+                phase_after = error.snapshot["phase"]
+            else:
+                phase_after = phase_before
+            raise
+        finally:
+            ACTION_LOGGER.info(
+                json.dumps(
+                    {
+                        "action_type": action.type,
+                        "duration_ms": round(
+                            (perf_counter() - started) * 1000,
+                            3,
+                        ),
+                        "event_count": event_count,
+                        "game_id": game_id,
+                        "outcome": outcome,
+                        "phase_after": phase_after,
+                        "phase_before": phase_before,
+                        "revision": action.revision,
+                    },
+                    separators=(",", ":"),
+                    sort_keys=True,
+                )
+            )
 
     @api.post("/api/games/{game_id}/restart", response_model=GameResponse)
     def restart_game(game_id: str):

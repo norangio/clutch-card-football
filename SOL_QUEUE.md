@@ -323,6 +323,8 @@ one session and asserts exactly one wins and the store is consistent.
 
 ## 16. Structured logging
 
+**Status: complete — JSON action logs enforce a secret-free allowlist.**
+
 One line per action: game id, revision, action type, phase before and after,
 event count, duration. Not a debugger, just enough to answer "what happened in
 this game" from a log. Keep card values and hands **out** of it: logs are
