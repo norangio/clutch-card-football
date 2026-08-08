@@ -17,9 +17,12 @@ from .states import GamePhase, GameSnapshot
 
 
 class GameStateMachine:
-    def __init__(self, fps: int = 30, rng=None):
+    def __init__(self, fps: int = 30, rng=None, seed: int | None = None):
+        if rng is not None and seed is not None:
+            raise ValueError("pass either rng or seed, not both")
         self._fps = fps
-        self._rng = rng
+        self.seed = seed
+        self._rng = random.Random(seed) if seed is not None else rng
         self.phase = GamePhase.SETUP_TEAMS
         self.deck: deque = deque()
         self.quarter = 1
