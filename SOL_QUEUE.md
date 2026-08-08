@@ -335,3 +335,112 @@ another place hidden information leaks.
 The 3-D scene, the HUD, the setup screen, and the animation work are all mine
 and all under `web/`. If the API needs a new field to support them, I will
 propose it in the contract rather than you guessing.
+
+---
+
+# Round 3 (added 2026-08-08 by Claude)
+
+All six round-2 tasks are done and verified. I confirmed the real ones by hand
+rather than trusting counts:
+
+- **Setup validation is fixed at the right boundary.** rating 0, -5 and 99 are
+  now 400 `invalid_action`; 1 and 12 pass. `kick_rating`, `clutch` and empty
+  names are rejected too.
+- **`ai_vs_ai` works**: one create request returned a complete 237-event game
+  with the seed released only at `GAME_OVER`.
+- You wired `apply_bonus` in rather than leaving it dead, and removed the dead
+  `move()` call in `_do_punt`. Both noted.
+
+**Both your contract proposals are accepted, now in `docs/CONTRACT.md` v2.2**
+(optional `ai_vs_ai` on create, 14-day retention). `CONTRACT_PROPOSALS.md` is
+cleared. Same rules as before: you keep git, stay on `web-edition`, `web/` is
+mine except `web/src/api/__fixtures__/generated/`.
+
+Frontend is now on v2.2 with a real setup screen, so ratings, kick rating,
+clutch, colour and difficulty are all player-chosen and bounded to your
+validated ranges.
+
+## 17. Fix the negative segment stat  `[last known defect]`
+
+`state_machine.py:443`:
+
+```python
+movement = SEGMENTS.index("Z3") - SEGMENTS.index(old_pos)
+self.offense.segments += movement
+```
+
+A war advance "to Z3" from Z2 or Z1 is backwards, so `movement` is negative and
+the cumulative `segments` stat goes down. It has no gameplay effect, which is
+why it survived, but the stat is wrong and it is the last item on the plan's
+section 3 list.
+
+Decide and document which is correct: clamp the advance at `max(0, ...)`, or
+treat a war from beyond Z3 as no movement at all. Then flip the
+`test_engine_characterization.py` case that currently pins the negative value.
+
+**The golden transcripts should not move.** If they do, the change affected
+gameplay, which it should not; stop and tell me rather than regenerating.
+
+## 18. Prove the difficulty ladder actually exists
+
+Nothing currently asserts that hard beats medium beats easy. Add a statistical
+test: N seeded games per pairing, assert the stronger side wins meaningfully
+more than half.
+
+Use fixed seeds so it cannot flake, keep N low enough to stay fast (the whole
+suite is ~1.3s today and should stay under a few seconds), and assert on a
+margin wide enough that a small AI tweak does not turn it red spuriously.
+
+If the ladder turns out **not** to hold, that is a genuine finding. Report it,
+do not tune the AI to make the test pass.
+
+## 19. Soak test: 1000 games per difficulty
+
+`ai_vs_ai` makes this cheap now. Run it headless (not through HTTP) and assert:
+
+- no exceptions, and no game hits the `pump()` `max_steps` guard
+- every game reaches `GAME_OVER` in a plausible number of actions
+- no negative scores, no ball position outside `SEGMENTS`
+- report the score distribution and the rate of each scoring path
+
+Mark it `@pytest.mark.slow` and exclude it from the default run. The point is a
+command we can run before any risky engine change, not something in the
+1.3-second loop.
+
+## 20. Audit deck exhaustion
+
+The deck is 55 cards and is only rebuilt in Q1 and Q3. Q1 deals 14, Q2 deals 12,
+and war and clutch each draw extra. Work out whether the first half can
+actually run the deck dry, and what happens when it does.
+
+The empty-deck fallbacks (`Card("2","S")` for war, `Card("A","H")` for clutch)
+are currently pinned by characterization tests, but nobody has checked whether
+they are *reachable in a real game* or merely defensive. Two very different
+things:
+
+- If unreachable, say so in a comment so nobody "fixes" them later.
+- If reachable, a fixed fallback card is a silent rules decision, and the
+  correct behaviour needs a human call. Write it up rather than choosing.
+
+## 21. Restart preserves setup
+
+Contract 7.3 says restart reuses the prior setup with a new `game_id` and seed.
+Add a test that a restarted game keeps team names, ratings, colours, difficulty
+and `ai_vs_ai`, and that the new id differs and revision resets to 0.
+
+## 22. Redaction fuzz
+
+`test_redaction.py` checks the phases we thought of. Add a fuzz pass: play many
+seeded games, serialize at **every** step for both viewer seats, and assert the
+JSON never contains a card the viewer is not entitled to see.
+
+Compare against ground truth from the engine's internal state rather than a
+hardcoded list, so it catches leaks through fields nobody thought about. This
+is the one test most worth over-building: a redaction bug is invisible until
+someone reads the network tab.
+
+## What NOT to pick up
+
+`web/`, the 3-D scene, the setup screen and the animation work are mine. The
+canvas-blank-after-reload note in CLAUDE.md is resolved: it was an artefact of
+my automated browser pane, not a product bug.
