@@ -15,9 +15,9 @@ Pygame desktop UI, with a browser 3-D edition in progress.
 | **Active branch** | `web-edition` (trunk for all new work) |
 | **`main`** | Old CRT UI + retired pygbag deploy. Do not build on it. |
 | **Desktop UI** | Broadcast presentation, 960x720. Playable. |
-| **Web 3-D edition** | Planning complete, Phase 0 done. See below. |
+| **Web 3-D edition** | Phase 0 done. Contract frozen at v2.1. Engine seeded + redacting serializers landed. Frontend HUD playable on fixtures. |
 | **Hosting** | **None.** `ccf.norangio.dev` was taken down 2026-08-07. Local-only. |
-| **Tests** | 59 passed, 2 skipped |
+| **Tests** | 127 passed, 2 skipped |
 
 ### What changed in Phase 0
 
@@ -104,8 +104,13 @@ rules never exist in TypeScript.**
 | **Claude** (TS + infra) | `web/**`, `ccf_pygame/ui/**` except `app.py`, all docs, all git work |
 
 If you need a file you do not own, ask. Do not edit it. `docs/CONTRACT.md` is the
-frozen interface; changing a payload shape is its own commit, made before any
-consumer changes.
+frozen interface (**v2.1**); changing a payload shape is its own commit, made
+before any consumer changes.
+
+> **Claude is paused (2026-08-07).** Sol holds git for the duration and works
+> from **[SOL_QUEUE.md](SOL_QUEUE.md)**. Rules and the one permitted red-suite
+> commit are described there. `web/` remains off-limits except
+> `web/src/api/__fixtures__/generated/`.
 
 ---
 
