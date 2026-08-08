@@ -191,6 +191,7 @@ def create_app(
                 revision=session.revision,
             )
 
+        expected_revision = session.revision
         game = session.game
         expected = {
             GamePhase.WAITING_OFFENSE_CARD: "play_card",
@@ -244,7 +245,21 @@ def create_app(
         events = game.pump()
         session.revision += 1
         session.event_log.extend(events)
-        session_store.save(session)
+        save_if_revision = getattr(session_store, "save_if_revision", None)
+        if save_if_revision is None:
+            session_store.save(session)
+        elif not save_if_revision(
+            session,
+            expected_revision=expected_revision,
+        ):
+            current = require_session(game_id)
+            raise ApiError(
+                "stale_revision",
+                "client revision is stale",
+                409,
+                revision=current.revision,
+                snapshot=snapshot_for(current),
+            )
         return response_for(session, events)
 
     @api.post("/api/games/{game_id}/actions", response_model=GameResponse)

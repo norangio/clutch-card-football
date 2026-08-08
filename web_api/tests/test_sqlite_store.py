@@ -1,4 +1,5 @@
 import sqlite3
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta, timezone
 
 from web_api.app import create_app
@@ -122,3 +123,43 @@ def test_expired_session_is_swept_while_recent_session_survives(tmp_path):
     assert recent_status == 200
     assert recent_payload["snapshot"]["game_id"] == recent
     store.close()
+
+
+def test_overlapping_actions_across_app_instances_commit_exactly_once(tmp_path):
+    database = tmp_path / "sessions.sqlite3"
+    first_store = SQLiteSessionStore(database)
+    first_app = create_app(
+        store=first_store,
+        id_factory=lambda: "shared-game",
+    )
+    created = create_game(first_app)
+    second_store = SQLiteSessionStore(database)
+    second_app = create_app(store=second_store)
+    path = "/api/games/shared-game/actions"
+    action = {"revision": 0, "type": "play_card", "card_index": 0}
+
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        first_future = pool.submit(request, first_app, "POST", path, action)
+        second_future = pool.submit(request, second_app, "POST", path, action)
+        responses = [first_future.result(), second_future.result()]
+
+    statuses = sorted(status for status, _payload in responses)
+    winner = next(payload for status, payload in responses if status == 200)
+    loser = next(payload for status, payload in responses if status == 409)
+    persisted = first_store.get("shared-game")
+
+    assert statuses == [200, 409]
+    assert loser["error"]["code"] == "stale_revision"
+    assert loser["snapshot"] == winner["snapshot"]
+    assert persisted.revision == 1
+    assert len(persisted.event_log) == (
+        len(created["events"]) + len(winner["events"])
+    )
+
+    first_store.close()
+    second_store.close()
+    reopened = SQLiteSessionStore(database)
+    resumed = reopened.get("shared-game")
+    assert resumed.revision == 1
+    assert len(resumed.event_log) == len(persisted.event_log)
+    reopened.close()

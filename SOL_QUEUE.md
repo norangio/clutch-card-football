@@ -314,6 +314,8 @@ shape.
 
 ## 15. Concurrency on one session
 
+**Status: complete — SQLite compare-and-save proves one winner across apps.**
+
 Two rapid actions on the same `game_id` should not interleave into a corrupt
 state. The revision guard makes the second a 409, but that depends on the
 read-modify-write being atomic. Add a test that fires overlapping requests at

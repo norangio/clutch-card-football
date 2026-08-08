@@ -163,6 +163,34 @@ class SQLiteSessionStore:
             if cursor.rowcount != 1:
                 raise KeyError(f"unknown game_id: {session.game_id}")
 
+    def save_if_revision(
+        self,
+        session: GameSession,
+        *,
+        expected_revision: int,
+    ) -> bool:
+        """Atomically save only if another request has not advanced the game."""
+        with self._lock, self._connection:
+            cursor = self._connection.execute(
+                """
+                UPDATE sessions
+                SET seed = ?, revision = ?, setup_json = ?, engine_state = ?,
+                    event_log = ?, updated_at = ?
+                WHERE game_id = ? AND revision = ?
+                """,
+                (
+                    str(session.seed),
+                    session.revision,
+                    json.dumps(session.setup, sort_keys=True),
+                    self._engine_blob(session),
+                    self._events_blob(session),
+                    self._now(),
+                    session.game_id,
+                    expected_revision,
+                ),
+            )
+            return cursor.rowcount == 1
+
     def cleanup_expired(self, *, now: datetime | None = None) -> int:
         """Delete sessions inactive for at least ``SESSION_TTL_DAYS`` days."""
         reference = now or self._clock()
