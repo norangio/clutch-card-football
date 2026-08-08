@@ -3,6 +3,7 @@
 import pytest
 
 from ccf.ai import Difficulty
+from ccf.events import GameEndedEvent, QuarterStartedEvent
 from ccf.models import Color
 from ccf.state_machine import DECISION_PHASES, GameStateMachine
 from ccf.states import GamePhase
@@ -43,7 +44,7 @@ def test_pump_stops_at_first_human_decision_without_using_timers():
 
     events = game.pump()
 
-    assert events == []
+    assert events == [QuarterStartedEvent(1, "home", 7, "1")]
     assert game.phase == GamePhase.WAITING_OFFENSE_CARD
     assert game._timer == -999
 
@@ -53,7 +54,8 @@ def test_ai_vs_ai_game_completes_through_one_pump_call():
 
     events = game.pump()
 
-    assert events == []
+    assert isinstance(events[0], QuarterStartedEvent)
+    assert isinstance(events[-1], GameEndedEvent)
     assert game.phase == GamePhase.GAME_OVER
     assert game.quarter == 5
     assert game.human.score >= 0

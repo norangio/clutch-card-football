@@ -82,6 +82,8 @@ explicitly out of Phase 1 scope.
 
 ### 3. Emit events at every transition  `[was 1.3]`
 
+**Status: complete — 178 passed, 2 skipped.**
+
 The invariant is **scoped** (contract 5.2): every change to score, ball,
 possession, mojo, clutch, hands, phase, and result must be explained by an
 event. The cumulative stats `segments`, `fg_made`, `fg_att`, `punts` are

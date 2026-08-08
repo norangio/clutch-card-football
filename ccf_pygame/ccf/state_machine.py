@@ -13,6 +13,27 @@ from .ai import (Difficulty,
                  choose_card as ai_choose_card,
                  post_move_choice as ai_post_move,
                  extra_point_choice as ai_extra_point)
+from .events import (
+    BallMovedEvent,
+    CardPlayedEvent,
+    CardsRevealedEvent,
+    ClutchUsedEvent,
+    ExtraPointResolvedEvent,
+    FieldGoalResolvedEvent,
+    GameEndedEvent,
+    GameEvent,
+    JokerResolvedEvent,
+    MojoChangedEvent,
+    MojoConvertedToClutchEvent,
+    PossessionChangedEvent,
+    PuntResolvedEvent,
+    QuarterEndedEvent,
+    QuarterStartedEvent,
+    SafetyScoredEvent,
+    TouchdownScoredEvent,
+    WarCardRevealedEvent,
+    WarStartedEvent,
+)
 from .states import GamePhase, GameSnapshot
 
 DECISION_PHASES = {
@@ -68,7 +89,7 @@ class GameStateMachine:
         self._message = ""
 
         self.log: list[str] = []
-        self._events: list = []
+        self._events: list[GameEvent] = []
 
         # Timer for auto-advance states (time-based, converted to frames at game FPS)
         self._timer = 0
@@ -87,6 +108,39 @@ class GameStateMachine:
 
     def _log(self, msg: str):
         self.log.append(msg)
+
+    def _emit(self, event: GameEvent) -> None:
+        self._events.append(event)
+
+    def _seat(self, team: Team) -> str:
+        if team is self.human:
+            return "home"
+        if team is self.ai:
+            return "away"
+        raise ValueError("team does not belong to this game")
+
+    def _emit_ball_moved(
+        self,
+        team: Team,
+        from_ball: str,
+        to_ball: str,
+        segments: int,
+        reason: str,
+        *,
+        is_touchdown: bool = False,
+        is_safety: bool = False,
+    ) -> None:
+        self._emit(
+            BallMovedEvent(
+                self._seat(team),
+                from_ball,
+                to_ball,
+                segments,
+                reason,
+                is_touchdown,
+                is_safety,
+            )
+        )
 
     def snapshot(self) -> GameSnapshot:
         can_clutch, can_fg, can_punt, can_short = self._post_move_options()
@@ -163,6 +217,14 @@ class GameStateMachine:
         if self.phase == GamePhase.WAITING_OFFENSE_CARD:
             self._off_card = self.offense.play(idx)
             self._log(f"{self.offense.name} plays {self._off_card.display}")
+            self._emit(
+                CardPlayedEvent(
+                    self._seat(self.offense),
+                    "offense",
+                    self._off_card,
+                    len(self.offense.hand),
+                )
+            )
             # Now defense plays
             if self.defense == self.human:
                 self.phase = GamePhase.WAITING_DEFENSE_CARD
@@ -171,6 +233,14 @@ class GameStateMachine:
         elif self.phase == GamePhase.WAITING_DEFENSE_CARD:
             self._def_card = self.defense.play(idx)
             self._log(f"{self.defense.name} plays {self._def_card.display}")
+            self._emit(
+                CardPlayedEvent(
+                    self._seat(self.defense),
+                    "defense",
+                    self._def_card,
+                    len(self.defense.hand),
+                )
+            )
             self._resolve_cards()
 
     def provide_post_move(self, choice: str):
@@ -187,6 +257,7 @@ class GameStateMachine:
 
     def _apply_extra_point(self, choice: str):
         scorer = self._scorer or self.offense
+        roll = None
         if choice == "K":
             pts, desc = pat_kick(rng=self._rng)
             self._extra_pts = pts
@@ -203,6 +274,18 @@ class GameStateMachine:
             scorer.score += pts
             self._message = desc
             self._log(f"2-point attempt: {desc} (+{pts})")
+        else:
+            return
+        self._emit(
+            ExtraPointResolvedEvent(
+                self._seat(scorer),
+                choice,
+                pts > 0,
+                roll,
+                pts,
+                scorer.score,
+            )
+        )
         self.phase = GamePhase.SHOWING_EXTRA_POINTS
         self._timer = 0
 
@@ -329,9 +412,24 @@ class GameStateMachine:
                 self._log(f"AI chooses extra point: {choice}")
                 self._apply_extra_point(choice)
         elif self.phase == GamePhase.SHOWING_EXTRA_POINTS:
+            scorer = self._scorer or self.offense
+            old_pos = self.pos
             self.pos = "1"
+            if old_pos != self.pos:
+                self._emit_ball_moved(
+                    scorer, old_pos, self.pos, 0, "kickoff"
+                )
             if self._scorer is None or self._scorer == self.offense:
-                self._swap_sides()
+                self._swap_sides(reason="touchdown")
+            else:
+                self._emit(
+                    PossessionChangedEvent(
+                        self._seat(scorer),
+                        self._seat(self.offense),
+                        self.pos,
+                        "touchdown",
+                    )
+                )
             self._next_turn_or_end()
         elif self.phase == GamePhase.SHOWING_SAFETY:
             self.pos = "3"
@@ -340,11 +438,20 @@ class GameStateMachine:
             if self._war_card and self.offense and self._war_card.color == self.offense.color:
                 old_pos = self.pos
                 self.pos = "Z3"
-                self.offense.segments += SEGMENTS.index("Z3") - SEGMENTS.index(old_pos)
+                movement = SEGMENTS.index("Z3") - SEGMENTS.index(old_pos)
+                self.offense.segments += movement
+                self._emit_ball_moved(
+                    self.offense, old_pos, self.pos, movement, "war"
+                )
                 self._enter_post_move()
             else:
+                old_pos = self.pos
                 self.pos = "3"
-                self._swap_sides()
+                movement = SEGMENTS.index("3") - SEGMENTS.index(old_pos)
+                self._emit_ball_moved(
+                    self.offense, old_pos, self.pos, movement, "turnover"
+                )
+                self._swap_sides(reason="war_turnover")
                 self._next_turn_or_end()
         elif self.phase == GamePhase.SHOWING_JOKER:
             if self._pending_action:
@@ -352,16 +459,26 @@ class GameStateMachine:
                 self._pending_action = None
                 action()
         elif self.phase in (GamePhase.SHOWING_PUNT, GamePhase.SHOWING_SHORT_PUNT):
-            self._swap_sides()
+            reason = "punt" if self.phase == GamePhase.SHOWING_PUNT else "short_punt"
+            self._swap_sides(reason=reason)
             self._next_turn_or_end()
         elif self.phase == GamePhase.SHOWING_FIELD_GOAL:
+            old_pos = self.pos
             if self._fg_success:
                 self.pos = "1"
-                self._swap_sides()
+                reason = "field_goal_made"
+                move_reason = "kickoff"
             else:
                 miss_map = {"Z3": "3", "Z2": "2", "Z1": "1"}
                 self.pos = miss_map.get(self.pos, self.pos)
-                self._swap_sides()
+                reason = "field_goal_missed"
+                move_reason = "turnover"
+            if old_pos != self.pos:
+                movement = SEGMENTS.index(self.pos) - SEGMENTS.index(old_pos)
+                self._emit_ball_moved(
+                    self.offense, old_pos, self.pos, movement, move_reason
+                )
+            self._swap_sides(reason=reason)
             self._next_turn_or_end()
         elif self.phase == GamePhase.SHOWING_CLUTCH:
             if self._pending_action:
@@ -378,6 +495,7 @@ class GameStateMachine:
     # --- Internal game flow ---
 
     def _start_quarter(self):
+        previous_offense = self.offense
         fresh = self.quarter in (1, 3)
         if fresh:
             self.deck = create_deck(rng=self._rng)
@@ -411,6 +529,23 @@ class GameStateMachine:
         self._log(f"=== QUARTER {self.quarter} === {receiver} has ball")
         self.phase = GamePhase.QUARTER_START
         self._timer = 0
+        self._emit(
+            QuarterStartedEvent(
+                self.quarter,
+                self._seat(self.offense),
+                deal,
+                self.pos,
+            )
+        )
+        if previous_offense is not None and previous_offense is not self.offense:
+            self._emit(
+                PossessionChangedEvent(
+                    self._seat(previous_offense),
+                    self._seat(self.offense),
+                    self.pos,
+                    "quarter_start",
+                )
+            )
 
     def _start_turn(self):
         self.turn += 1
@@ -440,6 +575,14 @@ class GameStateMachine:
                              rng=self._rng)
         self._off_card = self.offense.play(idx)
         self._log(f"AI plays card ... ") # {self._off_card.display}")
+        self._emit(
+            CardPlayedEvent(
+                self._seat(self.offense),
+                "offense",
+                self._off_card,
+                len(self.offense.hand),
+            )
+        )
 
         if self.defense == self.human and not self.ai_vs_ai:
             self.phase = GamePhase.WAITING_DEFENSE_CARD
@@ -455,11 +598,35 @@ class GameStateMachine:
                              rng=self._rng)
         self._def_card = self.defense.play(idx)
         self._log(f"{self.defense.name} defends with {self._def_card.display}")
+        self._emit(
+            CardPlayedEvent(
+                self._seat(self.defense),
+                "defense",
+                self._def_card,
+                len(self.defense.hand),
+            )
+        )
         self._resolve_cards()
 
     def _resolve_cards(self):
         self._message = f"OFF: {self._off_card.display}  vs  DEF: {self._def_card.display}"
         self._log(self._message)
+        off_val = card_value(self._off_card)
+        def_val = card_value(self._def_card)
+        winner = "tie"
+        if off_val > def_val:
+            winner = "offense"
+        elif def_val > off_val:
+            winner = "defense"
+        self._emit(
+            CardsRevealedEvent(
+                self._off_card,
+                self._def_card,
+                off_val,
+                def_val,
+                winner,
+            )
+        )
         self.phase = GamePhase.SHOWING_CARD_BATTLE
         self._timer = 0
 
@@ -480,20 +647,45 @@ class GameStateMachine:
         # MOJO for defense (defense won the card battle)
         if def_val > off_val:
             if self.defense.mojo < 2:
+                old_mojo = self.defense.mojo
                 self.defense.mojo += 1
                 self._log(f"MOJO! {self.defense.name} won card battle ({self.defense.mojo}/2)")
+                self._emit(
+                    MojoChangedEvent(
+                        self._seat(self.defense),
+                        old_mojo,
+                        self.defense.mojo,
+                        "won_card_battle",
+                    )
+                )
 
         # MOJO for offense (dominating win by 4+)
         if off_val >= def_val + 4:
             if self.offense.mojo < 2:
+                old_mojo = self.offense.mojo
                 self.offense.mojo += 1
                 self._log(f"MOJO! {self.offense.name} dominated by {off_val - def_val} ({self.offense.mojo}/2)")
+                self._emit(
+                    MojoChangedEvent(
+                        self._seat(self.offense),
+                        old_mojo,
+                        self.offense.mojo,
+                        "dominant_win",
+                    )
+                )
 
         # convert  2 mojo to clutch if clutch lo
         if ( self.offense.clutch == 0) and (self.offense.mojo == 2):
             self.offense.mojo = 0
             self.offense.clutch += 1
             self._log(f"MOJO CONVERTED to CLUTCH! {self.offense.name}")
+            self._emit(
+                MojoConvertedToClutchEvent(
+                    self._seat(self.offense),
+                    self.offense.clutch,
+                    "pre_play",
+                )
+            )
 
         # DRIVE — get movement
         self._movement = get_card_result(
@@ -502,6 +694,15 @@ class GameStateMachine:
         old_pos = self.pos
         self._new_pos, self._is_td, self._is_safety = move(self.pos, self._movement)
         self.offense.segments += self._movement
+        self._emit_ball_moved(
+            self.offense,
+            old_pos,
+            self._new_pos,
+            self._movement,
+            "drive_chart",
+            is_touchdown=self._is_td,
+            is_safety=self._is_safety,
+        )
 
         move_msg = f"Moved from {old_pos} -> {self._new_pos} (+{self._movement} segments)"
         if self._is_td:
@@ -521,8 +722,18 @@ class GameStateMachine:
         self._war_card = self.deck.popleft() if self.deck else Card("2", "S")
         color_name = self._war_card.color.value if self._war_card.color else "Joker"
         self._log(f"WAR! Drew {self._war_card.display} ({color_name})")
+        tied_value = card_value(self._off_card)
+        matches = self._war_card.color == self.offense.color
+        self._emit(WarStartedEvent(tied_value))
+        self._emit(
+            WarCardRevealedEvent(
+                self._war_card,
+                matches,
+                "advance" if matches else "turnover",
+            )
+        )
 
-        if self._war_card.color == self.offense.color:
+        if matches:
             self._message = f"WAR! {self._war_card.display} - Offense to Z3!"
             self._log("Offense advances to Z3")
         else:
@@ -541,35 +752,54 @@ class GameStateMachine:
                 self._message = "JOKER DEFENSE - DEFENSIVE TOUCHDOWN!"
                 self._log("Defense Joker! Automatic defensive TD!")
                 scorer = self.defense
-                self._pending_action = lambda s=scorer: self._score_touchdown(scorer=s)
+                outcome = "touchdown"
+                self._pending_action = lambda s=scorer: self._score_touchdown(
+                    scorer=s, cause="defensive_joker"
+                )
             elif off_val < 11:
                 self._message = "JOKER DEFENSE - Defense ball at Z3!"
                 self._log("Defense Joker! Turnover to Z3")
+                outcome = "turnover_z3"
                 self._pending_action = lambda: self._joker_turnover("Z3")
             else:
                 self._message = "JOKER DEFENSE - No gain"
                 self._log("Defense Joker! Offense stopped, no gain")
+                outcome = "no_gain"
                 self._pending_action = lambda: self._enter_post_move()
+            played_by = "defense"
+            opposing_value = off_val
         else:  # offense played joker
             if def_val < 4:
                 self._message = "JOKER OFFENSE - TOUCHDOWN!"
                 self._log("Offense Joker! Automatic TD!")
-                self._pending_action = lambda: self._score_touchdown()
+                outcome = "touchdown"
+                self._pending_action = lambda: self._score_touchdown(cause="joker")
             elif def_val < 11:
                 self._message = "JOKER OFFENSE - +3 segments!"
                 self._log("Offense Joker! +3 segments")
+                outcome = "advance_3"
                 self._pending_action = lambda: self._joker_move(3)
             else:
                 self._message = "JOKER OFFENSE - +1 segment"
                 self._log("Offense Joker! +1 segment")
+                outcome = "advance_1"
                 self._pending_action = lambda: self._joker_move(1)
+            played_by = "offense"
+            opposing_value = def_val
+
+        self._emit(JokerResolvedEvent(played_by, opposing_value, outcome))
 
         self.phase = GamePhase.SHOWING_JOKER
         self._timer = 0
 
     def _joker_turnover(self, target="3"):
+        old_pos = self.pos
         self.pos = target
-        self._swap_sides()
+        movement = SEGMENTS.index(self.pos) - SEGMENTS.index(old_pos)
+        self._emit_ball_moved(
+            self.offense, old_pos, self.pos, movement, "turnover"
+        )
+        self._swap_sides(reason="joker_turnover")
         self._next_turn_or_end()
 
     def _joker_move(self, movement):
@@ -580,20 +810,37 @@ class GameStateMachine:
         self._is_safety = safety
         self.offense.segments += movement
         self._log(f"Joker move {movement} -> {new_pos}")
+        self._emit_ball_moved(
+            self.offense,
+            self.pos,
+            new_pos,
+            movement,
+            "joker",
+            is_touchdown=td,
+            is_safety=safety,
+        )
 
         if td:
-            self._score_touchdown()
+            self._score_touchdown(cause="joker")
         else:
             self.pos = new_pos
             self._enter_post_move()
 
-    def _score_touchdown(self, scorer=None):
+    def _score_touchdown(self, scorer=None, cause="drive"):
         scorer = scorer or self.offense
         self._scorer = scorer
         scorer.score += 6
         self._is_td = True
         self._message = f"TOUCHDOWN! {scorer.name} +6"
         self._log(f"TOUCHDOWN! {scorer.name} +6")
+        self._emit(
+            TouchdownScoredEvent(
+                self._seat(scorer),
+                6,
+                scorer.score,
+                cause,
+            )
+        )
         self.phase = GamePhase.SHOWING_TOUCHDOWN
         self._timer = 0
 
@@ -602,6 +849,13 @@ class GameStateMachine:
         self._message = f"SAFETY! {self.defense.name} +2"
         self._log(f"SAFETY! {self.defense.name} +2")
         self.pos = "3"
+        self._emit(
+            SafetyScoredEvent(
+                self._seat(self.defense),
+                2,
+                self.defense.score,
+            )
+        )
         self.phase = GamePhase.SHOWING_SAFETY
         self._timer = 0
 
@@ -640,12 +894,27 @@ class GameStateMachine:
         self._message = f"PUNT! Roll {roll} + Kick {self.offense.kick_rating} = {dist}"
         self._log(self._message)
         self.offense.punts += 1
-        new_pos, _, _ = move(self.pos, dist, )
         # Punt moves ball backwards for the offense (towards their own side)
         # Use negative movement to go backwards
+        old_pos = self.pos
         idx = SEGMENTS.index(self.pos)
         new_idx = max(1, idx - dist)
         self.pos = SEGMENTS[new_idx]
+        actual_movement = new_idx - idx
+        self._emit(
+            PuntResolvedEvent(
+                self._seat(self.offense),
+                "punt",
+                dist,
+                roll,
+                old_pos,
+                self.pos,
+                abs(actual_movement) < dist,
+            )
+        )
+        self._emit_ball_moved(
+            self.offense, old_pos, self.pos, actual_movement, "punt"
+        )
         self.phase = GamePhase.SHOWING_PUNT
         self._timer = 0
 
@@ -655,13 +924,30 @@ class GameStateMachine:
         self._message = f"SHORT PUNT! Distance: {dist}"
         self._log(self._message)
         self.offense.punts += 1
+        old_pos = self.pos
         idx = SEGMENTS.index(self.pos)
         new_idx = max(1, idx - dist)
         self.pos = SEGMENTS[new_idx]
+        actual_movement = new_idx - idx
+        self._emit(
+            PuntResolvedEvent(
+                self._seat(self.offense),
+                "short_punt",
+                dist,
+                None,
+                old_pos,
+                self.pos,
+                abs(actual_movement) < dist,
+            )
+        )
+        self._emit_ball_moved(
+            self.offense, old_pos, self.pos, actual_movement, "short_punt"
+        )
         self.phase = GamePhase.SHOWING_SHORT_PUNT
         self._timer = 0
 
     def _do_field_goal(self):
+        old_pos = self.pos
         success, roll, total, target = field_goal_attempt(
             self.offense.kick_rating, self.pos, rng=self._rng
         )
@@ -678,6 +964,18 @@ class GameStateMachine:
         else:
             self._message = f"FG MISSED! d6:[{roll}] + Kick {self.offense.kick_rating} = {total} (need {target})"
             self._log(f"FG missed! {total} < {target}")
+        self._emit(
+            FieldGoalResolvedEvent(
+                self._seat(self.offense),
+                success,
+                roll,
+                total,
+                target,
+                old_pos,
+                3 if success else 0,
+                self.offense.score,
+            )
+        )
         self.phase = GamePhase.SHOWING_FIELD_GOAL
         self._timer = 0
 
@@ -687,12 +985,26 @@ class GameStateMachine:
             self.offense.clutch += 1
             self.offense.mojo = 0
             self._log(f"2 Mojo and Clutch < 2 >> Award Clutch! ")
+            self._emit(
+                MojoConvertedToClutchEvent(
+                    self._seat(self.offense),
+                    self.offense.clutch,
+                    "clutch_spend",
+                )
+            )
         self._clutch_card = self.deck.popleft() if self.deck else Card("A", "H")
         self._log(f"CLUTCH! Drew {self._clutch_card.display} (remaining: {self.offense.clutch})")
         self._message = f"CLUTCH! Drew {self._clutch_card.display}"
+        self._emit(
+            ClutchUsedEvent(
+                self._seat(self.offense),
+                self.offense.clutch,
+                self._clutch_card,
+            )
+        )
 
         if card_value(self._clutch_card) == 15:  # Joker
-            self._pending_action = lambda: self._score_touchdown()
+            self._pending_action = lambda: self._score_touchdown(cause="clutch")
         else:
             movement = get_card_result(
                 self.offense.color.value, self.offense.rating, str(self._clutch_card)
@@ -704,8 +1016,17 @@ class GameStateMachine:
                 self._new_pos = new_pos
                 self.offense.segments += movement
                 self._log(f"Clutch move {movement} -> {new_pos}")
+                self._emit_ball_moved(
+                    self.offense,
+                    self.pos,
+                    new_pos,
+                    movement,
+                    "clutch",
+                    is_touchdown=td,
+                    is_safety=safety,
+                )
                 if td:
-                    self._score_touchdown()
+                    self._score_touchdown(cause="clutch")
                 else:
                     self.pos = new_pos
                     self._enter_post_move()
@@ -715,8 +1036,18 @@ class GameStateMachine:
         self.phase = GamePhase.SHOWING_CLUTCH
         self._timer = 0
 
-    def _swap_sides(self):
+    def _swap_sides(self, reason=None):
+        previous_offense = self.offense
         self.offense, self.defense = self.defense, self.offense
+        if reason is not None:
+            self._emit(
+                PossessionChangedEvent(
+                    self._seat(previous_offense),
+                    self._seat(self.offense),
+                    self.pos,
+                    reason,
+                )
+            )
 
     def _next_turn_or_end(self):
         if self.turn >= self.turns_in_quarter:
@@ -729,6 +1060,13 @@ class GameStateMachine:
         self._log(f"=== End Q{self.quarter} | "
                   f"{self.human.name}: {self.human.score} - "
                   f"{self.ai.name}: {self.ai.score} ===")
+        self._emit(
+            QuarterEndedEvent(
+                self.quarter,
+                self.human.score,
+                self.ai.score,
+            )
+        )
         self.phase = GamePhase.QUARTER_END
         self._timer = 0
 
@@ -741,4 +1079,17 @@ class GameStateMachine:
             result = "TIE GAME!"
         self._message = result
         self._log(f"FINAL: {self.human.name} {self.human.score} - {self.ai.name} {self.ai.score} | {result}")
+        winner = None
+        if self.human.score > self.ai.score:
+            winner = "home"
+        elif self.ai.score > self.human.score:
+            winner = "away"
+        self._emit(
+            GameEndedEvent(
+                winner,
+                self.human.score,
+                self.ai.score,
+                winner is None,
+            )
+        )
         self.phase = GamePhase.GAME_OVER
