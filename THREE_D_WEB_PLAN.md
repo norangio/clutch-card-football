@@ -600,7 +600,14 @@ delivered value.** Everything after this is presentation.
 **Handoff H3:** expect a round of contract drift fixes at integration. Budget a
 session for it rather than treating it as a surprise.
 
-### Phase 3: 3-D vertical slice &nbsp;&nbsp;`[Claude]`
+### Phase 3: 3-D vertical slice &nbsp;&nbsp;`[Claude]` &nbsp;**PULL FORWARD**
+
+> **Priority note, 2026-08-07.** Nick saw the Phase 1b HUD and expected to see a
+> 3-D field with the ball moving. The flat field is a deliberate placeholder,
+> but this phase should start **before** Phase 2 API integration rather than
+> after. The fixtures already drive a full play loop, so the scene can be built
+> with no backend. Minimum first deliverable: seven segments, a real ball mesh
+> tweening between them on `ball_moved`, broadcast camera. HUD stays in HTML.
 
 - Procedural tabletop stadium and field. No Blender (see 7.1).
 - Camera director with default plus event shots.

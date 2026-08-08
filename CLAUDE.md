@@ -117,6 +117,31 @@ before any consumer changes.
 > commit are described there. `web/` remains off-limits except
 > `web/src/api/__fixtures__/generated/`.
 
+### FIRST THING WHEN CLAUDE RESUMES: the actual 3-D field
+
+Nick saw the Phase 1b screenshot and said it "doesn't look like a 3-D rendering
+of an actual game... I want to see stuff moving up and down a 3-D field."
+
+He is right, and nothing is broken: `hud/components.tsx:Field` is a deliberate
+flat CSS placeholder, and the plan puts 3-D in Phase 3. But the reaction is the
+useful part. **The 3-D field is the thing he actually wants to see, and it
+should be pulled forward rather than waiting for the full Phase 2 API
+integration.** The fixtures already drive a complete play loop, so the R3F
+scene can be built against them with no backend at all.
+
+On resume, before anything else:
+
+1. Replace `Field` with an R3F tabletop: seven segments, a real ball mesh
+   travelling between them, broadcast three-quarter camera.
+2. Wire `ball_moved` in the animation queue to an actual tweened position, so
+   movement reads as motion rather than a jump.
+3. Keep the HUD in HTML exactly as it is (plan 3.2). Only the field becomes 3-D.
+4. Show him that before building anything else.
+
+Everything else in Phase 3/4 (camera director, per-event choreography, low
+quality mode) can follow. The one-line version: **make the ball move in 3-D
+first, polish second.**
+
 ---
 
 ## Known engine issues
