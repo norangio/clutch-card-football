@@ -163,7 +163,7 @@ def test_punt_is_clamped_at_segment_one():
     assert game.pos == "1"
 
 
-def test_war_advance_from_z2_currently_decrements_segment_stat():
+def test_war_relocation_from_z2_does_not_decrement_segment_stat():
     game = make_game()
     game.pos = "Z2"
     game.deck = deque([Card("4", "H")])
@@ -174,8 +174,13 @@ def test_war_advance_from_z2_currently_decrements_segment_stat():
     game._auto_transition()
 
     assert game.pos == "Z3"
-    assert game.human.segments == -1
+    assert game.human.segments == 0
     assert game.phase == GamePhase.WAITING_POST_MOVE
+    ball_event = game.drain_events()[-1].to_dict(0)
+    assert ball_event["type"] == "ball_moved"
+    assert ball_event["from"] == "Z2"
+    assert ball_event["to"] == "Z3"
+    assert ball_event["segments"] == 0
 
 
 def test_empty_deck_war_falls_back_to_black_two_and_turnover():

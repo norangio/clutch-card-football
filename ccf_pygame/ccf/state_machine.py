@@ -440,7 +440,13 @@ class GameStateMachine:
             if self._war_card and self.offense and self._war_card.color == self.offense.color:
                 old_pos = self.pos
                 self.pos = "Z3"
-                movement = SEGMENTS.index("Z3") - SEGMENTS.index(old_pos)
+                # War always relocates the ball to Z3. When the offense was
+                # already in Z2/Z1 that relocation is not earned forward
+                # progress, so cumulative segments and the event delta stay 0.
+                movement = max(
+                    0,
+                    SEGMENTS.index("Z3") - SEGMENTS.index(old_pos),
+                )
                 self.offense.segments += movement
                 self._emit_ball_moved(
                     self.offense, old_pos, self.pos, movement, "war"

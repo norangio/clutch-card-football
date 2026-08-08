@@ -362,6 +362,8 @@ validated ranges.
 
 ## 17. Fix the negative segment stat  `[last known defect]`
 
+**Status: complete — relocation stays intact; earned progress clamps at zero.**
+
 `state_machine.py:443`:
 
 ```python
