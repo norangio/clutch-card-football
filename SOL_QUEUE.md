@@ -415,6 +415,9 @@ command we can run before any risky engine change, not something in the
 
 ## 20. Audit deck exhaustion
 
+**Status: complete — legal play leaves at least 11 cards in the first half and
+5 in the second; both fixed-card fallbacks are defensive-only.**
+
 The deck is 55 cards and is only rebuilt in Q1 and Q3. Q1 deals 14, Q2 deals 12,
 and war and clutch each draw extra. Work out whether the first half can
 actually run the deck dry, and what happens when it does.

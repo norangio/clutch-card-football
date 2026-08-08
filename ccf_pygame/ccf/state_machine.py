@@ -740,6 +740,14 @@ class GameStateMachine:
         self._timer = 0
 
     def _handle_war(self):
+        # A legal game cannot exhaust a half-deck. Q1/Q2 consume 26 cards in
+        # deals and have 12 plays; Q3/Q4 consume 30 and have 14. Each play can
+        # add at most one war draw. The teams bring at most six total clutch
+        # tokens into a half, and earning another needs two non-war mojo plays
+        # (which replace two possible war draws). The worst legal second half
+        # therefore consumes 30 + 14 + 6 = 50 of 55 cards (the first uses 44).
+        # Keep the fixed card only as defense for malformed/restored state and
+        # direct characterization tests, not as a reachable rules outcome.
         self._war_card = self.deck.popleft() if self.deck else Card("2", "S")
         color_name = self._war_card.color.value if self._war_card.color else "Joker"
         self._log(f"WAR! Drew {self._war_card.display} ({color_name})")
@@ -1013,6 +1021,8 @@ class GameStateMachine:
                     "clutch_spend",
                 )
             )
+        # See _handle_war for the proof that this fallback is unreachable via
+        # legal actions. It remains a defensive guard for invalid state.
         self._clutch_card = self.deck.popleft() if self.deck else Card("A", "H")
         self._log(f"CLUTCH! Drew {self._clutch_card.display} (remaining: {self.offense.clutch})")
         self._message = f"CLUTCH! Drew {self._clutch_card.display}"
