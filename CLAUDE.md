@@ -42,6 +42,18 @@ comes back.
 
 ## Running the game
 
+**Web edition (3-D, the active build):**
+
+```bash
+./run-local.sh
+```
+
+Starts FastAPI on `:8000` and Vite on `:5173`, creating the venv and installing
+deps on first run. Open `http://localhost:5173`. Append `?mock=1` to run the
+frontend on fixtures with no backend, which is useful for scene work.
+
+**Pygame desktop edition:**
+
 ```bash
 cd ccf_pygame
 pip install -r requirements.txt   # pygame-ce

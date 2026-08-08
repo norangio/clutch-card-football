@@ -18,3 +18,6 @@ mockups/out/
 
 # Local FastAPI session database
 web_api/data/
+
+# Local API session database
+web_api/data/
