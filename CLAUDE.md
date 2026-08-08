@@ -51,11 +51,16 @@ python3 game.py
 ## Tests
 
 ```bash
-cd ccf_pygame && python3 -m pytest test_ai.py test_ui.py -q
+cd ccf_pygame && python3 -m pytest test_ai.py test_ui.py test_transcripts.py tests/ -q
 ```
 
-**59 passed, 2 skipped is the baseline. It must stay green at every commit.**
-If a change needs the suite red, split it into two commits.
+**127 passed, 2 skipped is the baseline. It must stay green at every commit.**
+If a change needs the suite red, split it into two commits. The single
+exception is SOL_QUEUE.md task 5, where breaking the transcripts is the point.
+
+`test_transcripts.py` compares against 12 seeded golden games. If it goes red,
+a change altered gameplay. Do not regenerate the fixtures to make it pass;
+read the diff first.
 
 ---
 
@@ -118,17 +123,18 @@ before any consumer changes.
 
 Documented in detail in THREE_D_WEB_PLAN.md section 3. Summary:
 
-1. **Hidden information leaks through `snapshot()`.** `Team.hand` rides inside
-   the snapshot, and `_off_card` holds the AI's card during
-   `WAITING_DEFENSE_CARD`. The Pygame UI hides this by convention, not by
-   structure. A browser client would expose both. **Must be fixed before any
-   HTTP surface exists.**
+1. ~~Hidden information leaks through `snapshot()`.~~ **FIXED.** `serializers.py`
+   decides visibility from `(viewer_seat, phase)` at construction. The raw
+   `GameSnapshot` still carries both hands, so it must never be serialized
+   directly; always go through `serialize_snapshot(game, viewer_seat)`.
 2. **Orange and green auto-touchdowns are never awarded.** `rules.apply_bonus()`
-   is dead code, never imported. `drive_chart.py` defers those auto-TDs to
-   "handled elsewhere", which does not exist. **Open question for the humans, do
-   not fix silently** since it changes balance and diverges from dad's build.
-3. Minor: dead `move()` call in `_do_punt()`; `offense.segments` can go negative
-   on a war advance from Z2/Z1.
+   is dead code. **Decided 2026-08-07: implement it** (plan 3.2). Assigned as
+   SOL_QUEUE.md task 5. Until that lands, the current non-award behavior is
+   pinned by `tests/test_engine_characterization.py`.
+3. **`WAITING_CONFIRM` is dead state**, never assigned. Keep it out of
+   `DECISION_PHASES`; a test asserts it stays unassigned.
+4. Minor: dead `move()` call in `_do_punt()`; `offense.segments` can go negative
+   on a war advance from Z2/Z1. Both pinned by characterization tests.
 
 ---
 
