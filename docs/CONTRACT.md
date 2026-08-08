@@ -1,7 +1,7 @@
 # CCF Web Edition: Interface Contract
 
 **Status:** FROZEN. Handoff H1 complete.
-**Version:** 2
+**Version:** 2.1
 **Owner:** Claude drafts, Sol reviews, then both code against it.
 
 This is the only interface between the Python engine and the browser. Once
@@ -369,7 +369,13 @@ server-side and returns the whole batch. The client owns pacing.
 ```
 
 `away.color` is derived (the opposite of `home.color`); the engine only supports
-red and black. `seed: null` means the server picks one and returns it.
+red and black.
+
+`seed: null` means the server **picks one and stores it**. It is *not* returned.
+That would contradict 4.1 on the very first response and hand the client the
+whole deck before the first card is played. The seed surfaces only once `result`
+is non-null. A caller that passes an explicit `seed` obviously already knows it;
+that is a debugging affordance, not a leak the server created.
 
 ### 7.2 Action
 
@@ -444,6 +450,7 @@ hand), WebSocket push (same payloads, different transport).
 
 | Version | Date | Change |
 | --- | --- | --- |
+| 2.1 | 2026-08-07 | Fixes a self-contradiction Sol caught: 7.1 said a generated seed was "returned" at creation, which 4.1 forbids. Now "picked and stored". Wording only, no shape change. |
 | 2 | 2026-08-07 | Adds `color_bonus` to `touchdown_scored.cause`. The orange/green auto-touchdown is being implemented (plan 3.2), and it deserves its own celebration since it is the rarest scoring path in the game. Additive only: no existing field changed. |
 | 1 | 2026-08-07 | **Frozen.** All eight of Sol's review findings applied: seed withheld until game over (and `/replay` gated the same way), `score_after` on `field_goal_resolved`, `possession_changed.reason` enumerated, event invariant scoped to presentation-relevant state, `roll` nullable on short punt and PAT kick, clutch visibility clarified, restart returns a new `game_id`. |
 | 0 | 2026-08-07 | Initial draft. |
