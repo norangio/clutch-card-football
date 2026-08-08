@@ -74,6 +74,7 @@ def _build_game(setup: dict, seed: int) -> GameStateMachine:
         away["kick_rating"],
         away["clutch"],
         difficulty=Difficulty(setup["difficulty"]),
+        ai_vs_ai=setup.get("ai_vs_ai", False),
     )
     return game
 

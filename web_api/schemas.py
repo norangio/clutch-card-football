@@ -49,6 +49,7 @@ class CreateGameRequest(StrictModel):
     away: AwaySetup
     difficulty: Literal["easy", "medium", "hard"]
     seed: int | None = None
+    ai_vs_ai: bool = False
 
 
 class PlayCardAction(StrictModel):

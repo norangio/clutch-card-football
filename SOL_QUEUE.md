@@ -302,6 +302,8 @@ The full-game run hit 17 of 18 event types. The only one missing was
 
 ## 14. AI-vs-AI over HTTP
 
+**Status: complete — proposed first, then covered as a one-request soak.**
+
 The engine supports `ai_vs_ai` but the API create payload has no way to request
 it. It is the cheapest possible soak test: one request that plays a whole game.
 Add it as an optional `ai_vs_ai: bool` on create, and a test that drives a full
