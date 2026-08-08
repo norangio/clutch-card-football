@@ -385,6 +385,8 @@ gameplay, which it should not; stop and tell me rather than regenerating.
 
 ## 18. Prove the difficulty ladder actually exists
 
+**Status: complete — all three fixed-seed pairings clear a 60% win bar.**
+
 Nothing currently asserts that hard beats medium beats easy. Add a statistical
 test: N seeded games per pairing, assert the stronger side wins meaningfully
 more than half.

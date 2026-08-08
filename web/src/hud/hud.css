@@ -279,3 +279,35 @@ body {
 
 .setup .chip { min-height: 40px; padding: 8px 14px; display: inline-flex; align-items: center; gap: 7px; }
 .setup .chip .dot { width: 11px; height: 11px; }
+
+/* --------------------------------------------------------------- game over */
+
+.gameover { display: grid; gap: 14px; justify-items: center; text-align: center; }
+.gameover-headline { margin: 0; font-size: 30px; letter-spacing: 0.01em; }
+
+.gameover-score {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-size: 20px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-dim);
+}
+.gameover-score .won { color: var(--ink); font-weight: 700; }
+.gameover-score .dash { opacity: 0.5; }
+.gameover-score .dot { display: inline-block; vertical-align: middle; }
+
+.gameover-stats { display: grid; gap: 4px; margin: 0; font-size: 12.5px; color: var(--ink-dim); }
+.gameover-stats dt { display: inline; font-weight: 700; color: var(--ink); }
+.gameover-stats dt::after { content: ": "; }
+.gameover-stats dd { display: inline; margin: 0; }
+
+.gameover-seed { margin: 0; }
+.gameover-seed code {
+  background: #00000038;
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--gold);
+}

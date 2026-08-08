@@ -7,6 +7,7 @@ import { ActionBar, CardBattle, GameLog, Hand, Scoreboard } from "../hud/compone
 import StadiumScene from "../scene/StadiumScene";
 import { useAnimationQueue, type Speed } from "./useAnimationQueue";
 import SetupScreen, { type SetupResult } from "../setup/SetupScreen";
+import GameOver from "./GameOver";
 
 const SPEEDS: Speed[] = ["normal", "fast", "instant"];
 const STORAGE_KEY = "ccf.game_id";
@@ -38,6 +39,7 @@ export default function GamePage({ client = defaultClient }: { client?: GameClie
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [resuming, setResuming] = useState(true);
+  const lastSetup = useRef<SetupResult | null>(null);
   const queue = useAnimationQueue();
   const inFlight = useRef(false);
 
@@ -68,6 +70,7 @@ export default function GamePage({ client = defaultClient }: { client?: GameClie
 
   const startGame = useCallback(
     (setup: SetupResult) => {
+      lastSetup.current = setup;
       setBusy(true);
       setError(null);
       client
@@ -112,6 +115,28 @@ export default function GamePage({ client = defaultClient }: { client?: GameClie
     },
     [client, state, queue],
   );
+
+  const playAgain = useCallback(() => {
+    if (!state) return;
+    setBusy(true);
+    setError(null);
+    client
+      .restart(state.snapshot.game_id)
+      .then((res) => {
+        localStorage.setItem(STORAGE_KEY, res.snapshot.game_id);
+        setState(res);
+        queue.enqueue(res.events);
+      })
+      .catch((e: unknown) =>
+        setError(e instanceof Error ? e.message : String(e)))
+      .finally(() => setBusy(false));
+  }, [client, state, queue]);
+
+  const newTeams = useCallback(() => {
+    localStorage.removeItem(STORAGE_KEY);
+    setState(null);
+    setError(null);
+  }, []);
 
   const onAction = useCallback(
     (a: LegalAction) => {
@@ -199,12 +224,17 @@ export default function GamePage({ client = defaultClient }: { client?: GameClie
         </span>
       </div>
 
-      <div className={`panel ${locked ? "locked" : ""}`}>
-        <Hand snapshot={snapshot} locked={locked}
-              onPlay={(i) => void submit({ type: "play_card", card_index: i })} />
-      </div>
+      {snapshot.result ? (
+        <GameOver snapshot={snapshot} busy={busy}
+                  onPlayAgain={playAgain} onNewTeams={newTeams} />
+      ) : (
+        <div className={`panel ${locked ? "locked" : ""}`}>
+          <Hand snapshot={snapshot} locked={locked}
+                onPlay={(i) => void submit({ type: "play_card", card_index: i })} />
+        </div>
+      )}
 
-      {snapshot.legal_actions.some((a) => a.type !== "play_card") && (
+      {!snapshot.result && snapshot.legal_actions.some((a) => a.type !== "play_card") && (
         <div className={`panel ${locked ? "locked" : ""}`}>
           <ActionBar snapshot={snapshot} locked={locked} onAction={onAction} />
         </div>
