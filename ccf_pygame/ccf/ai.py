@@ -37,39 +37,43 @@ _SUITS = ["H", "D", "S", "C"]
 def choose_card(pos: str, team: Team, is_offense: bool,
                 difficulty: Difficulty = Difficulty.MEDIUM,
                 opponent: Team = None, opponent_card: Card = None,
-                deck_remaining: list = None) -> int:
+                deck_remaining: list = None, rng=None) -> int:
     """Return the index of the card the AI should play."""
+    rng = rng or random
     if not team.hand:
         return 0
 
     if difficulty == Difficulty.EASY:
-        return random.randrange(len(team.hand))
+        return rng.randrange(len(team.hand))
 
     if is_offense:
         if difficulty == Difficulty.HARD:
-            return _mc_offense(pos, team, opponent, list(deck_remaining or []))
+            return _mc_offense(pos, team, opponent, list(deck_remaining or []), rng=rng)
         return _medium_offense(pos, team)
 
     # defense
     if difficulty == Difficulty.HARD:
-        return _mc_defense(pos, team, opponent, opponent_card, list(deck_remaining or []))
+        return _mc_defense(
+            pos, team, opponent, opponent_card, list(deck_remaining or []), rng=rng
+        )
     return _medium_defense(team, opponent_card)
 
 
 def post_move_choice(pos: str, clutch: int, clutch_used: bool,
                      difficulty: Difficulty = Difficulty.MEDIUM,
                      team: Team = None, opponent: Team = None,
-                     deck_remaining: list = None) -> str:
+                     deck_remaining: list = None, rng=None) -> str:
     """AI chooses post-move action. Returns 'P', 'F', 'C', or 'S'."""
+    rng = rng or random
     if difficulty == Difficulty.EASY:
-        if clutch > 0 and not clutch_used and random.random() < 0.4:
+        if clutch > 0 and not clutch_used and rng.random() < 0.4:
             return "C"
         if pos in ("Z1", "Z2", "Z3"):
-            return random.choice(["P", "F"])
+            return rng.choice(["P", "F"])
         return "P"
 
     if difficulty == Difficulty.HARD and team is not None:
-        return _mc_post_move(pos, team, opponent, list(deck_remaining or []))
+        return _mc_post_move(pos, team, opponent, list(deck_remaining or []), rng=rng)
 
     # MEDIUM
     if clutch > 1 and not clutch_used:
@@ -82,10 +86,11 @@ def post_move_choice(pos: str, clutch: int, clutch_used: bool,
 
 
 def extra_point_choice(difficulty: Difficulty = Difficulty.MEDIUM,
-                       score_diff: int = 0, quarter: int = 1) -> str:
+                       score_diff: int = 0, quarter: int = 1, rng=None) -> str:
     """AI chooses extra point: 'K' (kick PAT) or '2' (two-point attempt)."""
+    rng = rng or random
     if difficulty == Difficulty.EASY:
-        return random.choice(["K", "2"])
+        return rng.choice(["K", "2"])
     if difficulty == Difficulty.HARD and quarter == 4 and score_diff <= -8:
         return "2"
     return "K"
@@ -140,14 +145,14 @@ def _opponent_pool(ai_hand, deck_remaining):
     return pool
 
 
-def _sample(cards):
+def _sample(cards, rng=None):
     if not cards:
         return Card("2", "S")
-    return random.choice(cards)
+    return (rng or random).choice(cards)
 
 
-def _sample_card(pool) -> Card:
-    v, s = _sample(pool)
+def _sample_card(pool, rng=None) -> Card:
+    v, s = _sample(pool, rng=rng)
     return Card(v, s)
 
 
@@ -159,7 +164,8 @@ def _pos_value(pos: str) -> int:
 
 
 def _simulate_play(off_card: Card, def_card: Card, pos: str,
-                   off_team: Team, def_team: Team, deck_remaining: list) -> dict:
+                   off_team: Team, def_team: Team, deck_remaining: list,
+                   rng=None) -> dict:
     """Resolve a single play (war card sampled from the deck). Returns outcome dict."""
     off_val = card_value(off_card)
     def_val = card_value(def_card)
@@ -167,7 +173,7 @@ def _simulate_play(off_card: Card, def_card: Card, pos: str,
               "turnover": False, "def_td": False, "off_mojo": 0, "def_mojo": 0}
 
     if off_val == def_val:
-        war = _sample(deck_remaining)
+        war = _sample(deck_remaining, rng=rng)
         if war.color == off_team.color:
             result["new_pos"] = "Z3"
         else:
@@ -233,27 +239,32 @@ def _outcome_value(out: dict, perspective: str) -> float:
     return value
 
 
-def _mc_offense(pos: str, team: Team, opponent: Team, deck_remaining: list) -> int:
+def _mc_offense(pos: str, team: Team, opponent: Team, deck_remaining: list,
+                rng=None) -> int:
     pool = _opponent_pool(team.hand, deck_remaining)
     scores = []
     for card in team.hand:
         total = 0.0
         for _ in range(MC_EPISODES):
-            opp_card = _sample_card(pool)
-            out = _simulate_play(card, opp_card, pos, team, opponent, deck_remaining)
+            opp_card = _sample_card(pool, rng=rng)
+            out = _simulate_play(
+                card, opp_card, pos, team, opponent, deck_remaining, rng=rng
+            )
             total += _outcome_value(out, "offense")
         scores.append(total / MC_EPISODES)
     return max(range(len(team.hand)), key=lambda i: (scores[i], card_value(team.hand[i])))
 
 
 def _mc_defense(pos: str, team: Team, opponent: Team, opponent_card: Card,
-                deck_remaining: list) -> int:
+                deck_remaining: list, rng=None) -> int:
     off_card = opponent_card or Card("2", "S")
     scores = []
     for card in team.hand:
         total = 0.0
         for _ in range(MC_EPISODES):
-            out = _simulate_play(off_card, card, pos, opponent, team, deck_remaining)
+            out = _simulate_play(
+                off_card, card, pos, opponent, team, deck_remaining, rng=rng
+            )
             total += _outcome_value(out, "defense")
         scores.append(total / MC_EPISODES)
     return max(range(len(team.hand)), key=lambda i: scores[i])
@@ -261,43 +272,46 @@ def _mc_defense(pos: str, team: Team, opponent: Team, opponent_card: Card,
 
 # --- Monte Carlo post-move ---
 
-def _mc_post_move(pos: str, team: Team, opponent: Team, deck_remaining: list) -> str:
+def _mc_post_move(pos: str, team: Team, opponent: Team, deck_remaining: list,
+                  rng=None) -> str:
     in_zone = pos in ("Z1", "Z2", "Z3")
     actions = ["P"]
-    scores = {"P": _mc_punt_value(pos, team)}
+    scores = {"P": _mc_punt_value(pos, team, rng=rng)}
     if in_zone:
         actions += ["F", "S"]
-        scores["F"] = _mc_fg_value(pos, team)
-        scores["S"] = _mc_short_punt_value(pos, team)
+        scores["F"] = _mc_fg_value(pos, team, rng=rng)
+        scores["S"] = _mc_short_punt_value(pos, team, rng=rng)
     if team.clutch > 0 and not team.clutch_used:
         actions.append("C")
-        scores["C"] = _mc_clutch_value(pos, team, deck_remaining)
+        scores["C"] = _mc_clutch_value(pos, team, deck_remaining, rng=rng)
     return max(actions, key=lambda a: scores[a])
 
 
-def _mc_punt_value(pos: str, team: Team) -> float:
+def _mc_punt_value(pos: str, team: Team, rng=None) -> float:
     total = 0.0
     for _ in range(MC_EPISODES):
-        dist, _ = punt_distance(team.kick_rating)
+        dist, _ = punt_distance(team.kick_rating, rng=rng)
         idx = max(1, SEGMENTS.index(pos) - dist)
         total += -_pos_value(SEGMENTS[idx]) * FIELD_W
     return total / MC_EPISODES
 
 
-def _mc_short_punt_value(pos: str, team: Team) -> float:
+def _mc_short_punt_value(pos: str, team: Team, rng=None) -> float:
     total = 0.0
     for _ in range(MC_EPISODES):
-        dist = short_punt_distance(team.kick_rating)
+        dist = short_punt_distance(team.kick_rating, rng=rng)
         idx = max(1, SEGMENTS.index(pos) - dist)
         total += -_pos_value(SEGMENTS[idx]) * FIELD_W
     return total / MC_EPISODES
 
 
-def _mc_fg_value(pos: str, team: Team) -> float:
+def _mc_fg_value(pos: str, team: Team, rng=None) -> float:
     total = 0.0
     miss_map = {"Z3": "3", "Z2": "2", "Z1": "1"}
     for _ in range(MC_EPISODES):
-        success, _roll, _total, _target = field_goal_attempt(team.kick_rating, pos)
+        success, _roll, _total, _target = field_goal_attempt(
+            team.kick_rating, pos, rng=rng
+        )
         if success:
             total += 3 * PTS_W - _pos_value("1") * FIELD_W
         else:
@@ -305,10 +319,11 @@ def _mc_fg_value(pos: str, team: Team) -> float:
     return total / MC_EPISODES
 
 
-def _mc_clutch_value(pos: str, team: Team, deck_remaining: list) -> float:
+def _mc_clutch_value(pos: str, team: Team, deck_remaining: list,
+                     rng=None) -> float:
     total = 0.0
     for _ in range(MC_EPISODES):
-        card = _sample(deck_remaining)
+        card = _sample(deck_remaining, rng=rng)
         if card_value(card) == 15:
             total += TD_VALUE
         else:

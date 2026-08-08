@@ -24,34 +24,34 @@ def apply_bonus(base: int, bonus: str, card: Card, team_color: Color, end_pos: s
     return extra, auto_td
 
 
-def pat_kick() -> Tuple[int, str]:
+def pat_kick(rng=None) -> Tuple[int, str]:
     """PAT kick — ."""
-    roll = random.randint(1, 6)
+    roll = (rng or random).randint(1, 6)
     if (roll > 1):
         return 1, "PAT KICK! +1 pt"
     else:
         return 0, "PAT KICK Missed !"
 
 
-def two_point_attempt() -> Tuple[int, int, str]:
+def two_point_attempt(rng=None) -> Tuple[int, int, str]:
     """2-point conversion attempt. Returns (points, roll, description)."""
-    roll = random.randint(1, 6)
+    roll = (rng or random).randint(1, 6)
     if roll >= 5:
         return 2, roll, f"2PT! Rolled {roll} (need 5+) → +2 pts!"
     return 0, roll, f"2PT failed. Rolled {roll} (need 5+) → 0 pts"
 
 
-def field_goal_attempt(kick_rating: int, pos: str) -> Tuple[bool, int, int, int]:
+def field_goal_attempt(kick_rating: int, pos: str, rng=None) -> Tuple[bool, int, int, int]:
     """Attempt a FG. Returns (success, roll, total, target)."""
     target = FG_SUCCESS.get(pos, 99)
-    roll = random.randint(1, 6)
+    roll = (rng or random).randint(1, 6)
     total = kick_rating + roll
     return total >= target, roll, total, target
 
 
-def punt_distance(kick_rating: int) -> Tuple[int, int]:
+def punt_distance(kick_rating: int, rng=None) -> Tuple[int, int]:
     """Calculate punt distance. Returns (total_distance, roll)."""
-    roll = random.randint(1, 6)
+    roll = (rng or random).randint(1, 6)
     if roll == 2:
         roll = 1
     elif (roll == 4) or ( roll == 3):
@@ -62,5 +62,5 @@ def punt_distance(kick_rating: int) -> Tuple[int, int]:
     return kick_rating + roll, roll
 
 
-def short_punt_distance(kick_rating: int) -> int:
-    return 3 - kick_rating + random.randint(0, 2)
+def short_punt_distance(kick_rating: int, rng=None) -> int:
+    return 3 - kick_rating + (rng or random).randint(0, 2)

@@ -6,12 +6,13 @@ from collections import deque
 from .models import Card
 
 
-def create_deck() -> deque:
+def create_deck(rng=None) -> deque:
+    """Create and shuffle a deck using ``rng`` or the global RNG."""
     values = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
     suits = ["H", "D", "S", "C"]
     deck = [Card(v, s) for v in values for s in suits]
     deck.extend([Card("Joker") for _ in range(3)])
-    random.shuffle(deck)
+    (rng or random).shuffle(deck)
     return deque(deck)
 
 

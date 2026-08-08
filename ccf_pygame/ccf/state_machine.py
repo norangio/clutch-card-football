@@ -17,8 +17,9 @@ from .states import GamePhase, GameSnapshot
 
 
 class GameStateMachine:
-    def __init__(self, fps: int = 30):
+    def __init__(self, fps: int = 30, rng=None):
         self._fps = fps
+        self._rng = rng
         self.phase = GamePhase.SETUP_TEAMS
         self.deck: deque = deque()
         self.quarter = 1
@@ -175,7 +176,7 @@ class GameStateMachine:
     def _apply_extra_point(self, choice: str):
         scorer = self._scorer or self.offense
         if choice == "K":
-            pts, desc = pat_kick()
+            pts, desc = pat_kick(rng=self._rng)
             self._extra_pts = pts
             self._extra_pts_desc = desc
             self._extra_pt_roll = 0
@@ -183,7 +184,7 @@ class GameStateMachine:
             self._message = desc
             self._log(f"PAT kick: {desc} (+{pts})")
         elif choice == "2":
-            pts, roll, desc = two_point_attempt()
+            pts, roll, desc = two_point_attempt(rng=self._rng)
             self._extra_pts = pts
             self._extra_pts_desc = desc
             self._extra_pt_roll = roll
@@ -222,7 +223,8 @@ class GameStateMachine:
                                       difficulty=self.difficulty,
                                       team=self.offense,
                                       opponent=self.defense,
-                                      deck_remaining=list(self.deck))
+                                      deck_remaining=list(self.deck),
+                                      rng=self._rng)
                 self._log(f"AI chooses: {choice}")
                 self._execute_post_move(choice)
 
@@ -266,7 +268,8 @@ class GameStateMachine:
                 opponent = self.defense if scorer == self.offense else self.offense
                 choice = ai_extra_point(self.difficulty,
                                         score_diff=scorer.score - opponent.score,
-                                        quarter=self.quarter)
+                                        quarter=self.quarter,
+                                        rng=self._rng)
                 self._log(f"AI chooses extra point: {choice}")
                 self._apply_extra_point(choice)
         elif self.phase == GamePhase.SHOWING_EXTRA_POINTS:
@@ -321,7 +324,7 @@ class GameStateMachine:
     def _start_quarter(self):
         fresh = self.quarter in (1, 3)
         if fresh:
-            self.deck = create_deck()
+            self.deck = create_deck(rng=self._rng)
 
         deal = {1: 7, 2: 6, 3: 7, 4: 8}.get(self.quarter, 7)
         if self.quarter in (1, 3):
@@ -377,7 +380,8 @@ class GameStateMachine:
         idx = ai_choose_card(self.pos, self.offense, True,
                              difficulty=self.difficulty,
                              opponent=self.defense,
-                             deck_remaining=list(self.deck))
+                             deck_remaining=list(self.deck),
+                             rng=self._rng)
         self._off_card = self.offense.play(idx)
         self._log(f"AI plays card ... ") # {self._off_card.display}")
 
@@ -391,7 +395,8 @@ class GameStateMachine:
                              difficulty=self.difficulty,
                              opponent=self.offense,
                              opponent_card=self._off_card,
-                             deck_remaining=list(self.deck))
+                             deck_remaining=list(self.deck),
+                             rng=self._rng)
         self._def_card = self.defense.play(idx)
         self._log(f"{self.defense.name} defends with {self._def_card.display}")
         self._resolve_cards()
@@ -573,7 +578,7 @@ class GameStateMachine:
             self._do_clutch()
 
     def _do_punt(self):
-        dist, roll = punt_distance(self.offense.kick_rating)
+        dist, roll = punt_distance(self.offense.kick_rating, rng=self._rng)
         self._punt_dist = dist
         self._punt_roll = roll
         self._message = f"PUNT! Roll {roll} + Kick {self.offense.kick_rating} = {dist}"
@@ -589,7 +594,7 @@ class GameStateMachine:
         self._timer = 0
 
     def _do_short_punt(self):
-        dist = short_punt_distance(self.offense.kick_rating)
+        dist = short_punt_distance(self.offense.kick_rating, rng=self._rng)
         self._punt_dist = dist
         self._message = f"SHORT PUNT! Distance: {dist}"
         self._log(self._message)
@@ -601,7 +606,9 @@ class GameStateMachine:
         self._timer = 0
 
     def _do_field_goal(self):
-        success, roll, total, target = field_goal_attempt(self.offense.kick_rating, self.pos)
+        success, roll, total, target = field_goal_attempt(
+            self.offense.kick_rating, self.pos, rng=self._rng
+        )
         self._fg_success = success
         self._fg_roll = roll
         self._fg_total = total
