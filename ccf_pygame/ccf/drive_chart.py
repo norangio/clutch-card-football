@@ -100,6 +100,13 @@ def get_card_result(team_color_str: str, rating: int, card_str: str) -> int:
     return get_drive_result(team_color_str, rating, card_value, card_suit)
 
 
+def get_card_bonus(rating: int, card_str: str) -> str | None:
+    """Return the chart bonus marker for a card, before color matching."""
+    card_value = card_str[:-1]
+    entry = DRIVE_CHART.get(str(rating), {}).get(card_value)
+    return entry.get("bonus") if entry else None
+
+
 def get_drive_result(color: str, rate: int, card_value: str, card_suit: str = None) -> int:
     """Returns the final movement segments for a play."""
     color_str = str(color).lower()

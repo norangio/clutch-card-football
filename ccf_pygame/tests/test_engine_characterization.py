@@ -39,7 +39,7 @@ def resolve_normal_play(game, *, position, offense_card, defense_card):
     game._resolve_play()
 
 
-def test_orange_bonus_currently_stops_at_z1_instead_of_auto_touchdown():
+def test_orange_bonus_landing_on_z1_scores_automatic_touchdown():
     game = make_game(human_rating=5)
 
     resolve_normal_play(
@@ -52,11 +52,16 @@ def test_orange_bonus_currently_stops_at_z1_instead_of_auto_touchdown():
     assert game.phase == GamePhase.SHOWING_MOVEMENT
     assert game._movement == 4
     assert game._new_pos == "Z1"
-    assert game._is_td is False
-    assert game.human.score == 0
+    assert game._is_td is True
+    assert game.pos == "Z1"
+
+    game._auto_transition()
+
+    assert game.human.score == 6
+    assert game.drain_events()[-1].to_dict(0)["cause"] == "color_bonus"
 
 
-def test_green_bonus_currently_stops_at_z1_instead_of_auto_touchdown():
+def test_green_bonus_landing_on_z1_scores_automatic_touchdown():
     game = make_game(human_rating=7)
 
     resolve_normal_play(
@@ -69,8 +74,46 @@ def test_green_bonus_currently_stops_at_z1_instead_of_auto_touchdown():
     assert game.phase == GamePhase.SHOWING_MOVEMENT
     assert game._movement == 5
     assert game._new_pos == "Z1"
+    assert game._is_td is True
+    assert game.pos == "Z1"
+
+    game._auto_transition()
+
+    assert game.human.score == 6
+    assert game.drain_events()[-1].to_dict(0)["cause"] == "color_bonus"
+
+
+def test_orange_bonus_requires_a_team_color_match():
+    game = make_game(human_rating=5)
+
+    resolve_normal_play(
+        game,
+        position="2",
+        offense_card=Card("A", "S"),
+        defense_card=Card("2", "H"),
+    )
+
+    assert game._new_pos == "Z1"
     assert game._is_td is False
-    assert game.human.score == 0
+
+
+def test_orange_move_past_z1_remains_a_normal_drive_touchdown():
+    game = make_game(human_rating=9)
+
+    resolve_normal_play(
+        game,
+        position="2",
+        offense_card=Card("A", "H"),
+        defense_card=Card("2", "S"),
+    )
+
+    assert game._movement == 5
+    assert game._new_pos == "1"
+    assert game._is_td is True
+
+    game._auto_transition()
+
+    assert game.drain_events()[-1].to_dict(0)["cause"] == "drive"
 
 
 def test_internal_snapshot_contains_both_complete_hands():

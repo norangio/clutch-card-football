@@ -9,7 +9,13 @@ TABLE_FG = {1: [65, 75, 85], 2: [70, 80, 90], 3: [75, 85, 90]}
 FG_SUCCESS = {"Z3": 7, "Z2": 5, "Z1": 4}
 
 
-def apply_bonus(base: int, bonus: str, card: Card, team_color: Color, end_pos: str) -> Tuple[int, bool]:
+def apply_bonus(
+    bonus: str | None,
+    card: Card,
+    team_color: Color,
+    end_pos: str,
+) -> Tuple[int, bool]:
+    """Return bonus movement and whether the landing is an automatic TD."""
     extra = 0
     auto_td = False
     if card.color == team_color:

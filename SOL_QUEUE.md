@@ -113,6 +113,8 @@ nested leak inside an event cannot slip past.
 
 ### 5. Implement the orange/green auto-touchdown  `[task 1.10, decided]`
 
+**Status: complete — non-golden suite 166 passed, 2 skipped.**
+
 Plan section 3.2 has the full reasoning. The rule:
 
 > A **color-matched** card whose drive-chart entry carries an `orange` or
@@ -207,4 +209,7 @@ then a `--seed` CLI flag for the Pygame build to replay a specific game.
 
 Append here. Do not delete anything.
 
-- [ ] _(Sol: log surprises, contract friction, and anything you had to guess.)_
+- [x] Task 5 intentionally leaves three golden cases red; fixtures were not
+  regenerated: `seed42-easy.json`, `seed42-medium.json`, and
+  `human-seed42-hard.json`. Non-golden suite is 166 passed, 2 skipped. The
+  drift is downstream score/decision branching after color-bonus touchdowns.

@@ -7,8 +7,9 @@ from typing import Optional
 from .models import Card, Color, Team
 from .deck import create_deck, card_value
 from .field import move, SEGMENTS
-from .drive_chart import get_card_result
-from .rules import pat_kick, two_point_attempt, field_goal_attempt, punt_distance, short_punt_distance
+from .drive_chart import get_card_bonus, get_card_result
+from .rules import (apply_bonus, pat_kick, two_point_attempt,
+                    field_goal_attempt, punt_distance, short_punt_distance)
 from .ai import (Difficulty,
                  choose_card as ai_choose_card,
                  post_move_choice as ai_post_move,
@@ -76,6 +77,7 @@ class GameStateMachine:
         self._new_pos = ""
         self._is_td = False
         self._is_safety = False
+        self._touchdown_cause = "drive"
         self._extra_pts = 0
         self._extra_pts_desc = ""
         self._extra_pt_roll = 0
@@ -392,7 +394,7 @@ class GameStateMachine:
             self._resolve_play()
         elif self.phase == GamePhase.SHOWING_MOVEMENT:
             if self._is_td:
-                self._score_touchdown()
+                self._score_touchdown(cause=self._touchdown_cause)
             elif self._is_safety:
                 self._score_safety()
             else:
@@ -557,6 +559,7 @@ class GameStateMachine:
         self._scorer = None
         self._is_td = False
         self._is_safety = False
+        self._touchdown_cause = "drive"
 
         self._log(f"-- Play {self.turn}/{self.turns_in_quarter} | "
                   f"OFF: {self.offense.name} | Ball: {self.pos}")
@@ -693,6 +696,16 @@ class GameStateMachine:
         )
         old_pos = self.pos
         self._new_pos, self._is_td, self._is_safety = move(self.pos, self._movement)
+        bonus = get_card_bonus(self.offense.rating, str(self._off_card))
+        _, color_bonus_td = apply_bonus(
+            bonus,
+            self._off_card,
+            self.offense.color,
+            self._new_pos,
+        )
+        if color_bonus_td and not self._is_td:
+            self._is_td = True
+            self._touchdown_cause = "color_bonus"
         self.offense.segments += self._movement
         self._emit_ball_moved(
             self.offense,
@@ -712,7 +725,9 @@ class GameStateMachine:
         self._log(move_msg)
         self._message = move_msg
 
-        if not self._is_td and not self._is_safety:
+        if self._touchdown_cause == "color_bonus":
+            self.pos = self._new_pos
+        elif not self._is_td and not self._is_safety:
             self.pos = self._new_pos
 
         self.phase = GamePhase.SHOWING_MOVEMENT
