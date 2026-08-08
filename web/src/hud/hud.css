@@ -94,52 +94,6 @@ body {
   min-height: 14px;
 }
 
-/* --------------------------------------------------------------------- field */
-
-.field {
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  border-radius: var(--radius);
-  overflow: hidden;
-  border: 1px solid var(--line);
-  min-height: 92px;
-}
-
-.seg {
-  position: relative;
-  display: grid;
-  place-items: center;
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  color: #ffffff7a;
-  background: repeating-linear-gradient(90deg, #ffffff08 0 1px, transparent 1px 100%),
-    #1a4433;
-  border-right: 1px solid var(--line);
-}
-.seg:last-child { border-right: 0; }
-.seg.endzone { background: #123a2b; color: var(--gold); font-weight: 700; }
-
-.ball {
-  position: absolute;
-  top: 50%;
-  width: 30px;
-  height: 20px;
-  margin: -10px 0 0 -15px;
-  border-radius: 50% / 42%;
-  background: linear-gradient(180deg, #8b4a25, #63321a);
-  border: 1px solid #00000060;
-  box-shadow: 0 4px 10px #00000070;
-  transition: left 700ms cubic-bezier(0.34, 1.2, 0.5, 1);
-}
-.ball::after {
-  content: "";
-  position: absolute;
-  inset: 48% 20% auto;
-  height: 2px;
-  background: #ffffffc0;
-}
-
 /* ---------------------------------------------------------------------- cards */
 
 .battle { display: flex; gap: 26px; justify-content: center; align-items: center; }
@@ -206,7 +160,7 @@ body {
 /* ---------------------------------------------------------------- transport */
 
 .transport { display: flex; gap: 8px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
-.transport .group { display: flex; gap: 6px; align-items: center; }
+.group { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 .chip {
   padding: 6px 12px;
   border-radius: 999px;
@@ -268,3 +222,60 @@ body {
 @media (max-width: 720px) {
   .stage { height: 34vh; min-height: 190px; }
 }
+
+/* ------------------------------------------------------------------- setup */
+
+.setup { display: grid; gap: 18px; max-width: 720px; margin: 6vh auto 0; }
+
+.setup-title {
+  margin: 0;
+  font-size: 26px;
+  letter-spacing: 0.01em;
+  text-align: center;
+}
+
+.setup-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 14px;
+}
+
+.field { display: grid; gap: 6px; }
+
+.field label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink-dim);
+}
+
+.field-hint {
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 12px;
+  color: var(--ink-dim);
+}
+
+.field input {
+  padding: 11px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: #00000033;
+  color: var(--ink);
+  font: inherit;
+  min-height: 44px;
+}
+.field input:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+
+.stepper { display: flex; align-items: center; gap: 10px; }
+.stepper .chip { min-width: 44px; min-height: 44px; font-size: 18px; }
+.stepper output {
+  min-width: 2.5ch;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.setup .chip { min-height: 40px; padding: 8px 14px; display: inline-flex; align-items: center; gap: 7px; }
+.setup .chip .dot { width: 11px; height: 11px; }

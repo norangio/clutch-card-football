@@ -1,7 +1,7 @@
 # CCF Web Edition: Interface Contract
 
 **Status:** FROZEN. Handoff H1 complete.
-**Version:** 2.1
+**Version:** 2.2
 **Owner:** Claude drafts, Sol reviews, then both code against it.
 
 This is the only interface between the Python engine and the browser. Once
@@ -371,6 +371,20 @@ server-side and returns the whole batch. The client owns pacing.
 `away.color` is derived (the opposite of `home.color`); the engine only supports
 red and black.
 
+`ai_vs_ai` may be included as an optional boolean, defaulting to `false`. When
+true both seats are engine-controlled and the initial `pump()` runs the whole
+game to `GAME_OVER`, so the create response carries the full event batch and the
+final snapshot at revision 0 and no actions are needed. Restart preserves it.
+Intended for soak tests, demos and deterministic replays; redaction and
+seed-release rules are unchanged.
+
+**Setup values are validated at the boundary** and a violation is 400
+`invalid_action`. Bounds come from the engine data rather than being hardcoded:
+`rating` 1-12 (`DRIVE_CHART` keys), `kick_rating` 1-3 (`TABLE_FG` keys),
+`clutch` 0-3, non-empty capped `name`, `color` red or black. A rating outside
+the chart silently yields zero movement forever, which is unwinnable and
+undiagnosable, so it must never be accepted.
+
 `seed: null` means the server **picks one and stores it**. It is *not* returned.
 That would contradict 4.1 on the very first response and hand the client the
 whole deck before the first card is played. The seed surfaces only once `result`
@@ -429,6 +443,11 @@ game is left to normal expiry.
 SQLite, one row per session: `game_id`, `seed`, `revision`, serialized engine
 state, event log, `created_at`, `updated_at`.
 
+**Retention.** Sessions expire after **14 days without activity**, measured
+from `updated_at`. Accepted actions refresh it; reads do not. The service may
+sweep during startup or normal request handling. An expired `game_id` behaves
+exactly like an unknown one: 404 `game_not_found`, and the client starts fresh.
+
 Requirement: a server restart mid-game loses nothing. `GET /games/{id}` after a
 restart returns a snapshot identical to the one before it.
 
@@ -450,6 +469,7 @@ hand), WebSocket push (same payloads, different transport).
 
 | Version | Date | Change |
 | --- | --- | --- |
+| 2.2 | 2026-08-08 | Accepts both of Sol's proposals: optional `ai_vs_ai` on create (7.1), and a 14-day session retention policy (8). Also documents setup validation bounds, which fix a real bug where an out-of-range rating was accepted and left that team unable to ever advance. Additive; no existing field changed. |
 | 2.1 | 2026-08-07 | Fixes a self-contradiction Sol caught: 7.1 said a generated seed was "returned" at creation, which 4.1 forbids. Now "picked and stored". Wording only, no shape change. |
 | 2 | 2026-08-07 | Adds `color_bonus` to `touchdown_scored.cause`. The orange/green auto-touchdown is being implemented (plan 3.2), and it deserves its own celebration since it is the rarest scoring path in the game. Additive only: no existing field changed. |
 | 1 | 2026-08-07 | **Frozen.** All eight of Sol's review findings applied: seed withheld until game over (and `/replay` gated the same way), `score_after` on `field_goal_resolved`, `possession_changed.reason` enumerated, event invariant scoped to presentation-relevant state, `roll` nullable on short punt and PAT kick, clutch visibility clarified, restart returns a new `game_id`. |

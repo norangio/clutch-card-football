@@ -6,6 +6,7 @@ import type { Action, GameResponse, LegalAction, UnversionedAction } from "../ap
 import { ActionBar, CardBattle, GameLog, Hand, Scoreboard } from "../hud/components";
 import StadiumScene from "../scene/StadiumScene";
 import { useAnimationQueue, type Speed } from "./useAnimationQueue";
+import SetupScreen, { type SetupResult } from "../setup/SetupScreen";
 
 const SPEEDS: Speed[] = ["normal", "fast", "instant"];
 const STORAGE_KEY = "ccf.game_id";
@@ -36,39 +37,52 @@ export default function GamePage({ client = defaultClient }: { client?: GameClie
   const [state, setState] = useState<GameResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [resuming, setResuming] = useState(true);
   const queue = useAnimationQueue();
   const inFlight = useRef(false);
 
+  // Resume a stored game on load. If there is none, or it has expired, show
+  // setup rather than silently inventing teams the player did not choose.
   useEffect(() => {
     let cancelled = false;
     const stored = localStorage.getItem(STORAGE_KEY);
-
-    // Resume first, fall back to a new game if the id is unknown or expired.
-    const start = stored
-      ? client.getGame(stored).catch(() => createFresh())
-      : createFresh();
-
-    function createFresh() {
-      return client.createGame({
-        home: { name: "Wolverines", rating: 7, kick_rating: 2, color: "red", clutch: 2 },
-        away: { name: "Buckeyes", rating: 6, kick_rating: 2, clutch: 2 },
-        difficulty: "hard",
-        seed: null,
-      });
+    if (!stored) {
+      setResuming(false);
+      return;
     }
-
-    start
+    client
+      .getGame(stored)
       .then((res) => {
         if (cancelled) return;
-        localStorage.setItem(STORAGE_KEY, res.snapshot.game_id);
         setState(res);
         queue.enqueue(res.events);
       })
-      .catch((e: unknown) =>
-        !cancelled && setError(e instanceof Error ? e.message : String(e)));
+      .catch(() => {
+        // Expired or unknown id (contract 8): drop it and fall back to setup.
+        localStorage.removeItem(STORAGE_KEY);
+      })
+      .finally(() => !cancelled && setResuming(false));
     return () => { cancelled = true; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [client]);
+
+  const startGame = useCallback(
+    (setup: SetupResult) => {
+      setBusy(true);
+      setError(null);
+      client
+        .createGame(setup)
+        .then((res) => {
+          localStorage.setItem(STORAGE_KEY, res.snapshot.game_id);
+          setState(res);
+          queue.enqueue(res.events);
+        })
+        .catch((e: unknown) =>
+          setError(e instanceof Error ? e.message : String(e)))
+        .finally(() => setBusy(false));
+    },
+    [client, queue],
+  );
 
   useEffect(() => {
     if (prefersReducedMotion()) queue.setSpeed("instant");
@@ -130,13 +144,15 @@ export default function GamePage({ client = defaultClient }: { client?: GameClie
     );
   }
 
-  if (!state) {
+  if (resuming) {
     return (
       <div className="app">
-        <div className="panel"><span className="status">Dealing cards…</span></div>
+        <div className="panel"><span className="status">Looking for your game…</span></div>
       </div>
     );
   }
+
+  if (!state) return <SetupScreen onStart={startGame} busy={busy} />;
 
   const { snapshot } = state;
   const offenseColor =
@@ -188,9 +204,11 @@ export default function GamePage({ client = defaultClient }: { client?: GameClie
               onPlay={(i) => void submit({ type: "play_card", card_index: i })} />
       </div>
 
-      <div className={`panel ${locked ? "locked" : ""}`}>
-        <ActionBar snapshot={snapshot} locked={locked} onAction={onAction} />
-      </div>
+      {snapshot.legal_actions.some((a) => a.type !== "play_card") && (
+        <div className={`panel ${locked ? "locked" : ""}`}>
+          <ActionBar snapshot={snapshot} locked={locked} onAction={onAction} />
+        </div>
+      )}
 
       <div className="panel"><GameLog log={snapshot.log} /></div>
     </div>

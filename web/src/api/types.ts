@@ -1,5 +1,5 @@
 /**
- * Derived from docs/CONTRACT.md v1. The document is the source of truth.
+ * Derived from docs/CONTRACT.md v2.2. The document is the source of truth.
  *
  * If you need to change a shape here, change the contract first, in its own
  * commit, then regenerate. Never edit this to match the server.
@@ -217,11 +217,23 @@ export type Action =
   | { revision: number; type: "post_move"; choice: PostMoveChoice }
   | { revision: number; type: "extra_point"; choice: ExtraPointChoice };
 
+export type Difficulty = "easy" | "medium" | "hard";
+
+/**
+ * Bounds are enforced server-side and a violation is 400 invalid_action
+ * (contract 7.1). Mirrored here so the UI can never offer an illegal value.
+ */
+export const RATING_RANGE = { min: 1, max: 12 } as const;
+export const KICK_RANGE = { min: 1, max: 3 } as const;
+export const CLUTCH_RANGE = { min: 0, max: 3 } as const;
+
 export interface CreateGameRequest {
   home: { name: string; rating: number; kick_rating: number; color: CardColor; clutch: number };
   away: { name: string; rating: number; kick_rating: number; clutch: number };
-  difficulty: "easy" | "medium" | "hard";
+  difficulty: Difficulty;
   seed: number | null;
+  /** Both seats engine-controlled; the create response is the whole game. */
+  ai_vs_ai?: boolean;
 }
 
 export type ApiErrorCode =

@@ -5,10 +5,8 @@
  */
 
 import type {
-  Ball, Card, LegalAction, MaybeCard, PostMoveChoice, SeatState, Snapshot,
+  Card, LegalAction, MaybeCard, PostMoveChoice, SeatState, Snapshot,
 } from "../api/types";
-
-const SEGMENTS: Ball[] = ["1", "2", "3", "Z3", "Z2", "Z1"];
 
 const POST_MOVE_LABEL: Record<PostMoveChoice, string> = {
   P: "Punt",
@@ -91,24 +89,6 @@ export function Scoreboard({ snapshot }: { snapshot: Snapshot }) {
       </div>
       <TeamPanel team={snapshot.away} side="away"
                  hasBall={snapshot.offense_seat === "away"} />
-    </div>
-  );
-}
-
-// -------------------------------------------------------------------- field
-
-/** Flat 2-D placeholder. Phase 3 replaces this with the R3F tabletop. */
-export function Field({ ball, offenseColor }: { ball: Ball; offenseColor: string }) {
-  const index = Math.max(0, SEGMENTS.indexOf(ball));
-  const left = `${((index + 0.5) / SEGMENTS.length) * 100}%`;
-  return (
-    <div className="field" role="img" aria-label={`Ball at segment ${ball}`}>
-      {SEGMENTS.map((seg) => (
-        <div key={seg} className={`seg ${seg.startsWith("Z") ? "endzone" : ""}`}>
-          {seg}
-        </div>
-      ))}
-      <div className="ball" style={{ left, borderColor: offenseColor }} />
     </div>
   );
 }
