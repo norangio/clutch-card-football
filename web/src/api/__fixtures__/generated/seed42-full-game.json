@@ -1,0 +1,7961 @@
+[
+  {
+    "revision": 0,
+    "snapshot": {
+      "game_id": "generated-seed-42",
+      "revision": 0,
+      "phase": "WAITING_OFFENSE_CARD",
+      "required_action": "play_card",
+      "acting_seat": "home",
+      "viewer_seat": "home",
+      "quarter": 1,
+      "play": 1,
+      "plays_in_quarter": 6,
+      "ball": "1",
+      "offense_seat": "home",
+      "defense_seat": "away",
+      "home": {
+        "seat": "home",
+        "name": "Wolverines",
+        "color": "red",
+        "rating": 7,
+        "kick_rating": 2,
+        "score": 0,
+        "mojo": 0,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 7,
+        "segments": 0,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 0,
+        "hand": [
+          {
+            "id": "9S",
+            "value": "9",
+            "suit": "S",
+            "color": "black",
+            "display": "9♠"
+          },
+          {
+            "id": "AD",
+            "value": "A",
+            "suit": "D",
+            "color": "red",
+            "display": "A♦"
+          },
+          {
+            "id": "6H",
+            "value": "6",
+            "suit": "H",
+            "color": "red",
+            "display": "6♥"
+          },
+          {
+            "id": "AS",
+            "value": "A",
+            "suit": "S",
+            "color": "black",
+            "display": "A♠"
+          },
+          {
+            "id": "10C",
+            "value": "10",
+            "suit": "C",
+            "color": "black",
+            "display": "10♣"
+          },
+          {
+            "id": "4D",
+            "value": "4",
+            "suit": "D",
+            "color": "red",
+            "display": "4♦"
+          },
+          {
+            "id": "QD",
+            "value": "Q",
+            "suit": "D",
+            "color": "red",
+            "display": "Q♦"
+          }
+        ]
+      },
+      "away": {
+        "seat": "away",
+        "name": "Buckeyes",
+        "color": "black",
+        "rating": 6,
+        "kick_rating": 2,
+        "score": 0,
+        "mojo": 0,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 7,
+        "segments": 0,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 0
+      },
+      "play_cards": {
+        "offense": null,
+        "defense": null,
+        "war": null,
+        "clutch": null
+      },
+      "legal_actions": [
+        {
+          "type": "play_card",
+          "card_index": 0,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 1,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 2,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 3,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 4,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 5,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 6,
+          "enabled": true
+        }
+      ],
+      "log": [
+        "=== CLUTCH CARD FOOTBALL ===",
+        "Wolverines (red) vs Buckeyes (black)",
+        "=== QUARTER 1 === Wolverines has ball",
+        "-- Play 1/6 | OFF: Wolverines | Ball: 1"
+      ],
+      "message": "QUARTER 1 -- Wolverines has ball",
+      "result": null
+    },
+    "events": [
+      {
+        "seq": 0,
+        "type": "quarter_started",
+        "quarter": 1,
+        "offense_seat": "home",
+        "dealt": 7,
+        "ball": "1"
+      }
+    ]
+  },
+  {
+    "revision": 1,
+    "snapshot": {
+      "game_id": "generated-seed-42",
+      "revision": 1,
+      "phase": "WAITING_DEFENSE_CARD",
+      "required_action": "play_card",
+      "acting_seat": "home",
+      "viewer_seat": "home",
+      "quarter": 1,
+      "play": 2,
+      "plays_in_quarter": 6,
+      "ball": "Z3",
+      "offense_seat": "away",
+      "defense_seat": "home",
+      "home": {
+        "seat": "home",
+        "name": "Wolverines",
+        "color": "red",
+        "rating": 7,
+        "kick_rating": 2,
+        "score": 0,
+        "mojo": 0,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 6,
+        "segments": 0,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 0,
+        "hand": [
+          {
+            "id": "AD",
+            "value": "A",
+            "suit": "D",
+            "color": "red",
+            "display": "A♦"
+          },
+          {
+            "id": "6H",
+            "value": "6",
+            "suit": "H",
+            "color": "red",
+            "display": "6♥"
+          },
+          {
+            "id": "AS",
+            "value": "A",
+            "suit": "S",
+            "color": "black",
+            "display": "A♠"
+          },
+          {
+            "id": "10C",
+            "value": "10",
+            "suit": "C",
+            "color": "black",
+            "display": "10♣"
+          },
+          {
+            "id": "4D",
+            "value": "4",
+            "suit": "D",
+            "color": "red",
+            "display": "4♦"
+          },
+          {
+            "id": "QD",
+            "value": "Q",
+            "suit": "D",
+            "color": "red",
+            "display": "Q♦"
+          }
+        ]
+      },
+      "away": {
+        "seat": "away",
+        "name": "Buckeyes",
+        "color": "black",
+        "rating": 6,
+        "kick_rating": 2,
+        "score": 0,
+        "mojo": 0,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 5,
+        "segments": 0,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 0
+      },
+      "play_cards": {
+        "offense": null,
+        "defense": null,
+        "war": null,
+        "clutch": null
+      },
+      "legal_actions": [
+        {
+          "type": "play_card",
+          "card_index": 0,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 1,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 2,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 3,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 4,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 5,
+          "enabled": true
+        }
+      ],
+      "log": [
+        "=== CLUTCH CARD FOOTBALL ===",
+        "Wolverines (red) vs Buckeyes (black)",
+        "=== QUARTER 1 === Wolverines has ball",
+        "-- Play 1/6 | OFF: Wolverines | Ball: 1",
+        "Wolverines plays 9♠",
+        "Buckeyes defends with JOKER",
+        "OFF: 9♠  vs  DEF: JOKER",
+        "Defense Joker! Turnover to Z3",
+        "-- Play 2/6 | OFF: Buckeyes | Ball: Z3",
+        "AI plays card ... "
+      ],
+      "message": "JOKER DEFENSE - Defense ball at Z3!",
+      "result": null
+    },
+    "events": [
+      {
+        "seq": 0,
+        "type": "card_played",
+        "seat": "home",
+        "role": "offense",
+        "card": {
+          "id": "9S",
+          "value": "9",
+          "suit": "S",
+          "color": "black",
+          "display": "9♠"
+        },
+        "hand_count_after": 6
+      },
+      {
+        "seq": 1,
+        "type": "card_played",
+        "seat": "away",
+        "role": "defense",
+        "card": null,
+        "hand_count_after": 6
+      },
+      {
+        "seq": 2,
+        "type": "cards_revealed",
+        "offense_card": {
+          "id": "9S",
+          "value": "9",
+          "suit": "S",
+          "color": "black",
+          "display": "9♠"
+        },
+        "defense_card": {
+          "id": "JOKER",
+          "value": "Joker",
+          "suit": null,
+          "color": null,
+          "display": "JOKER"
+        },
+        "offense_value": 9,
+        "defense_value": 15,
+        "winner": "defense"
+      },
+      {
+        "seq": 3,
+        "type": "joker_resolved",
+        "played_by": "defense",
+        "opposing_value": 9,
+        "outcome": "turnover_z3"
+      },
+      {
+        "seq": 4,
+        "type": "ball_moved",
+        "seat": "home",
+        "from": "1",
+        "to": "Z3",
+        "segments": 3,
+        "reason": "turnover",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 5,
+        "type": "possession_changed",
+        "from_seat": "home",
+        "to_seat": "away",
+        "ball": "Z3",
+        "reason": "joker_turnover"
+      },
+      {
+        "seq": 6,
+        "type": "card_played",
+        "seat": "away",
+        "role": "offense",
+        "card": null,
+        "hand_count_after": 5
+      }
+    ]
+  },
+  {
+    "revision": 2,
+    "snapshot": {
+      "game_id": "generated-seed-42",
+      "revision": 2,
+      "phase": "WAITING_OFFENSE_CARD",
+      "required_action": "play_card",
+      "acting_seat": "home",
+      "viewer_seat": "home",
+      "quarter": 1,
+      "play": 3,
+      "plays_in_quarter": 6,
+      "ball": "1",
+      "offense_seat": "home",
+      "defense_seat": "away",
+      "home": {
+        "seat": "home",
+        "name": "Wolverines",
+        "color": "red",
+        "rating": 7,
+        "kick_rating": 2,
+        "score": 0,
+        "mojo": 1,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 5,
+        "segments": 0,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 0,
+        "hand": [
+          {
+            "id": "6H",
+            "value": "6",
+            "suit": "H",
+            "color": "red",
+            "display": "6♥"
+          },
+          {
+            "id": "AS",
+            "value": "A",
+            "suit": "S",
+            "color": "black",
+            "display": "A♠"
+          },
+          {
+            "id": "10C",
+            "value": "10",
+            "suit": "C",
+            "color": "black",
+            "display": "10♣"
+          },
+          {
+            "id": "4D",
+            "value": "4",
+            "suit": "D",
+            "color": "red",
+            "display": "4♦"
+          },
+          {
+            "id": "QD",
+            "value": "Q",
+            "suit": "D",
+            "color": "red",
+            "display": "Q♦"
+          }
+        ]
+      },
+      "away": {
+        "seat": "away",
+        "name": "Buckeyes",
+        "color": "black",
+        "rating": 6,
+        "kick_rating": 2,
+        "score": 7,
+        "mojo": 0,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 5,
+        "segments": 4,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 0
+      },
+      "play_cards": {
+        "offense": null,
+        "defense": null,
+        "war": null,
+        "clutch": null
+      },
+      "legal_actions": [
+        {
+          "type": "play_card",
+          "card_index": 0,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 1,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 2,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 3,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 4,
+          "enabled": true
+        }
+      ],
+      "log": [
+        "=== CLUTCH CARD FOOTBALL ===",
+        "Wolverines (red) vs Buckeyes (black)",
+        "=== QUARTER 1 === Wolverines has ball",
+        "-- Play 1/6 | OFF: Wolverines | Ball: 1",
+        "Wolverines plays 9♠",
+        "Buckeyes defends with JOKER",
+        "OFF: 9♠  vs  DEF: JOKER",
+        "Defense Joker! Turnover to Z3",
+        "-- Play 2/6 | OFF: Buckeyes | Ball: Z3",
+        "AI plays card ... ",
+        "Wolverines plays A♦",
+        "OFF: K♥  vs  DEF: A♦",
+        "MOJO! Wolverines won card battle (1/2)",
+        "Moved Z3 -> END ZONE (+4) TOUCHDOWN!",
+        "TOUCHDOWN! Buckeyes +6",
+        "AI chooses extra point: K",
+        "PAT kick: PAT KICK! +1 pt (+1)",
+        "-- Play 3/6 | OFF: Wolverines | Ball: 1"
+      ],
+      "message": "PAT KICK! +1 pt",
+      "result": null
+    },
+    "events": [
+      {
+        "seq": 0,
+        "type": "card_played",
+        "seat": "home",
+        "role": "defense",
+        "card": {
+          "id": "AD",
+          "value": "A",
+          "suit": "D",
+          "color": "red",
+          "display": "A♦"
+        },
+        "hand_count_after": 5
+      },
+      {
+        "seq": 1,
+        "type": "cards_revealed",
+        "offense_card": {
+          "id": "KH",
+          "value": "K",
+          "suit": "H",
+          "color": "red",
+          "display": "K♥"
+        },
+        "defense_card": {
+          "id": "AD",
+          "value": "A",
+          "suit": "D",
+          "color": "red",
+          "display": "A♦"
+        },
+        "offense_value": 13,
+        "defense_value": 14,
+        "winner": "defense"
+      },
+      {
+        "seq": 2,
+        "type": "mojo_changed",
+        "seat": "home",
+        "from": 0,
+        "to": 1,
+        "reason": "won_card_battle"
+      },
+      {
+        "seq": 3,
+        "type": "ball_moved",
+        "seat": "away",
+        "from": "Z3",
+        "to": "1",
+        "segments": 4,
+        "reason": "drive_chart",
+        "is_touchdown": true,
+        "is_safety": false
+      },
+      {
+        "seq": 4,
+        "type": "touchdown_scored",
+        "seat": "away",
+        "points": 6,
+        "score_after": 6,
+        "cause": "drive"
+      },
+      {
+        "seq": 5,
+        "type": "extra_point_resolved",
+        "seat": "away",
+        "choice": "K",
+        "success": true,
+        "roll": null,
+        "points": 1,
+        "score_after": 7
+      },
+      {
+        "seq": 6,
+        "type": "ball_moved",
+        "seat": "away",
+        "from": "Z3",
+        "to": "1",
+        "segments": 0,
+        "reason": "kickoff",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 7,
+        "type": "possession_changed",
+        "from_seat": "away",
+        "to_seat": "home",
+        "ball": "1",
+        "reason": "touchdown"
+      }
+    ]
+  },
+  {
+    "revision": 3,
+    "snapshot": {
+      "game_id": "generated-seed-42",
+      "revision": 3,
+      "phase": "WAITING_POST_MOVE",
+      "required_action": "post_move",
+      "acting_seat": "home",
+      "viewer_seat": "home",
+      "quarter": 1,
+      "play": 3,
+      "plays_in_quarter": 6,
+      "ball": "Z3",
+      "offense_seat": "home",
+      "defense_seat": "away",
+      "home": {
+        "seat": "home",
+        "name": "Wolverines",
+        "color": "red",
+        "rating": 7,
+        "kick_rating": 2,
+        "score": 0,
+        "mojo": 1,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 4,
+        "segments": 3,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 0,
+        "hand": [
+          {
+            "id": "AS",
+            "value": "A",
+            "suit": "S",
+            "color": "black",
+            "display": "A♠"
+          },
+          {
+            "id": "10C",
+            "value": "10",
+            "suit": "C",
+            "color": "black",
+            "display": "10♣"
+          },
+          {
+            "id": "4D",
+            "value": "4",
+            "suit": "D",
+            "color": "red",
+            "display": "4♦"
+          },
+          {
+            "id": "QD",
+            "value": "Q",
+            "suit": "D",
+            "color": "red",
+            "display": "Q♦"
+          }
+        ]
+      },
+      "away": {
+        "seat": "away",
+        "name": "Buckeyes",
+        "color": "black",
+        "rating": 6,
+        "kick_rating": 2,
+        "score": 7,
+        "mojo": 0,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 4,
+        "segments": 4,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 0
+      },
+      "play_cards": {
+        "offense": {
+          "id": "6H",
+          "value": "6",
+          "suit": "H",
+          "color": "red",
+          "display": "6♥"
+        },
+        "defense": {
+          "id": "6C",
+          "value": "6",
+          "suit": "C",
+          "color": "black",
+          "display": "6♣"
+        },
+        "war": {
+          "id": "9D",
+          "value": "9",
+          "suit": "D",
+          "color": "red",
+          "display": "9♦"
+        },
+        "clutch": null
+      },
+      "legal_actions": [
+        {
+          "type": "post_move",
+          "choice": "P",
+          "enabled": true
+        },
+        {
+          "type": "post_move",
+          "choice": "F",
+          "enabled": true
+        },
+        {
+          "type": "post_move",
+          "choice": "C",
+          "enabled": true
+        },
+        {
+          "type": "post_move",
+          "choice": "S",
+          "enabled": true
+        }
+      ],
+      "log": [
+        "-- Play 1/6 | OFF: Wolverines | Ball: 1",
+        "Wolverines plays 9♠",
+        "Buckeyes defends with JOKER",
+        "OFF: 9♠  vs  DEF: JOKER",
+        "Defense Joker! Turnover to Z3",
+        "-- Play 2/6 | OFF: Buckeyes | Ball: Z3",
+        "AI plays card ... ",
+        "Wolverines plays A♦",
+        "OFF: K♥  vs  DEF: A♦",
+        "MOJO! Wolverines won card battle (1/2)",
+        "Moved Z3 -> END ZONE (+4) TOUCHDOWN!",
+        "TOUCHDOWN! Buckeyes +6",
+        "AI chooses extra point: K",
+        "PAT kick: PAT KICK! +1 pt (+1)",
+        "-- Play 3/6 | OFF: Wolverines | Ball: 1",
+        "Wolverines plays 6♥",
+        "Buckeyes defends with 6♣",
+        "OFF: 6♥  vs  DEF: 6♣",
+        "WAR! Drew 9♦ (red)",
+        "Offense advances to Z3"
+      ],
+      "message": "WAR! 9♦ - Offense to Z3!",
+      "result": null
+    },
+    "events": [
+      {
+        "seq": 0,
+        "type": "card_played",
+        "seat": "home",
+        "role": "offense",
+        "card": {
+          "id": "6H",
+          "value": "6",
+          "suit": "H",
+          "color": "red",
+          "display": "6♥"
+        },
+        "hand_count_after": 4
+      },
+      {
+        "seq": 1,
+        "type": "card_played",
+        "seat": "away",
+        "role": "defense",
+        "card": null,
+        "hand_count_after": 4
+      },
+      {
+        "seq": 2,
+        "type": "cards_revealed",
+        "offense_card": {
+          "id": "6H",
+          "value": "6",
+          "suit": "H",
+          "color": "red",
+          "display": "6♥"
+        },
+        "defense_card": {
+          "id": "6C",
+          "value": "6",
+          "suit": "C",
+          "color": "black",
+          "display": "6♣"
+        },
+        "offense_value": 6,
+        "defense_value": 6,
+        "winner": "tie"
+      },
+      {
+        "seq": 3,
+        "type": "war_started",
+        "tied_value": 6
+      },
+      {
+        "seq": 4,
+        "type": "war_card_revealed",
+        "card": {
+          "id": "9D",
+          "value": "9",
+          "suit": "D",
+          "color": "red",
+          "display": "9♦"
+        },
+        "matches_offense_color": true,
+        "outcome": "advance"
+      },
+      {
+        "seq": 5,
+        "type": "ball_moved",
+        "seat": "home",
+        "from": "1",
+        "to": "Z3",
+        "segments": 3,
+        "reason": "war",
+        "is_touchdown": false,
+        "is_safety": false
+      }
+    ]
+  },
+  {
+    "revision": 4,
+    "snapshot": {
+      "game_id": "generated-seed-42",
+      "revision": 4,
+      "phase": "WAITING_DEFENSE_CARD",
+      "required_action": "play_card",
+      "acting_seat": "home",
+      "viewer_seat": "home",
+      "quarter": 1,
+      "play": 4,
+      "plays_in_quarter": 6,
+      "ball": "1",
+      "offense_seat": "away",
+      "defense_seat": "home",
+      "home": {
+        "seat": "home",
+        "name": "Wolverines",
+        "color": "red",
+        "rating": 7,
+        "kick_rating": 2,
+        "score": 0,
+        "mojo": 1,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 4,
+        "segments": 3,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 1,
+        "hand": [
+          {
+            "id": "AS",
+            "value": "A",
+            "suit": "S",
+            "color": "black",
+            "display": "A♠"
+          },
+          {
+            "id": "10C",
+            "value": "10",
+            "suit": "C",
+            "color": "black",
+            "display": "10♣"
+          },
+          {
+            "id": "4D",
+            "value": "4",
+            "suit": "D",
+            "color": "red",
+            "display": "4♦"
+          },
+          {
+            "id": "QD",
+            "value": "Q",
+            "suit": "D",
+            "color": "red",
+            "display": "Q♦"
+          }
+        ]
+      },
+      "away": {
+        "seat": "away",
+        "name": "Buckeyes",
+        "color": "black",
+        "rating": 6,
+        "kick_rating": 2,
+        "score": 7,
+        "mojo": 0,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 3,
+        "segments": 4,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 0
+      },
+      "play_cards": {
+        "offense": null,
+        "defense": null,
+        "war": null,
+        "clutch": null
+      },
+      "legal_actions": [
+        {
+          "type": "play_card",
+          "card_index": 0,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 1,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 2,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 3,
+          "enabled": true
+        }
+      ],
+      "log": [
+        "OFF: 9♠  vs  DEF: JOKER",
+        "Defense Joker! Turnover to Z3",
+        "-- Play 2/6 | OFF: Buckeyes | Ball: Z3",
+        "AI plays card ... ",
+        "Wolverines plays A♦",
+        "OFF: K♥  vs  DEF: A♦",
+        "MOJO! Wolverines won card battle (1/2)",
+        "Moved Z3 -> END ZONE (+4) TOUCHDOWN!",
+        "TOUCHDOWN! Buckeyes +6",
+        "AI chooses extra point: K",
+        "PAT kick: PAT KICK! +1 pt (+1)",
+        "-- Play 3/6 | OFF: Wolverines | Ball: 1",
+        "Wolverines plays 6♥",
+        "Buckeyes defends with 6♣",
+        "OFF: 6♥  vs  DEF: 6♣",
+        "WAR! Drew 9♦ (red)",
+        "Offense advances to Z3",
+        "PUNT! Roll 1 + Kick 2 = 3",
+        "-- Play 4/6 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... "
+      ],
+      "message": "PUNT! Roll 1 + Kick 2 = 3",
+      "result": null
+    },
+    "events": [
+      {
+        "seq": 0,
+        "type": "punt_resolved",
+        "seat": "home",
+        "kind": "punt",
+        "distance": 3,
+        "roll": 1,
+        "from": "Z3",
+        "to": "1",
+        "clamped": false
+      },
+      {
+        "seq": 1,
+        "type": "ball_moved",
+        "seat": "home",
+        "from": "Z3",
+        "to": "1",
+        "segments": -3,
+        "reason": "punt",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 2,
+        "type": "possession_changed",
+        "from_seat": "home",
+        "to_seat": "away",
+        "ball": "1",
+        "reason": "punt"
+      },
+      {
+        "seq": 3,
+        "type": "card_played",
+        "seat": "away",
+        "role": "offense",
+        "card": null,
+        "hand_count_after": 3
+      }
+    ]
+  },
+  {
+    "revision": 5,
+    "snapshot": {
+      "game_id": "generated-seed-42",
+      "revision": 5,
+      "phase": "WAITING_OFFENSE_CARD",
+      "required_action": "play_card",
+      "acting_seat": "home",
+      "viewer_seat": "home",
+      "quarter": 1,
+      "play": 5,
+      "plays_in_quarter": 6,
+      "ball": "1",
+      "offense_seat": "home",
+      "defense_seat": "away",
+      "home": {
+        "seat": "home",
+        "name": "Wolverines",
+        "color": "red",
+        "rating": 7,
+        "kick_rating": 2,
+        "score": 0,
+        "mojo": 2,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 3,
+        "segments": 3,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 1,
+        "hand": [
+          {
+            "id": "10C",
+            "value": "10",
+            "suit": "C",
+            "color": "black",
+            "display": "10♣"
+          },
+          {
+            "id": "4D",
+            "value": "4",
+            "suit": "D",
+            "color": "red",
+            "display": "4♦"
+          },
+          {
+            "id": "QD",
+            "value": "Q",
+            "suit": "D",
+            "color": "red",
+            "display": "Q♦"
+          }
+        ]
+      },
+      "away": {
+        "seat": "away",
+        "name": "Buckeyes",
+        "color": "black",
+        "rating": 6,
+        "kick_rating": 2,
+        "score": 14,
+        "mojo": 0,
+        "clutch": 1,
+        "clutch_used": true,
+        "hand_count": 3,
+        "segments": 7,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 0
+      },
+      "play_cards": {
+        "offense": null,
+        "defense": null,
+        "war": null,
+        "clutch": null
+      },
+      "legal_actions": [
+        {
+          "type": "play_card",
+          "card_index": 0,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 1,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 2,
+          "enabled": true
+        }
+      ],
+      "log": [
+        "PAT kick: PAT KICK! +1 pt (+1)",
+        "-- Play 3/6 | OFF: Wolverines | Ball: 1",
+        "Wolverines plays 6♥",
+        "Buckeyes defends with 6♣",
+        "OFF: 6♥  vs  DEF: 6♣",
+        "WAR! Drew 9♦ (red)",
+        "Offense advances to Z3",
+        "PUNT! Roll 1 + Kick 2 = 3",
+        "-- Play 4/6 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... ",
+        "Wolverines plays A♠",
+        "OFF: 10♦  vs  DEF: A♠",
+        "MOJO! Wolverines won card battle (2/2)",
+        "Moved from 1 -> Z3 (+3 segments)",
+        "AI chooses: C",
+        "CLUTCH! Drew JOKER (remaining: 1)",
+        "TOUCHDOWN! Buckeyes +6",
+        "AI chooses extra point: K",
+        "PAT kick: PAT KICK! +1 pt (+1)",
+        "-- Play 5/6 | OFF: Wolverines | Ball: 1"
+      ],
+      "message": "PAT KICK! +1 pt",
+      "result": null
+    },
+    "events": [
+      {
+        "seq": 0,
+        "type": "card_played",
+        "seat": "home",
+        "role": "defense",
+        "card": {
+          "id": "AS",
+          "value": "A",
+          "suit": "S",
+          "color": "black",
+          "display": "A♠"
+        },
+        "hand_count_after": 3
+      },
+      {
+        "seq": 1,
+        "type": "cards_revealed",
+        "offense_card": {
+          "id": "10D",
+          "value": "10",
+          "suit": "D",
+          "color": "red",
+          "display": "10♦"
+        },
+        "defense_card": {
+          "id": "AS",
+          "value": "A",
+          "suit": "S",
+          "color": "black",
+          "display": "A♠"
+        },
+        "offense_value": 10,
+        "defense_value": 14,
+        "winner": "defense"
+      },
+      {
+        "seq": 2,
+        "type": "mojo_changed",
+        "seat": "home",
+        "from": 1,
+        "to": 2,
+        "reason": "won_card_battle"
+      },
+      {
+        "seq": 3,
+        "type": "ball_moved",
+        "seat": "away",
+        "from": "1",
+        "to": "Z3",
+        "segments": 3,
+        "reason": "drive_chart",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 4,
+        "type": "clutch_used",
+        "seat": "away",
+        "clutch_after": 1,
+        "card": {
+          "id": "JOKER",
+          "value": "Joker",
+          "suit": null,
+          "color": null,
+          "display": "JOKER"
+        }
+      },
+      {
+        "seq": 5,
+        "type": "touchdown_scored",
+        "seat": "away",
+        "points": 6,
+        "score_after": 13,
+        "cause": "clutch"
+      },
+      {
+        "seq": 6,
+        "type": "extra_point_resolved",
+        "seat": "away",
+        "choice": "K",
+        "success": true,
+        "roll": null,
+        "points": 1,
+        "score_after": 14
+      },
+      {
+        "seq": 7,
+        "type": "ball_moved",
+        "seat": "away",
+        "from": "Z3",
+        "to": "1",
+        "segments": 0,
+        "reason": "kickoff",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 8,
+        "type": "possession_changed",
+        "from_seat": "away",
+        "to_seat": "home",
+        "ball": "1",
+        "reason": "touchdown"
+      }
+    ]
+  },
+  {
+    "revision": 6,
+    "snapshot": {
+      "game_id": "generated-seed-42",
+      "revision": 6,
+      "phase": "WAITING_POST_MOVE",
+      "required_action": "post_move",
+      "acting_seat": "home",
+      "viewer_seat": "home",
+      "quarter": 1,
+      "play": 5,
+      "plays_in_quarter": 6,
+      "ball": "Z3",
+      "offense_seat": "home",
+      "defense_seat": "away",
+      "home": {
+        "seat": "home",
+        "name": "Wolverines",
+        "color": "red",
+        "rating": 7,
+        "kick_rating": 2,
+        "score": 0,
+        "mojo": 2,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 2,
+        "segments": 6,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 1,
+        "hand": [
+          {
+            "id": "4D",
+            "value": "4",
+            "suit": "D",
+            "color": "red",
+            "display": "4♦"
+          },
+          {
+            "id": "QD",
+            "value": "Q",
+            "suit": "D",
+            "color": "red",
+            "display": "Q♦"
+          }
+        ]
+      },
+      "away": {
+        "seat": "away",
+        "name": "Buckeyes",
+        "color": "black",
+        "rating": 6,
+        "kick_rating": 2,
+        "score": 14,
+        "mojo": 0,
+        "clutch": 1,
+        "clutch_used": true,
+        "hand_count": 2,
+        "segments": 7,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 0
+      },
+      "play_cards": {
+        "offense": {
+          "id": "10C",
+          "value": "10",
+          "suit": "C",
+          "color": "black",
+          "display": "10♣"
+        },
+        "defense": {
+          "id": "7C",
+          "value": "7",
+          "suit": "C",
+          "color": "black",
+          "display": "7♣"
+        },
+        "war": null,
+        "clutch": null
+      },
+      "legal_actions": [
+        {
+          "type": "post_move",
+          "choice": "P",
+          "enabled": true
+        },
+        {
+          "type": "post_move",
+          "choice": "F",
+          "enabled": true
+        },
+        {
+          "type": "post_move",
+          "choice": "C",
+          "enabled": true
+        },
+        {
+          "type": "post_move",
+          "choice": "S",
+          "enabled": true
+        }
+      ],
+      "log": [
+        "OFF: 6♥  vs  DEF: 6♣",
+        "WAR! Drew 9♦ (red)",
+        "Offense advances to Z3",
+        "PUNT! Roll 1 + Kick 2 = 3",
+        "-- Play 4/6 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... ",
+        "Wolverines plays A♠",
+        "OFF: 10♦  vs  DEF: A♠",
+        "MOJO! Wolverines won card battle (2/2)",
+        "Moved from 1 -> Z3 (+3 segments)",
+        "AI chooses: C",
+        "CLUTCH! Drew JOKER (remaining: 1)",
+        "TOUCHDOWN! Buckeyes +6",
+        "AI chooses extra point: K",
+        "PAT kick: PAT KICK! +1 pt (+1)",
+        "-- Play 5/6 | OFF: Wolverines | Ball: 1",
+        "Wolverines plays 10♣",
+        "Buckeyes defends with 7♣",
+        "OFF: 10♣  vs  DEF: 7♣",
+        "Moved from 1 -> Z3 (+3 segments)"
+      ],
+      "message": "Moved from 1 -> Z3 (+3 segments)",
+      "result": null
+    },
+    "events": [
+      {
+        "seq": 0,
+        "type": "card_played",
+        "seat": "home",
+        "role": "offense",
+        "card": {
+          "id": "10C",
+          "value": "10",
+          "suit": "C",
+          "color": "black",
+          "display": "10♣"
+        },
+        "hand_count_after": 2
+      },
+      {
+        "seq": 1,
+        "type": "card_played",
+        "seat": "away",
+        "role": "defense",
+        "card": null,
+        "hand_count_after": 2
+      },
+      {
+        "seq": 2,
+        "type": "cards_revealed",
+        "offense_card": {
+          "id": "10C",
+          "value": "10",
+          "suit": "C",
+          "color": "black",
+          "display": "10♣"
+        },
+        "defense_card": {
+          "id": "7C",
+          "value": "7",
+          "suit": "C",
+          "color": "black",
+          "display": "7♣"
+        },
+        "offense_value": 10,
+        "defense_value": 7,
+        "winner": "offense"
+      },
+      {
+        "seq": 3,
+        "type": "ball_moved",
+        "seat": "home",
+        "from": "1",
+        "to": "Z3",
+        "segments": 3,
+        "reason": "drive_chart",
+        "is_touchdown": false,
+        "is_safety": false
+      }
+    ]
+  },
+  {
+    "revision": 7,
+    "snapshot": {
+      "game_id": "generated-seed-42",
+      "revision": 7,
+      "phase": "WAITING_DEFENSE_CARD",
+      "required_action": "play_card",
+      "acting_seat": "home",
+      "viewer_seat": "home",
+      "quarter": 1,
+      "play": 6,
+      "plays_in_quarter": 6,
+      "ball": "1",
+      "offense_seat": "away",
+      "defense_seat": "home",
+      "home": {
+        "seat": "home",
+        "name": "Wolverines",
+        "color": "red",
+        "rating": 7,
+        "kick_rating": 2,
+        "score": 0,
+        "mojo": 2,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 2,
+        "segments": 6,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 2,
+        "hand": [
+          {
+            "id": "4D",
+            "value": "4",
+            "suit": "D",
+            "color": "red",
+            "display": "4♦"
+          },
+          {
+            "id": "QD",
+            "value": "Q",
+            "suit": "D",
+            "color": "red",
+            "display": "Q♦"
+          }
+        ]
+      },
+      "away": {
+        "seat": "away",
+        "name": "Buckeyes",
+        "color": "black",
+        "rating": 6,
+        "kick_rating": 2,
+        "score": 14,
+        "mojo": 0,
+        "clutch": 1,
+        "clutch_used": false,
+        "hand_count": 1,
+        "segments": 7,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 0
+      },
+      "play_cards": {
+        "offense": null,
+        "defense": null,
+        "war": null,
+        "clutch": null
+      },
+      "legal_actions": [
+        {
+          "type": "play_card",
+          "card_index": 0,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 1,
+          "enabled": true
+        }
+      ],
+      "log": [
+        "PUNT! Roll 1 + Kick 2 = 3",
+        "-- Play 4/6 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... ",
+        "Wolverines plays A♠",
+        "OFF: 10♦  vs  DEF: A♠",
+        "MOJO! Wolverines won card battle (2/2)",
+        "Moved from 1 -> Z3 (+3 segments)",
+        "AI chooses: C",
+        "CLUTCH! Drew JOKER (remaining: 1)",
+        "TOUCHDOWN! Buckeyes +6",
+        "AI chooses extra point: K",
+        "PAT kick: PAT KICK! +1 pt (+1)",
+        "-- Play 5/6 | OFF: Wolverines | Ball: 1",
+        "Wolverines plays 10♣",
+        "Buckeyes defends with 7♣",
+        "OFF: 10♣  vs  DEF: 7♣",
+        "Moved from 1 -> Z3 (+3 segments)",
+        "PUNT! Roll 2 + Kick 2 = 4",
+        "-- Play 6/6 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... "
+      ],
+      "message": "PUNT! Roll 2 + Kick 2 = 4",
+      "result": null
+    },
+    "events": [
+      {
+        "seq": 0,
+        "type": "punt_resolved",
+        "seat": "home",
+        "kind": "punt",
+        "distance": 4,
+        "roll": 2,
+        "from": "Z3",
+        "to": "1",
+        "clamped": true
+      },
+      {
+        "seq": 1,
+        "type": "ball_moved",
+        "seat": "home",
+        "from": "Z3",
+        "to": "1",
+        "segments": -3,
+        "reason": "punt",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 2,
+        "type": "possession_changed",
+        "from_seat": "home",
+        "to_seat": "away",
+        "ball": "1",
+        "reason": "punt"
+      },
+      {
+        "seq": 3,
+        "type": "card_played",
+        "seat": "away",
+        "role": "offense",
+        "card": null,
+        "hand_count_after": 1
+      }
+    ]
+  },
+  {
+    "revision": 8,
+    "snapshot": {
+      "game_id": "generated-seed-42",
+      "revision": 8,
+      "phase": "WAITING_OFFENSE_CARD",
+      "required_action": "play_card",
+      "acting_seat": "home",
+      "viewer_seat": "home",
+      "quarter": 2,
+      "play": 1,
+      "plays_in_quarter": 6,
+      "ball": "1",
+      "offense_seat": "home",
+      "defense_seat": "away",
+      "home": {
+        "seat": "home",
+        "name": "Wolverines",
+        "color": "red",
+        "rating": 7,
+        "kick_rating": 2,
+        "score": 0,
+        "mojo": 2,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 7,
+        "segments": 6,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 2,
+        "hand": [
+          {
+            "id": "QD",
+            "value": "Q",
+            "suit": "D",
+            "color": "red",
+            "display": "Q♦"
+          },
+          {
+            "id": "KS",
+            "value": "K",
+            "suit": "S",
+            "color": "black",
+            "display": "K♠"
+          },
+          {
+            "id": "9H",
+            "value": "9",
+            "suit": "H",
+            "color": "red",
+            "display": "9♥"
+          },
+          {
+            "id": "QS",
+            "value": "Q",
+            "suit": "S",
+            "color": "black",
+            "display": "Q♠"
+          },
+          {
+            "id": "JS",
+            "value": "J",
+            "suit": "S",
+            "color": "black",
+            "display": "J♠"
+          },
+          {
+            "id": "2H",
+            "value": "2",
+            "suit": "H",
+            "color": "red",
+            "display": "2♥"
+          },
+          {
+            "id": "AC",
+            "value": "A",
+            "suit": "C",
+            "color": "black",
+            "display": "A♣"
+          }
+        ]
+      },
+      "away": {
+        "seat": "away",
+        "name": "Buckeyes",
+        "color": "black",
+        "rating": 6,
+        "kick_rating": 2,
+        "score": 17,
+        "mojo": 0,
+        "clutch": 0,
+        "clutch_used": true,
+        "hand_count": 7,
+        "segments": 12,
+        "fg_made": 1,
+        "fg_att": 1,
+        "punts": 0
+      },
+      "play_cards": {
+        "offense": null,
+        "defense": null,
+        "war": null,
+        "clutch": null
+      },
+      "legal_actions": [
+        {
+          "type": "play_card",
+          "card_index": 0,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 1,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 2,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 3,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 4,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 5,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 6,
+          "enabled": true
+        }
+      ],
+      "log": [
+        "-- Play 5/6 | OFF: Wolverines | Ball: 1",
+        "Wolverines plays 10♣",
+        "Buckeyes defends with 7♣",
+        "OFF: 10♣  vs  DEF: 7♣",
+        "Moved from 1 -> Z3 (+3 segments)",
+        "PUNT! Roll 2 + Kick 2 = 4",
+        "-- Play 6/6 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... ",
+        "Wolverines plays 4♦",
+        "OFF: 4♣  vs  DEF: 4♦",
+        "WAR! Drew 2♣ (black)",
+        "Offense advances to Z3",
+        "AI chooses: C",
+        "CLUTCH! Drew 7♦ (remaining: 0)",
+        "Clutch move 2 -> Z1",
+        "AI chooses: F",
+        "FIELD GOAL GOOD! +3 (Buckeyes)",
+        "=== End Q1 | Wolverines: 0 - Buckeyes: 17 ===",
+        "=== QUARTER 2 === Wolverines has ball",
+        "-- Play 1/6 | OFF: Wolverines | Ball: 1"
+      ],
+      "message": "QUARTER 2 -- Wolverines has ball",
+      "result": null
+    },
+    "events": [
+      {
+        "seq": 0,
+        "type": "card_played",
+        "seat": "home",
+        "role": "defense",
+        "card": {
+          "id": "4D",
+          "value": "4",
+          "suit": "D",
+          "color": "red",
+          "display": "4♦"
+        },
+        "hand_count_after": 1
+      },
+      {
+        "seq": 1,
+        "type": "cards_revealed",
+        "offense_card": {
+          "id": "4C",
+          "value": "4",
+          "suit": "C",
+          "color": "black",
+          "display": "4♣"
+        },
+        "defense_card": {
+          "id": "4D",
+          "value": "4",
+          "suit": "D",
+          "color": "red",
+          "display": "4♦"
+        },
+        "offense_value": 4,
+        "defense_value": 4,
+        "winner": "tie"
+      },
+      {
+        "seq": 2,
+        "type": "war_started",
+        "tied_value": 4
+      },
+      {
+        "seq": 3,
+        "type": "war_card_revealed",
+        "card": {
+          "id": "2C",
+          "value": "2",
+          "suit": "C",
+          "color": "black",
+          "display": "2♣"
+        },
+        "matches_offense_color": true,
+        "outcome": "advance"
+      },
+      {
+        "seq": 4,
+        "type": "ball_moved",
+        "seat": "away",
+        "from": "1",
+        "to": "Z3",
+        "segments": 3,
+        "reason": "war",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 5,
+        "type": "clutch_used",
+        "seat": "away",
+        "clutch_after": 0,
+        "card": {
+          "id": "7D",
+          "value": "7",
+          "suit": "D",
+          "color": "red",
+          "display": "7♦"
+        }
+      },
+      {
+        "seq": 6,
+        "type": "ball_moved",
+        "seat": "away",
+        "from": "Z3",
+        "to": "Z1",
+        "segments": 2,
+        "reason": "clutch",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 7,
+        "type": "field_goal_resolved",
+        "seat": "away",
+        "success": true,
+        "roll": 6,
+        "total": 8,
+        "target": 4,
+        "from": "Z1",
+        "points": 3,
+        "score_after": 17
+      },
+      {
+        "seq": 8,
+        "type": "ball_moved",
+        "seat": "away",
+        "from": "Z1",
+        "to": "1",
+        "segments": -5,
+        "reason": "kickoff",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 9,
+        "type": "possession_changed",
+        "from_seat": "away",
+        "to_seat": "home",
+        "ball": "1",
+        "reason": "field_goal_made"
+      },
+      {
+        "seq": 10,
+        "type": "quarter_ended",
+        "quarter": 1,
+        "home_score": 0,
+        "away_score": 17
+      },
+      {
+        "seq": 11,
+        "type": "quarter_started",
+        "quarter": 2,
+        "offense_seat": "home",
+        "dealt": 6,
+        "ball": "1"
+      }
+    ]
+  },
+  {
+    "revision": 9,
+    "snapshot": {
+      "game_id": "generated-seed-42",
+      "revision": 9,
+      "phase": "WAITING_POST_MOVE",
+      "required_action": "post_move",
+      "acting_seat": "home",
+      "viewer_seat": "home",
+      "quarter": 2,
+      "play": 1,
+      "plays_in_quarter": 6,
+      "ball": "Z2",
+      "offense_seat": "home",
+      "defense_seat": "away",
+      "home": {
+        "seat": "home",
+        "name": "Wolverines",
+        "color": "red",
+        "rating": 7,
+        "kick_rating": 2,
+        "score": 0,
+        "mojo": 2,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 6,
+        "segments": 10,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 2,
+        "hand": [
+          {
+            "id": "KS",
+            "value": "K",
+            "suit": "S",
+            "color": "black",
+            "display": "K♠"
+          },
+          {
+            "id": "9H",
+            "value": "9",
+            "suit": "H",
+            "color": "red",
+            "display": "9♥"
+          },
+          {
+            "id": "QS",
+            "value": "Q",
+            "suit": "S",
+            "color": "black",
+            "display": "Q♠"
+          },
+          {
+            "id": "JS",
+            "value": "J",
+            "suit": "S",
+            "color": "black",
+            "display": "J♠"
+          },
+          {
+            "id": "2H",
+            "value": "2",
+            "suit": "H",
+            "color": "red",
+            "display": "2♥"
+          },
+          {
+            "id": "AC",
+            "value": "A",
+            "suit": "C",
+            "color": "black",
+            "display": "A♣"
+          }
+        ]
+      },
+      "away": {
+        "seat": "away",
+        "name": "Buckeyes",
+        "color": "black",
+        "rating": 6,
+        "kick_rating": 2,
+        "score": 17,
+        "mojo": 0,
+        "clutch": 0,
+        "clutch_used": true,
+        "hand_count": 6,
+        "segments": 12,
+        "fg_made": 1,
+        "fg_att": 1,
+        "punts": 0
+      },
+      "play_cards": {
+        "offense": {
+          "id": "QD",
+          "value": "Q",
+          "suit": "D",
+          "color": "red",
+          "display": "Q♦"
+        },
+        "defense": {
+          "id": "7H",
+          "value": "7",
+          "suit": "H",
+          "color": "red",
+          "display": "7♥"
+        },
+        "war": null,
+        "clutch": null
+      },
+      "legal_actions": [
+        {
+          "type": "post_move",
+          "choice": "P",
+          "enabled": true
+        },
+        {
+          "type": "post_move",
+          "choice": "F",
+          "enabled": true
+        },
+        {
+          "type": "post_move",
+          "choice": "C",
+          "enabled": true
+        },
+        {
+          "type": "post_move",
+          "choice": "S",
+          "enabled": true
+        }
+      ],
+      "log": [
+        "Moved from 1 -> Z3 (+3 segments)",
+        "PUNT! Roll 2 + Kick 2 = 4",
+        "-- Play 6/6 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... ",
+        "Wolverines plays 4♦",
+        "OFF: 4♣  vs  DEF: 4♦",
+        "WAR! Drew 2♣ (black)",
+        "Offense advances to Z3",
+        "AI chooses: C",
+        "CLUTCH! Drew 7♦ (remaining: 0)",
+        "Clutch move 2 -> Z1",
+        "AI chooses: F",
+        "FIELD GOAL GOOD! +3 (Buckeyes)",
+        "=== End Q1 | Wolverines: 0 - Buckeyes: 17 ===",
+        "=== QUARTER 2 === Wolverines has ball",
+        "-- Play 1/6 | OFF: Wolverines | Ball: 1",
+        "Wolverines plays Q♦",
+        "Buckeyes defends with 7♥",
+        "OFF: Q♦  vs  DEF: 7♥",
+        "Moved from 1 -> Z2 (+4 segments)"
+      ],
+      "message": "Moved from 1 -> Z2 (+4 segments)",
+      "result": null
+    },
+    "events": [
+      {
+        "seq": 0,
+        "type": "card_played",
+        "seat": "home",
+        "role": "offense",
+        "card": {
+          "id": "QD",
+          "value": "Q",
+          "suit": "D",
+          "color": "red",
+          "display": "Q♦"
+        },
+        "hand_count_after": 6
+      },
+      {
+        "seq": 1,
+        "type": "card_played",
+        "seat": "away",
+        "role": "defense",
+        "card": null,
+        "hand_count_after": 6
+      },
+      {
+        "seq": 2,
+        "type": "cards_revealed",
+        "offense_card": {
+          "id": "QD",
+          "value": "Q",
+          "suit": "D",
+          "color": "red",
+          "display": "Q♦"
+        },
+        "defense_card": {
+          "id": "7H",
+          "value": "7",
+          "suit": "H",
+          "color": "red",
+          "display": "7♥"
+        },
+        "offense_value": 12,
+        "defense_value": 7,
+        "winner": "offense"
+      },
+      {
+        "seq": 3,
+        "type": "ball_moved",
+        "seat": "home",
+        "from": "1",
+        "to": "Z2",
+        "segments": 4,
+        "reason": "drive_chart",
+        "is_touchdown": false,
+        "is_safety": false
+      }
+    ]
+  },
+  {
+    "revision": 10,
+    "snapshot": {
+      "game_id": "generated-seed-42",
+      "revision": 10,
+      "phase": "WAITING_DEFENSE_CARD",
+      "required_action": "play_card",
+      "acting_seat": "home",
+      "viewer_seat": "home",
+      "quarter": 2,
+      "play": 2,
+      "plays_in_quarter": 6,
+      "ball": "1",
+      "offense_seat": "away",
+      "defense_seat": "home",
+      "home": {
+        "seat": "home",
+        "name": "Wolverines",
+        "color": "red",
+        "rating": 7,
+        "kick_rating": 2,
+        "score": 0,
+        "mojo": 2,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 6,
+        "segments": 10,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 3,
+        "hand": [
+          {
+            "id": "KS",
+            "value": "K",
+            "suit": "S",
+            "color": "black",
+            "display": "K♠"
+          },
+          {
+            "id": "9H",
+            "value": "9",
+            "suit": "H",
+            "color": "red",
+            "display": "9♥"
+          },
+          {
+            "id": "QS",
+            "value": "Q",
+            "suit": "S",
+            "color": "black",
+            "display": "Q♠"
+          },
+          {
+            "id": "JS",
+            "value": "J",
+            "suit": "S",
+            "color": "black",
+            "display": "J♠"
+          },
+          {
+            "id": "2H",
+            "value": "2",
+            "suit": "H",
+            "color": "red",
+            "display": "2♥"
+          },
+          {
+            "id": "AC",
+            "value": "A",
+            "suit": "C",
+            "color": "black",
+            "display": "A♣"
+          }
+        ]
+      },
+      "away": {
+        "seat": "away",
+        "name": "Buckeyes",
+        "color": "black",
+        "rating": 6,
+        "kick_rating": 2,
+        "score": 17,
+        "mojo": 0,
+        "clutch": 0,
+        "clutch_used": false,
+        "hand_count": 5,
+        "segments": 12,
+        "fg_made": 1,
+        "fg_att": 1,
+        "punts": 0
+      },
+      "play_cards": {
+        "offense": null,
+        "defense": null,
+        "war": null,
+        "clutch": null
+      },
+      "legal_actions": [
+        {
+          "type": "play_card",
+          "card_index": 0,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 1,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 2,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 3,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 4,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 5,
+          "enabled": true
+        }
+      ],
+      "log": [
+        "AI plays card ... ",
+        "Wolverines plays 4♦",
+        "OFF: 4♣  vs  DEF: 4♦",
+        "WAR! Drew 2♣ (black)",
+        "Offense advances to Z3",
+        "AI chooses: C",
+        "CLUTCH! Drew 7♦ (remaining: 0)",
+        "Clutch move 2 -> Z1",
+        "AI chooses: F",
+        "FIELD GOAL GOOD! +3 (Buckeyes)",
+        "=== End Q1 | Wolverines: 0 - Buckeyes: 17 ===",
+        "=== QUARTER 2 === Wolverines has ball",
+        "-- Play 1/6 | OFF: Wolverines | Ball: 1",
+        "Wolverines plays Q♦",
+        "Buckeyes defends with 7♥",
+        "OFF: Q♦  vs  DEF: 7♥",
+        "Moved from 1 -> Z2 (+4 segments)",
+        "PUNT! Roll 3 + Kick 2 = 5",
+        "-- Play 2/6 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... "
+      ],
+      "message": "PUNT! Roll 3 + Kick 2 = 5",
+      "result": null
+    },
+    "events": [
+      {
+        "seq": 0,
+        "type": "punt_resolved",
+        "seat": "home",
+        "kind": "punt",
+        "distance": 5,
+        "roll": 3,
+        "from": "Z2",
+        "to": "1",
+        "clamped": true
+      },
+      {
+        "seq": 1,
+        "type": "ball_moved",
+        "seat": "home",
+        "from": "Z2",
+        "to": "1",
+        "segments": -4,
+        "reason": "punt",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 2,
+        "type": "possession_changed",
+        "from_seat": "home",
+        "to_seat": "away",
+        "ball": "1",
+        "reason": "punt"
+      },
+      {
+        "seq": 3,
+        "type": "card_played",
+        "seat": "away",
+        "role": "offense",
+        "card": null,
+        "hand_count_after": 5
+      }
+    ]
+  },
+  {
+    "revision": 11,
+    "snapshot": {
+      "game_id": "generated-seed-42",
+      "revision": 11,
+      "phase": "WAITING_OFFENSE_CARD",
+      "required_action": "play_card",
+      "acting_seat": "home",
+      "viewer_seat": "home",
+      "quarter": 2,
+      "play": 3,
+      "plays_in_quarter": 6,
+      "ball": "3",
+      "offense_seat": "home",
+      "defense_seat": "away",
+      "home": {
+        "seat": "home",
+        "name": "Wolverines",
+        "color": "red",
+        "rating": 7,
+        "kick_rating": 2,
+        "score": 0,
+        "mojo": 2,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 5,
+        "segments": 10,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 3,
+        "hand": [
+          {
+            "id": "9H",
+            "value": "9",
+            "suit": "H",
+            "color": "red",
+            "display": "9♥"
+          },
+          {
+            "id": "QS",
+            "value": "Q",
+            "suit": "S",
+            "color": "black",
+            "display": "Q♠"
+          },
+          {
+            "id": "JS",
+            "value": "J",
+            "suit": "S",
+            "color": "black",
+            "display": "J♠"
+          },
+          {
+            "id": "2H",
+            "value": "2",
+            "suit": "H",
+            "color": "red",
+            "display": "2♥"
+          },
+          {
+            "id": "AC",
+            "value": "A",
+            "suit": "C",
+            "color": "black",
+            "display": "A♣"
+          }
+        ]
+      },
+      "away": {
+        "seat": "away",
+        "name": "Buckeyes",
+        "color": "black",
+        "rating": 6,
+        "kick_rating": 2,
+        "score": 17,
+        "mojo": 0,
+        "clutch": 0,
+        "clutch_used": false,
+        "hand_count": 5,
+        "segments": 15,
+        "fg_made": 1,
+        "fg_att": 2,
+        "punts": 0
+      },
+      "play_cards": {
+        "offense": null,
+        "defense": null,
+        "war": null,
+        "clutch": null
+      },
+      "legal_actions": [
+        {
+          "type": "play_card",
+          "card_index": 0,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 1,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 2,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 3,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 4,
+          "enabled": true
+        }
+      ],
+      "log": [
+        "CLUTCH! Drew 7♦ (remaining: 0)",
+        "Clutch move 2 -> Z1",
+        "AI chooses: F",
+        "FIELD GOAL GOOD! +3 (Buckeyes)",
+        "=== End Q1 | Wolverines: 0 - Buckeyes: 17 ===",
+        "=== QUARTER 2 === Wolverines has ball",
+        "-- Play 1/6 | OFF: Wolverines | Ball: 1",
+        "Wolverines plays Q♦",
+        "Buckeyes defends with 7♥",
+        "OFF: Q♦  vs  DEF: 7♥",
+        "Moved from 1 -> Z2 (+4 segments)",
+        "PUNT! Roll 3 + Kick 2 = 5",
+        "-- Play 2/6 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... ",
+        "Wolverines plays K♠",
+        "OFF: 8♥  vs  DEF: K♠",
+        "Moved from 1 -> Z3 (+3 segments)",
+        "AI chooses: F",
+        "FG missed! 5 < 7",
+        "-- Play 3/6 | OFF: Wolverines | Ball: 3"
+      ],
+      "message": "FG MISSED! d6:[3] + Kick 2 = 5 (need 7)",
+      "result": null
+    },
+    "events": [
+      {
+        "seq": 0,
+        "type": "card_played",
+        "seat": "home",
+        "role": "defense",
+        "card": {
+          "id": "KS",
+          "value": "K",
+          "suit": "S",
+          "color": "black",
+          "display": "K♠"
+        },
+        "hand_count_after": 5
+      },
+      {
+        "seq": 1,
+        "type": "cards_revealed",
+        "offense_card": {
+          "id": "8H",
+          "value": "8",
+          "suit": "H",
+          "color": "red",
+          "display": "8♥"
+        },
+        "defense_card": {
+          "id": "KS",
+          "value": "K",
+          "suit": "S",
+          "color": "black",
+          "display": "K♠"
+        },
+        "offense_value": 8,
+        "defense_value": 13,
+        "winner": "defense"
+      },
+      {
+        "seq": 2,
+        "type": "ball_moved",
+        "seat": "away",
+        "from": "1",
+        "to": "Z3",
+        "segments": 3,
+        "reason": "drive_chart",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 3,
+        "type": "field_goal_resolved",
+        "seat": "away",
+        "success": false,
+        "roll": 3,
+        "total": 5,
+        "target": 7,
+        "from": "Z3",
+        "points": 0,
+        "score_after": 17
+      },
+      {
+        "seq": 4,
+        "type": "ball_moved",
+        "seat": "away",
+        "from": "Z3",
+        "to": "3",
+        "segments": -1,
+        "reason": "turnover",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 5,
+        "type": "possession_changed",
+        "from_seat": "away",
+        "to_seat": "home",
+        "ball": "3",
+        "reason": "field_goal_missed"
+      }
+    ]
+  },
+  {
+    "revision": 12,
+    "snapshot": {
+      "game_id": "generated-seed-42",
+      "revision": 12,
+      "phase": "WAITING_POST_MOVE",
+      "required_action": "post_move",
+      "acting_seat": "home",
+      "viewer_seat": "home",
+      "quarter": 2,
+      "play": 3,
+      "plays_in_quarter": 6,
+      "ball": "Z1",
+      "offense_seat": "home",
+      "defense_seat": "away",
+      "home": {
+        "seat": "home",
+        "name": "Wolverines",
+        "color": "red",
+        "rating": 7,
+        "kick_rating": 2,
+        "score": 0,
+        "mojo": 2,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 4,
+        "segments": 13,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 3,
+        "hand": [
+          {
+            "id": "QS",
+            "value": "Q",
+            "suit": "S",
+            "color": "black",
+            "display": "Q♠"
+          },
+          {
+            "id": "JS",
+            "value": "J",
+            "suit": "S",
+            "color": "black",
+            "display": "J♠"
+          },
+          {
+            "id": "2H",
+            "value": "2",
+            "suit": "H",
+            "color": "red",
+            "display": "2♥"
+          },
+          {
+            "id": "AC",
+            "value": "A",
+            "suit": "C",
+            "color": "black",
+            "display": "A♣"
+          }
+        ]
+      },
+      "away": {
+        "seat": "away",
+        "name": "Buckeyes",
+        "color": "black",
+        "rating": 6,
+        "kick_rating": 2,
+        "score": 17,
+        "mojo": 0,
+        "clutch": 0,
+        "clutch_used": false,
+        "hand_count": 4,
+        "segments": 15,
+        "fg_made": 1,
+        "fg_att": 2,
+        "punts": 0
+      },
+      "play_cards": {
+        "offense": {
+          "id": "9H",
+          "value": "9",
+          "suit": "H",
+          "color": "red",
+          "display": "9♥"
+        },
+        "defense": {
+          "id": "3H",
+          "value": "3",
+          "suit": "H",
+          "color": "red",
+          "display": "3♥"
+        },
+        "war": null,
+        "clutch": null
+      },
+      "legal_actions": [
+        {
+          "type": "post_move",
+          "choice": "P",
+          "enabled": true
+        },
+        {
+          "type": "post_move",
+          "choice": "F",
+          "enabled": true
+        },
+        {
+          "type": "post_move",
+          "choice": "C",
+          "enabled": true
+        },
+        {
+          "type": "post_move",
+          "choice": "S",
+          "enabled": true
+        }
+      ],
+      "log": [
+        "=== End Q1 | Wolverines: 0 - Buckeyes: 17 ===",
+        "=== QUARTER 2 === Wolverines has ball",
+        "-- Play 1/6 | OFF: Wolverines | Ball: 1",
+        "Wolverines plays Q♦",
+        "Buckeyes defends with 7♥",
+        "OFF: Q♦  vs  DEF: 7♥",
+        "Moved from 1 -> Z2 (+4 segments)",
+        "PUNT! Roll 3 + Kick 2 = 5",
+        "-- Play 2/6 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... ",
+        "Wolverines plays K♠",
+        "OFF: 8♥  vs  DEF: K♠",
+        "Moved from 1 -> Z3 (+3 segments)",
+        "AI chooses: F",
+        "FG missed! 5 < 7",
+        "-- Play 3/6 | OFF: Wolverines | Ball: 3",
+        "Wolverines plays 9♥",
+        "Buckeyes defends with 3♥",
+        "OFF: 9♥  vs  DEF: 3♥",
+        "Moved from 3 -> Z1 (+3 segments)"
+      ],
+      "message": "Moved from 3 -> Z1 (+3 segments)",
+      "result": null
+    },
+    "events": [
+      {
+        "seq": 0,
+        "type": "card_played",
+        "seat": "home",
+        "role": "offense",
+        "card": {
+          "id": "9H",
+          "value": "9",
+          "suit": "H",
+          "color": "red",
+          "display": "9♥"
+        },
+        "hand_count_after": 4
+      },
+      {
+        "seq": 1,
+        "type": "card_played",
+        "seat": "away",
+        "role": "defense",
+        "card": null,
+        "hand_count_after": 4
+      },
+      {
+        "seq": 2,
+        "type": "cards_revealed",
+        "offense_card": {
+          "id": "9H",
+          "value": "9",
+          "suit": "H",
+          "color": "red",
+          "display": "9♥"
+        },
+        "defense_card": {
+          "id": "3H",
+          "value": "3",
+          "suit": "H",
+          "color": "red",
+          "display": "3♥"
+        },
+        "offense_value": 9,
+        "defense_value": 3,
+        "winner": "offense"
+      },
+      {
+        "seq": 3,
+        "type": "ball_moved",
+        "seat": "home",
+        "from": "3",
+        "to": "Z1",
+        "segments": 3,
+        "reason": "drive_chart",
+        "is_touchdown": false,
+        "is_safety": false
+      }
+    ]
+  },
+  {
+    "revision": 13,
+    "snapshot": {
+      "game_id": "generated-seed-42",
+      "revision": 13,
+      "phase": "WAITING_DEFENSE_CARD",
+      "required_action": "play_card",
+      "acting_seat": "home",
+      "viewer_seat": "home",
+      "quarter": 2,
+      "play": 4,
+      "plays_in_quarter": 6,
+      "ball": "3",
+      "offense_seat": "away",
+      "defense_seat": "home",
+      "home": {
+        "seat": "home",
+        "name": "Wolverines",
+        "color": "red",
+        "rating": 7,
+        "kick_rating": 2,
+        "score": 0,
+        "mojo": 2,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 4,
+        "segments": 13,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 4,
+        "hand": [
+          {
+            "id": "QS",
+            "value": "Q",
+            "suit": "S",
+            "color": "black",
+            "display": "Q♠"
+          },
+          {
+            "id": "JS",
+            "value": "J",
+            "suit": "S",
+            "color": "black",
+            "display": "J♠"
+          },
+          {
+            "id": "2H",
+            "value": "2",
+            "suit": "H",
+            "color": "red",
+            "display": "2♥"
+          },
+          {
+            "id": "AC",
+            "value": "A",
+            "suit": "C",
+            "color": "black",
+            "display": "A♣"
+          }
+        ]
+      },
+      "away": {
+        "seat": "away",
+        "name": "Buckeyes",
+        "color": "black",
+        "rating": 6,
+        "kick_rating": 2,
+        "score": 17,
+        "mojo": 0,
+        "clutch": 0,
+        "clutch_used": false,
+        "hand_count": 3,
+        "segments": 15,
+        "fg_made": 1,
+        "fg_att": 2,
+        "punts": 0
+      },
+      "play_cards": {
+        "offense": null,
+        "defense": null,
+        "war": null,
+        "clutch": null
+      },
+      "legal_actions": [
+        {
+          "type": "play_card",
+          "card_index": 0,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 1,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 2,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 3,
+          "enabled": true
+        }
+      ],
+      "log": [
+        "Wolverines plays Q♦",
+        "Buckeyes defends with 7♥",
+        "OFF: Q♦  vs  DEF: 7♥",
+        "Moved from 1 -> Z2 (+4 segments)",
+        "PUNT! Roll 3 + Kick 2 = 5",
+        "-- Play 2/6 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... ",
+        "Wolverines plays K♠",
+        "OFF: 8♥  vs  DEF: K♠",
+        "Moved from 1 -> Z3 (+3 segments)",
+        "AI chooses: F",
+        "FG missed! 5 < 7",
+        "-- Play 3/6 | OFF: Wolverines | Ball: 3",
+        "Wolverines plays 9♥",
+        "Buckeyes defends with 3♥",
+        "OFF: 9♥  vs  DEF: 3♥",
+        "Moved from 3 -> Z1 (+3 segments)",
+        "PUNT! Roll 1 + Kick 2 = 3",
+        "-- Play 4/6 | OFF: Buckeyes | Ball: 3",
+        "AI plays card ... "
+      ],
+      "message": "PUNT! Roll 1 + Kick 2 = 3",
+      "result": null
+    },
+    "events": [
+      {
+        "seq": 0,
+        "type": "punt_resolved",
+        "seat": "home",
+        "kind": "punt",
+        "distance": 3,
+        "roll": 1,
+        "from": "Z1",
+        "to": "3",
+        "clamped": false
+      },
+      {
+        "seq": 1,
+        "type": "ball_moved",
+        "seat": "home",
+        "from": "Z1",
+        "to": "3",
+        "segments": -3,
+        "reason": "punt",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 2,
+        "type": "possession_changed",
+        "from_seat": "home",
+        "to_seat": "away",
+        "ball": "3",
+        "reason": "punt"
+      },
+      {
+        "seq": 3,
+        "type": "card_played",
+        "seat": "away",
+        "role": "offense",
+        "card": null,
+        "hand_count_after": 3
+      }
+    ]
+  },
+  {
+    "revision": 14,
+    "snapshot": {
+      "game_id": "generated-seed-42",
+      "revision": 14,
+      "phase": "WAITING_OFFENSE_CARD",
+      "required_action": "play_card",
+      "acting_seat": "home",
+      "viewer_seat": "home",
+      "quarter": 2,
+      "play": 5,
+      "plays_in_quarter": 6,
+      "ball": "1",
+      "offense_seat": "home",
+      "defense_seat": "away",
+      "home": {
+        "seat": "home",
+        "name": "Wolverines",
+        "color": "red",
+        "rating": 7,
+        "kick_rating": 2,
+        "score": 0,
+        "mojo": 2,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 3,
+        "segments": 13,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 4,
+        "hand": [
+          {
+            "id": "JS",
+            "value": "J",
+            "suit": "S",
+            "color": "black",
+            "display": "J♠"
+          },
+          {
+            "id": "2H",
+            "value": "2",
+            "suit": "H",
+            "color": "red",
+            "display": "2♥"
+          },
+          {
+            "id": "AC",
+            "value": "A",
+            "suit": "C",
+            "color": "black",
+            "display": "A♣"
+          }
+        ]
+      },
+      "away": {
+        "seat": "away",
+        "name": "Buckeyes",
+        "color": "black",
+        "rating": 6,
+        "kick_rating": 2,
+        "score": 20,
+        "mojo": 0,
+        "clutch": 0,
+        "clutch_used": false,
+        "hand_count": 3,
+        "segments": 18,
+        "fg_made": 2,
+        "fg_att": 3,
+        "punts": 0
+      },
+      "play_cards": {
+        "offense": null,
+        "defense": null,
+        "war": null,
+        "clutch": null
+      },
+      "legal_actions": [
+        {
+          "type": "play_card",
+          "card_index": 0,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 1,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 2,
+          "enabled": true
+        }
+      ],
+      "log": [
+        "AI plays card ... ",
+        "Wolverines plays K♠",
+        "OFF: 8♥  vs  DEF: K♠",
+        "Moved from 1 -> Z3 (+3 segments)",
+        "AI chooses: F",
+        "FG missed! 5 < 7",
+        "-- Play 3/6 | OFF: Wolverines | Ball: 3",
+        "Wolverines plays 9♥",
+        "Buckeyes defends with 3♥",
+        "OFF: 9♥  vs  DEF: 3♥",
+        "Moved from 3 -> Z1 (+3 segments)",
+        "PUNT! Roll 1 + Kick 2 = 3",
+        "-- Play 4/6 | OFF: Buckeyes | Ball: 3",
+        "AI plays card ... ",
+        "Wolverines plays Q♠",
+        "OFF: 8♦  vs  DEF: Q♠",
+        "Moved from 3 -> Z1 (+3 segments)",
+        "AI chooses: F",
+        "FIELD GOAL GOOD! +3 (Buckeyes)",
+        "-- Play 5/6 | OFF: Wolverines | Ball: 1"
+      ],
+      "message": "FG GOOD! d6:[6] + Kick 2 = 8 (need 4) → +3",
+      "result": null
+    },
+    "events": [
+      {
+        "seq": 0,
+        "type": "card_played",
+        "seat": "home",
+        "role": "defense",
+        "card": {
+          "id": "QS",
+          "value": "Q",
+          "suit": "S",
+          "color": "black",
+          "display": "Q♠"
+        },
+        "hand_count_after": 3
+      },
+      {
+        "seq": 1,
+        "type": "cards_revealed",
+        "offense_card": {
+          "id": "8D",
+          "value": "8",
+          "suit": "D",
+          "color": "red",
+          "display": "8♦"
+        },
+        "defense_card": {
+          "id": "QS",
+          "value": "Q",
+          "suit": "S",
+          "color": "black",
+          "display": "Q♠"
+        },
+        "offense_value": 8,
+        "defense_value": 12,
+        "winner": "defense"
+      },
+      {
+        "seq": 2,
+        "type": "ball_moved",
+        "seat": "away",
+        "from": "3",
+        "to": "Z1",
+        "segments": 3,
+        "reason": "drive_chart",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 3,
+        "type": "field_goal_resolved",
+        "seat": "away",
+        "success": true,
+        "roll": 6,
+        "total": 8,
+        "target": 4,
+        "from": "Z1",
+        "points": 3,
+        "score_after": 20
+      },
+      {
+        "seq": 4,
+        "type": "ball_moved",
+        "seat": "away",
+        "from": "Z1",
+        "to": "1",
+        "segments": -5,
+        "reason": "kickoff",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 5,
+        "type": "possession_changed",
+        "from_seat": "away",
+        "to_seat": "home",
+        "ball": "1",
+        "reason": "field_goal_made"
+      }
+    ]
+  },
+  {
+    "revision": 15,
+    "snapshot": {
+      "game_id": "generated-seed-42",
+      "revision": 15,
+      "phase": "WAITING_POST_MOVE",
+      "required_action": "post_move",
+      "acting_seat": "home",
+      "viewer_seat": "home",
+      "quarter": 2,
+      "play": 5,
+      "plays_in_quarter": 6,
+      "ball": "Z3",
+      "offense_seat": "home",
+      "defense_seat": "away",
+      "home": {
+        "seat": "home",
+        "name": "Wolverines",
+        "color": "red",
+        "rating": 7,
+        "kick_rating": 2,
+        "score": 0,
+        "mojo": 2,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 2,
+        "segments": 16,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 4,
+        "hand": [
+          {
+            "id": "2H",
+            "value": "2",
+            "suit": "H",
+            "color": "red",
+            "display": "2♥"
+          },
+          {
+            "id": "AC",
+            "value": "A",
+            "suit": "C",
+            "color": "black",
+            "display": "A♣"
+          }
+        ]
+      },
+      "away": {
+        "seat": "away",
+        "name": "Buckeyes",
+        "color": "black",
+        "rating": 6,
+        "kick_rating": 2,
+        "score": 20,
+        "mojo": 0,
+        "clutch": 0,
+        "clutch_used": false,
+        "hand_count": 2,
+        "segments": 18,
+        "fg_made": 2,
+        "fg_att": 3,
+        "punts": 0
+      },
+      "play_cards": {
+        "offense": {
+          "id": "JS",
+          "value": "J",
+          "suit": "S",
+          "color": "black",
+          "display": "J♠"
+        },
+        "defense": {
+          "id": "4S",
+          "value": "4",
+          "suit": "S",
+          "color": "black",
+          "display": "4♠"
+        },
+        "war": null,
+        "clutch": null
+      },
+      "legal_actions": [
+        {
+          "type": "post_move",
+          "choice": "P",
+          "enabled": true
+        },
+        {
+          "type": "post_move",
+          "choice": "F",
+          "enabled": true
+        },
+        {
+          "type": "post_move",
+          "choice": "C",
+          "enabled": true
+        },
+        {
+          "type": "post_move",
+          "choice": "S",
+          "enabled": true
+        }
+      ],
+      "log": [
+        "AI chooses: F",
+        "FG missed! 5 < 7",
+        "-- Play 3/6 | OFF: Wolverines | Ball: 3",
+        "Wolverines plays 9♥",
+        "Buckeyes defends with 3♥",
+        "OFF: 9♥  vs  DEF: 3♥",
+        "Moved from 3 -> Z1 (+3 segments)",
+        "PUNT! Roll 1 + Kick 2 = 3",
+        "-- Play 4/6 | OFF: Buckeyes | Ball: 3",
+        "AI plays card ... ",
+        "Wolverines plays Q♠",
+        "OFF: 8♦  vs  DEF: Q♠",
+        "Moved from 3 -> Z1 (+3 segments)",
+        "AI chooses: F",
+        "FIELD GOAL GOOD! +3 (Buckeyes)",
+        "-- Play 5/6 | OFF: Wolverines | Ball: 1",
+        "Wolverines plays J♠",
+        "Buckeyes defends with 4♠",
+        "OFF: J♠  vs  DEF: 4♠",
+        "Moved from 1 -> Z3 (+3 segments)"
+      ],
+      "message": "Moved from 1 -> Z3 (+3 segments)",
+      "result": null
+    },
+    "events": [
+      {
+        "seq": 0,
+        "type": "card_played",
+        "seat": "home",
+        "role": "offense",
+        "card": {
+          "id": "JS",
+          "value": "J",
+          "suit": "S",
+          "color": "black",
+          "display": "J♠"
+        },
+        "hand_count_after": 2
+      },
+      {
+        "seq": 1,
+        "type": "card_played",
+        "seat": "away",
+        "role": "defense",
+        "card": null,
+        "hand_count_after": 2
+      },
+      {
+        "seq": 2,
+        "type": "cards_revealed",
+        "offense_card": {
+          "id": "JS",
+          "value": "J",
+          "suit": "S",
+          "color": "black",
+          "display": "J♠"
+        },
+        "defense_card": {
+          "id": "4S",
+          "value": "4",
+          "suit": "S",
+          "color": "black",
+          "display": "4♠"
+        },
+        "offense_value": 11,
+        "defense_value": 4,
+        "winner": "offense"
+      },
+      {
+        "seq": 3,
+        "type": "ball_moved",
+        "seat": "home",
+        "from": "1",
+        "to": "Z3",
+        "segments": 3,
+        "reason": "drive_chart",
+        "is_touchdown": false,
+        "is_safety": false
+      }
+    ]
+  },
+  {
+    "revision": 16,
+    "snapshot": {
+      "game_id": "generated-seed-42",
+      "revision": 16,
+      "phase": "WAITING_DEFENSE_CARD",
+      "required_action": "play_card",
+      "acting_seat": "home",
+      "viewer_seat": "home",
+      "quarter": 2,
+      "play": 6,
+      "plays_in_quarter": 6,
+      "ball": "1",
+      "offense_seat": "away",
+      "defense_seat": "home",
+      "home": {
+        "seat": "home",
+        "name": "Wolverines",
+        "color": "red",
+        "rating": 7,
+        "kick_rating": 2,
+        "score": 0,
+        "mojo": 2,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 2,
+        "segments": 16,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 5,
+        "hand": [
+          {
+            "id": "2H",
+            "value": "2",
+            "suit": "H",
+            "color": "red",
+            "display": "2♥"
+          },
+          {
+            "id": "AC",
+            "value": "A",
+            "suit": "C",
+            "color": "black",
+            "display": "A♣"
+          }
+        ]
+      },
+      "away": {
+        "seat": "away",
+        "name": "Buckeyes",
+        "color": "black",
+        "rating": 6,
+        "kick_rating": 2,
+        "score": 20,
+        "mojo": 0,
+        "clutch": 0,
+        "clutch_used": false,
+        "hand_count": 1,
+        "segments": 18,
+        "fg_made": 2,
+        "fg_att": 3,
+        "punts": 0
+      },
+      "play_cards": {
+        "offense": null,
+        "defense": null,
+        "war": null,
+        "clutch": null
+      },
+      "legal_actions": [
+        {
+          "type": "play_card",
+          "card_index": 0,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 1,
+          "enabled": true
+        }
+      ],
+      "log": [
+        "Wolverines plays 9♥",
+        "Buckeyes defends with 3♥",
+        "OFF: 9♥  vs  DEF: 3♥",
+        "Moved from 3 -> Z1 (+3 segments)",
+        "PUNT! Roll 1 + Kick 2 = 3",
+        "-- Play 4/6 | OFF: Buckeyes | Ball: 3",
+        "AI plays card ... ",
+        "Wolverines plays Q♠",
+        "OFF: 8♦  vs  DEF: Q♠",
+        "Moved from 3 -> Z1 (+3 segments)",
+        "AI chooses: F",
+        "FIELD GOAL GOOD! +3 (Buckeyes)",
+        "-- Play 5/6 | OFF: Wolverines | Ball: 1",
+        "Wolverines plays J♠",
+        "Buckeyes defends with 4♠",
+        "OFF: J♠  vs  DEF: 4♠",
+        "Moved from 1 -> Z3 (+3 segments)",
+        "PUNT! Roll 1 + Kick 2 = 3",
+        "-- Play 6/6 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... "
+      ],
+      "message": "PUNT! Roll 1 + Kick 2 = 3",
+      "result": null
+    },
+    "events": [
+      {
+        "seq": 0,
+        "type": "punt_resolved",
+        "seat": "home",
+        "kind": "punt",
+        "distance": 3,
+        "roll": 1,
+        "from": "Z3",
+        "to": "1",
+        "clamped": false
+      },
+      {
+        "seq": 1,
+        "type": "ball_moved",
+        "seat": "home",
+        "from": "Z3",
+        "to": "1",
+        "segments": -3,
+        "reason": "punt",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 2,
+        "type": "possession_changed",
+        "from_seat": "home",
+        "to_seat": "away",
+        "ball": "1",
+        "reason": "punt"
+      },
+      {
+        "seq": 3,
+        "type": "card_played",
+        "seat": "away",
+        "role": "offense",
+        "card": null,
+        "hand_count_after": 1
+      }
+    ]
+  },
+  {
+    "revision": 17,
+    "snapshot": {
+      "game_id": "generated-seed-42",
+      "revision": 17,
+      "phase": "WAITING_DEFENSE_CARD",
+      "required_action": "play_card",
+      "acting_seat": "home",
+      "viewer_seat": "home",
+      "quarter": 3,
+      "play": 1,
+      "plays_in_quarter": 6,
+      "ball": "1",
+      "offense_seat": "away",
+      "defense_seat": "home",
+      "home": {
+        "seat": "home",
+        "name": "Wolverines",
+        "color": "red",
+        "rating": 7,
+        "kick_rating": 2,
+        "score": 0,
+        "mojo": 2,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 7,
+        "segments": 16,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 5,
+        "hand": [
+          {
+            "id": "JC",
+            "value": "J",
+            "suit": "C",
+            "color": "black",
+            "display": "J♣"
+          },
+          {
+            "id": "5C",
+            "value": "5",
+            "suit": "C",
+            "color": "black",
+            "display": "5♣"
+          },
+          {
+            "id": "3C",
+            "value": "3",
+            "suit": "C",
+            "color": "black",
+            "display": "3♣"
+          },
+          {
+            "id": "9D",
+            "value": "9",
+            "suit": "D",
+            "color": "red",
+            "display": "9♦"
+          },
+          {
+            "id": "QD",
+            "value": "Q",
+            "suit": "D",
+            "color": "red",
+            "display": "Q♦"
+          },
+          {
+            "id": "3H",
+            "value": "3",
+            "suit": "H",
+            "color": "red",
+            "display": "3♥"
+          },
+          {
+            "id": "10C",
+            "value": "10",
+            "suit": "C",
+            "color": "black",
+            "display": "10♣"
+          }
+        ]
+      },
+      "away": {
+        "seat": "away",
+        "name": "Buckeyes",
+        "color": "black",
+        "rating": 6,
+        "kick_rating": 2,
+        "score": 23,
+        "mojo": 1,
+        "clutch": 0,
+        "clutch_used": false,
+        "hand_count": 6,
+        "segments": 21,
+        "fg_made": 3,
+        "fg_att": 4,
+        "punts": 0
+      },
+      "play_cards": {
+        "offense": null,
+        "defense": null,
+        "war": null,
+        "clutch": null
+      },
+      "legal_actions": [
+        {
+          "type": "play_card",
+          "card_index": 0,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 1,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 2,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 3,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 4,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 5,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 6,
+          "enabled": true
+        }
+      ],
+      "log": [
+        "AI chooses: F",
+        "FIELD GOAL GOOD! +3 (Buckeyes)",
+        "-- Play 5/6 | OFF: Wolverines | Ball: 1",
+        "Wolverines plays J♠",
+        "Buckeyes defends with 4♠",
+        "OFF: J♠  vs  DEF: 4♠",
+        "Moved from 1 -> Z3 (+3 segments)",
+        "PUNT! Roll 1 + Kick 2 = 3",
+        "-- Play 6/6 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... ",
+        "Wolverines plays 2♥",
+        "OFF: 7♠  vs  DEF: 2♥",
+        "MOJO! Buckeyes dominated by 5 (1/2)",
+        "Moved from 1 -> Z3 (+3 segments)",
+        "AI chooses: F",
+        "FIELD GOAL GOOD! +3 (Buckeyes)",
+        "=== End Q2 | Wolverines: 0 - Buckeyes: 23 ===",
+        "=== QUARTER 3 === Buckeyes has ball",
+        "-- Play 1/6 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... "
+      ],
+      "message": "QUARTER 3 -- Buckeyes has ball",
+      "result": null
+    },
+    "events": [
+      {
+        "seq": 0,
+        "type": "card_played",
+        "seat": "home",
+        "role": "defense",
+        "card": {
+          "id": "2H",
+          "value": "2",
+          "suit": "H",
+          "color": "red",
+          "display": "2♥"
+        },
+        "hand_count_after": 1
+      },
+      {
+        "seq": 1,
+        "type": "cards_revealed",
+        "offense_card": {
+          "id": "7S",
+          "value": "7",
+          "suit": "S",
+          "color": "black",
+          "display": "7♠"
+        },
+        "defense_card": {
+          "id": "2H",
+          "value": "2",
+          "suit": "H",
+          "color": "red",
+          "display": "2♥"
+        },
+        "offense_value": 7,
+        "defense_value": 2,
+        "winner": "offense"
+      },
+      {
+        "seq": 2,
+        "type": "mojo_changed",
+        "seat": "away",
+        "from": 0,
+        "to": 1,
+        "reason": "dominant_win"
+      },
+      {
+        "seq": 3,
+        "type": "ball_moved",
+        "seat": "away",
+        "from": "1",
+        "to": "Z3",
+        "segments": 3,
+        "reason": "drive_chart",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 4,
+        "type": "field_goal_resolved",
+        "seat": "away",
+        "success": true,
+        "roll": 6,
+        "total": 8,
+        "target": 7,
+        "from": "Z3",
+        "points": 3,
+        "score_after": 23
+      },
+      {
+        "seq": 5,
+        "type": "ball_moved",
+        "seat": "away",
+        "from": "Z3",
+        "to": "1",
+        "segments": -3,
+        "reason": "kickoff",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 6,
+        "type": "possession_changed",
+        "from_seat": "away",
+        "to_seat": "home",
+        "ball": "1",
+        "reason": "field_goal_made"
+      },
+      {
+        "seq": 7,
+        "type": "quarter_ended",
+        "quarter": 2,
+        "home_score": 0,
+        "away_score": 23
+      },
+      {
+        "seq": 8,
+        "type": "quarter_started",
+        "quarter": 3,
+        "offense_seat": "away",
+        "dealt": 7,
+        "ball": "1"
+      },
+      {
+        "seq": 9,
+        "type": "possession_changed",
+        "from_seat": "home",
+        "to_seat": "away",
+        "ball": "1",
+        "reason": "quarter_start"
+      },
+      {
+        "seq": 10,
+        "type": "card_played",
+        "seat": "away",
+        "role": "offense",
+        "card": null,
+        "hand_count_after": 6
+      }
+    ]
+  },
+  {
+    "revision": 18,
+    "snapshot": {
+      "game_id": "generated-seed-42",
+      "revision": 18,
+      "phase": "WAITING_OFFENSE_CARD",
+      "required_action": "play_card",
+      "acting_seat": "home",
+      "viewer_seat": "home",
+      "quarter": 3,
+      "play": 2,
+      "plays_in_quarter": 6,
+      "ball": "1",
+      "offense_seat": "home",
+      "defense_seat": "away",
+      "home": {
+        "seat": "home",
+        "name": "Wolverines",
+        "color": "red",
+        "rating": 7,
+        "kick_rating": 2,
+        "score": 0,
+        "mojo": 2,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 6,
+        "segments": 16,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 5,
+        "hand": [
+          {
+            "id": "5C",
+            "value": "5",
+            "suit": "C",
+            "color": "black",
+            "display": "5♣"
+          },
+          {
+            "id": "3C",
+            "value": "3",
+            "suit": "C",
+            "color": "black",
+            "display": "3♣"
+          },
+          {
+            "id": "9D",
+            "value": "9",
+            "suit": "D",
+            "color": "red",
+            "display": "9♦"
+          },
+          {
+            "id": "QD",
+            "value": "Q",
+            "suit": "D",
+            "color": "red",
+            "display": "Q♦"
+          },
+          {
+            "id": "3H",
+            "value": "3",
+            "suit": "H",
+            "color": "red",
+            "display": "3♥"
+          },
+          {
+            "id": "10C",
+            "value": "10",
+            "suit": "C",
+            "color": "black",
+            "display": "10♣"
+          }
+        ]
+      },
+      "away": {
+        "seat": "away",
+        "name": "Buckeyes",
+        "color": "black",
+        "rating": 6,
+        "kick_rating": 2,
+        "score": 26,
+        "mojo": 1,
+        "clutch": 0,
+        "clutch_used": false,
+        "hand_count": 6,
+        "segments": 25,
+        "fg_made": 4,
+        "fg_att": 5,
+        "punts": 0
+      },
+      "play_cards": {
+        "offense": null,
+        "defense": null,
+        "war": null,
+        "clutch": null
+      },
+      "legal_actions": [
+        {
+          "type": "play_card",
+          "card_index": 0,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 1,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 2,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 3,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 4,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 5,
+          "enabled": true
+        }
+      ],
+      "log": [
+        "Moved from 1 -> Z3 (+3 segments)",
+        "PUNT! Roll 1 + Kick 2 = 3",
+        "-- Play 6/6 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... ",
+        "Wolverines plays 2♥",
+        "OFF: 7♠  vs  DEF: 2♥",
+        "MOJO! Buckeyes dominated by 5 (1/2)",
+        "Moved from 1 -> Z3 (+3 segments)",
+        "AI chooses: F",
+        "FIELD GOAL GOOD! +3 (Buckeyes)",
+        "=== End Q2 | Wolverines: 0 - Buckeyes: 23 ===",
+        "=== QUARTER 3 === Buckeyes has ball",
+        "-- Play 1/6 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... ",
+        "Wolverines plays J♣",
+        "OFF: K♠  vs  DEF: J♣",
+        "Moved from 1 -> Z2 (+4 segments)",
+        "AI chooses: F",
+        "FIELD GOAL GOOD! +3 (Buckeyes)",
+        "-- Play 2/6 | OFF: Wolverines | Ball: 1"
+      ],
+      "message": "FG GOOD! d6:[4] + Kick 2 = 6 (need 5) → +3",
+      "result": null
+    },
+    "events": [
+      {
+        "seq": 0,
+        "type": "card_played",
+        "seat": "home",
+        "role": "defense",
+        "card": {
+          "id": "JC",
+          "value": "J",
+          "suit": "C",
+          "color": "black",
+          "display": "J♣"
+        },
+        "hand_count_after": 6
+      },
+      {
+        "seq": 1,
+        "type": "cards_revealed",
+        "offense_card": {
+          "id": "KS",
+          "value": "K",
+          "suit": "S",
+          "color": "black",
+          "display": "K♠"
+        },
+        "defense_card": {
+          "id": "JC",
+          "value": "J",
+          "suit": "C",
+          "color": "black",
+          "display": "J♣"
+        },
+        "offense_value": 13,
+        "defense_value": 11,
+        "winner": "offense"
+      },
+      {
+        "seq": 2,
+        "type": "ball_moved",
+        "seat": "away",
+        "from": "1",
+        "to": "Z2",
+        "segments": 4,
+        "reason": "drive_chart",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 3,
+        "type": "field_goal_resolved",
+        "seat": "away",
+        "success": true,
+        "roll": 4,
+        "total": 6,
+        "target": 5,
+        "from": "Z2",
+        "points": 3,
+        "score_after": 26
+      },
+      {
+        "seq": 4,
+        "type": "ball_moved",
+        "seat": "away",
+        "from": "Z2",
+        "to": "1",
+        "segments": -4,
+        "reason": "kickoff",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 5,
+        "type": "possession_changed",
+        "from_seat": "away",
+        "to_seat": "home",
+        "ball": "1",
+        "reason": "field_goal_made"
+      }
+    ]
+  },
+  {
+    "revision": 19,
+    "snapshot": {
+      "game_id": "generated-seed-42",
+      "revision": 19,
+      "phase": "WAITING_POST_MOVE",
+      "required_action": "post_move",
+      "acting_seat": "home",
+      "viewer_seat": "home",
+      "quarter": 3,
+      "play": 2,
+      "plays_in_quarter": 6,
+      "ball": "3",
+      "offense_seat": "home",
+      "defense_seat": "away",
+      "home": {
+        "seat": "home",
+        "name": "Wolverines",
+        "color": "red",
+        "rating": 7,
+        "kick_rating": 2,
+        "score": 0,
+        "mojo": 2,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 5,
+        "segments": 18,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 5,
+        "hand": [
+          {
+            "id": "3C",
+            "value": "3",
+            "suit": "C",
+            "color": "black",
+            "display": "3♣"
+          },
+          {
+            "id": "9D",
+            "value": "9",
+            "suit": "D",
+            "color": "red",
+            "display": "9♦"
+          },
+          {
+            "id": "QD",
+            "value": "Q",
+            "suit": "D",
+            "color": "red",
+            "display": "Q♦"
+          },
+          {
+            "id": "3H",
+            "value": "3",
+            "suit": "H",
+            "color": "red",
+            "display": "3♥"
+          },
+          {
+            "id": "10C",
+            "value": "10",
+            "suit": "C",
+            "color": "black",
+            "display": "10♣"
+          }
+        ]
+      },
+      "away": {
+        "seat": "away",
+        "name": "Buckeyes",
+        "color": "black",
+        "rating": 6,
+        "kick_rating": 2,
+        "score": 26,
+        "mojo": 2,
+        "clutch": 0,
+        "clutch_used": false,
+        "hand_count": 5,
+        "segments": 25,
+        "fg_made": 4,
+        "fg_att": 5,
+        "punts": 0
+      },
+      "play_cards": {
+        "offense": {
+          "id": "5C",
+          "value": "5",
+          "suit": "C",
+          "color": "black",
+          "display": "5♣"
+        },
+        "defense": {
+          "id": "JS",
+          "value": "J",
+          "suit": "S",
+          "color": "black",
+          "display": "J♠"
+        },
+        "war": null,
+        "clutch": null
+      },
+      "legal_actions": [
+        {
+          "type": "post_move",
+          "choice": "P",
+          "enabled": true
+        },
+        {
+          "type": "post_move",
+          "choice": "F",
+          "enabled": false,
+          "disabled_reason": "not_in_field_goal_range"
+        },
+        {
+          "type": "post_move",
+          "choice": "C",
+          "enabled": true
+        },
+        {
+          "type": "post_move",
+          "choice": "S",
+          "enabled": false,
+          "disabled_reason": "not_in_field_goal_range"
+        }
+      ],
+      "log": [
+        "OFF: 7♠  vs  DEF: 2♥",
+        "MOJO! Buckeyes dominated by 5 (1/2)",
+        "Moved from 1 -> Z3 (+3 segments)",
+        "AI chooses: F",
+        "FIELD GOAL GOOD! +3 (Buckeyes)",
+        "=== End Q2 | Wolverines: 0 - Buckeyes: 23 ===",
+        "=== QUARTER 3 === Buckeyes has ball",
+        "-- Play 1/6 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... ",
+        "Wolverines plays J♣",
+        "OFF: K♠  vs  DEF: J♣",
+        "Moved from 1 -> Z2 (+4 segments)",
+        "AI chooses: F",
+        "FIELD GOAL GOOD! +3 (Buckeyes)",
+        "-- Play 2/6 | OFF: Wolverines | Ball: 1",
+        "Wolverines plays 5♣",
+        "Buckeyes defends with J♠",
+        "OFF: 5♣  vs  DEF: J♠",
+        "MOJO! Buckeyes won card battle (2/2)",
+        "Moved from 1 -> 3 (+2 segments)"
+      ],
+      "message": "Moved from 1 -> 3 (+2 segments)",
+      "result": null
+    },
+    "events": [
+      {
+        "seq": 0,
+        "type": "card_played",
+        "seat": "home",
+        "role": "offense",
+        "card": {
+          "id": "5C",
+          "value": "5",
+          "suit": "C",
+          "color": "black",
+          "display": "5♣"
+        },
+        "hand_count_after": 5
+      },
+      {
+        "seq": 1,
+        "type": "card_played",
+        "seat": "away",
+        "role": "defense",
+        "card": null,
+        "hand_count_after": 5
+      },
+      {
+        "seq": 2,
+        "type": "cards_revealed",
+        "offense_card": {
+          "id": "5C",
+          "value": "5",
+          "suit": "C",
+          "color": "black",
+          "display": "5♣"
+        },
+        "defense_card": {
+          "id": "JS",
+          "value": "J",
+          "suit": "S",
+          "color": "black",
+          "display": "J♠"
+        },
+        "offense_value": 5,
+        "defense_value": 11,
+        "winner": "defense"
+      },
+      {
+        "seq": 3,
+        "type": "mojo_changed",
+        "seat": "away",
+        "from": 1,
+        "to": 2,
+        "reason": "won_card_battle"
+      },
+      {
+        "seq": 4,
+        "type": "ball_moved",
+        "seat": "home",
+        "from": "1",
+        "to": "3",
+        "segments": 2,
+        "reason": "drive_chart",
+        "is_touchdown": false,
+        "is_safety": false
+      }
+    ]
+  },
+  {
+    "revision": 20,
+    "snapshot": {
+      "game_id": "generated-seed-42",
+      "revision": 20,
+      "phase": "WAITING_DEFENSE_CARD",
+      "required_action": "play_card",
+      "acting_seat": "home",
+      "viewer_seat": "home",
+      "quarter": 3,
+      "play": 3,
+      "plays_in_quarter": 6,
+      "ball": "1",
+      "offense_seat": "away",
+      "defense_seat": "home",
+      "home": {
+        "seat": "home",
+        "name": "Wolverines",
+        "color": "red",
+        "rating": 7,
+        "kick_rating": 2,
+        "score": 0,
+        "mojo": 2,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 5,
+        "segments": 18,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 6,
+        "hand": [
+          {
+            "id": "3C",
+            "value": "3",
+            "suit": "C",
+            "color": "black",
+            "display": "3♣"
+          },
+          {
+            "id": "9D",
+            "value": "9",
+            "suit": "D",
+            "color": "red",
+            "display": "9♦"
+          },
+          {
+            "id": "QD",
+            "value": "Q",
+            "suit": "D",
+            "color": "red",
+            "display": "Q♦"
+          },
+          {
+            "id": "3H",
+            "value": "3",
+            "suit": "H",
+            "color": "red",
+            "display": "3♥"
+          },
+          {
+            "id": "10C",
+            "value": "10",
+            "suit": "C",
+            "color": "black",
+            "display": "10♣"
+          }
+        ]
+      },
+      "away": {
+        "seat": "away",
+        "name": "Buckeyes",
+        "color": "black",
+        "rating": 6,
+        "kick_rating": 2,
+        "score": 26,
+        "mojo": 2,
+        "clutch": 0,
+        "clutch_used": false,
+        "hand_count": 4,
+        "segments": 25,
+        "fg_made": 4,
+        "fg_att": 5,
+        "punts": 0
+      },
+      "play_cards": {
+        "offense": null,
+        "defense": null,
+        "war": null,
+        "clutch": null
+      },
+      "legal_actions": [
+        {
+          "type": "play_card",
+          "card_index": 0,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 1,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 2,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 3,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 4,
+          "enabled": true
+        }
+      ],
+      "log": [
+        "AI chooses: F",
+        "FIELD GOAL GOOD! +3 (Buckeyes)",
+        "=== End Q2 | Wolverines: 0 - Buckeyes: 23 ===",
+        "=== QUARTER 3 === Buckeyes has ball",
+        "-- Play 1/6 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... ",
+        "Wolverines plays J♣",
+        "OFF: K♠  vs  DEF: J♣",
+        "Moved from 1 -> Z2 (+4 segments)",
+        "AI chooses: F",
+        "FIELD GOAL GOOD! +3 (Buckeyes)",
+        "-- Play 2/6 | OFF: Wolverines | Ball: 1",
+        "Wolverines plays 5♣",
+        "Buckeyes defends with J♠",
+        "OFF: 5♣  vs  DEF: J♠",
+        "MOJO! Buckeyes won card battle (2/2)",
+        "Moved from 1 -> 3 (+2 segments)",
+        "PUNT! Roll 3 + Kick 2 = 5",
+        "-- Play 3/6 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... "
+      ],
+      "message": "PUNT! Roll 3 + Kick 2 = 5",
+      "result": null
+    },
+    "events": [
+      {
+        "seq": 0,
+        "type": "punt_resolved",
+        "seat": "home",
+        "kind": "punt",
+        "distance": 5,
+        "roll": 3,
+        "from": "3",
+        "to": "1",
+        "clamped": true
+      },
+      {
+        "seq": 1,
+        "type": "ball_moved",
+        "seat": "home",
+        "from": "3",
+        "to": "1",
+        "segments": -2,
+        "reason": "punt",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 2,
+        "type": "possession_changed",
+        "from_seat": "home",
+        "to_seat": "away",
+        "ball": "1",
+        "reason": "punt"
+      },
+      {
+        "seq": 3,
+        "type": "card_played",
+        "seat": "away",
+        "role": "offense",
+        "card": null,
+        "hand_count_after": 4
+      }
+    ]
+  },
+  {
+    "revision": 21,
+    "snapshot": {
+      "game_id": "generated-seed-42",
+      "revision": 21,
+      "phase": "WAITING_OFFENSE_CARD",
+      "required_action": "play_card",
+      "acting_seat": "home",
+      "viewer_seat": "home",
+      "quarter": 3,
+      "play": 4,
+      "plays_in_quarter": 6,
+      "ball": "1",
+      "offense_seat": "home",
+      "defense_seat": "away",
+      "home": {
+        "seat": "home",
+        "name": "Wolverines",
+        "color": "red",
+        "rating": 7,
+        "kick_rating": 2,
+        "score": 0,
+        "mojo": 2,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 4,
+        "segments": 18,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 6,
+        "hand": [
+          {
+            "id": "9D",
+            "value": "9",
+            "suit": "D",
+            "color": "red",
+            "display": "9♦"
+          },
+          {
+            "id": "QD",
+            "value": "Q",
+            "suit": "D",
+            "color": "red",
+            "display": "Q♦"
+          },
+          {
+            "id": "3H",
+            "value": "3",
+            "suit": "H",
+            "color": "red",
+            "display": "3♥"
+          },
+          {
+            "id": "10C",
+            "value": "10",
+            "suit": "C",
+            "color": "black",
+            "display": "10♣"
+          }
+        ]
+      },
+      "away": {
+        "seat": "away",
+        "name": "Buckeyes",
+        "color": "black",
+        "rating": 6,
+        "kick_rating": 2,
+        "score": 26,
+        "mojo": 0,
+        "clutch": 0,
+        "clutch_used": true,
+        "hand_count": 4,
+        "segments": 27,
+        "fg_made": 4,
+        "fg_att": 5,
+        "punts": 1
+      },
+      "play_cards": {
+        "offense": null,
+        "defense": null,
+        "war": null,
+        "clutch": null
+      },
+      "legal_actions": [
+        {
+          "type": "play_card",
+          "card_index": 0,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 1,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 2,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 3,
+          "enabled": true
+        }
+      ],
+      "log": [
+        "FIELD GOAL GOOD! +3 (Buckeyes)",
+        "-- Play 2/6 | OFF: Wolverines | Ball: 1",
+        "Wolverines plays 5♣",
+        "Buckeyes defends with J♠",
+        "OFF: 5♣  vs  DEF: J♠",
+        "MOJO! Buckeyes won card battle (2/2)",
+        "Moved from 1 -> 3 (+2 segments)",
+        "PUNT! Roll 3 + Kick 2 = 5",
+        "-- Play 3/6 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... ",
+        "Wolverines plays 3♣",
+        "OFF: 7♦  vs  DEF: 3♣",
+        "MOJO CONVERTED to CLUTCH! Buckeyes",
+        "Moved from 1 -> 3 (+2 segments)",
+        "AI chooses: C",
+        "CLUTCH! Drew 2♠ (remaining: 0)",
+        "Clutch move 0 -> 3",
+        "AI chooses: P",
+        "PUNT! Roll 1 + Kick 2 = 3",
+        "-- Play 4/6 | OFF: Wolverines | Ball: 1"
+      ],
+      "message": "PUNT! Roll 1 + Kick 2 = 3",
+      "result": null
+    },
+    "events": [
+      {
+        "seq": 0,
+        "type": "card_played",
+        "seat": "home",
+        "role": "defense",
+        "card": {
+          "id": "3C",
+          "value": "3",
+          "suit": "C",
+          "color": "black",
+          "display": "3♣"
+        },
+        "hand_count_after": 4
+      },
+      {
+        "seq": 1,
+        "type": "cards_revealed",
+        "offense_card": {
+          "id": "7D",
+          "value": "7",
+          "suit": "D",
+          "color": "red",
+          "display": "7♦"
+        },
+        "defense_card": {
+          "id": "3C",
+          "value": "3",
+          "suit": "C",
+          "color": "black",
+          "display": "3♣"
+        },
+        "offense_value": 7,
+        "defense_value": 3,
+        "winner": "offense"
+      },
+      {
+        "seq": 2,
+        "type": "mojo_converted_to_clutch",
+        "seat": "away",
+        "clutch_after": 1,
+        "trigger": "pre_play"
+      },
+      {
+        "seq": 3,
+        "type": "ball_moved",
+        "seat": "away",
+        "from": "1",
+        "to": "3",
+        "segments": 2,
+        "reason": "drive_chart",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 4,
+        "type": "clutch_used",
+        "seat": "away",
+        "clutch_after": 0,
+        "card": {
+          "id": "2S",
+          "value": "2",
+          "suit": "S",
+          "color": "black",
+          "display": "2♠"
+        }
+      },
+      {
+        "seq": 5,
+        "type": "ball_moved",
+        "seat": "away",
+        "from": "3",
+        "to": "3",
+        "segments": 0,
+        "reason": "clutch",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 6,
+        "type": "punt_resolved",
+        "seat": "away",
+        "kind": "punt",
+        "distance": 3,
+        "roll": 1,
+        "from": "3",
+        "to": "1",
+        "clamped": true
+      },
+      {
+        "seq": 7,
+        "type": "ball_moved",
+        "seat": "away",
+        "from": "3",
+        "to": "1",
+        "segments": -2,
+        "reason": "punt",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 8,
+        "type": "possession_changed",
+        "from_seat": "away",
+        "to_seat": "home",
+        "ball": "1",
+        "reason": "punt"
+      }
+    ]
+  },
+  {
+    "revision": 22,
+    "snapshot": {
+      "game_id": "generated-seed-42",
+      "revision": 22,
+      "phase": "WAITING_POST_MOVE",
+      "required_action": "post_move",
+      "acting_seat": "home",
+      "viewer_seat": "home",
+      "quarter": 3,
+      "play": 4,
+      "plays_in_quarter": 6,
+      "ball": "Z3",
+      "offense_seat": "home",
+      "defense_seat": "away",
+      "home": {
+        "seat": "home",
+        "name": "Wolverines",
+        "color": "red",
+        "rating": 7,
+        "kick_rating": 2,
+        "score": 0,
+        "mojo": 2,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 3,
+        "segments": 21,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 6,
+        "hand": [
+          {
+            "id": "QD",
+            "value": "Q",
+            "suit": "D",
+            "color": "red",
+            "display": "Q♦"
+          },
+          {
+            "id": "3H",
+            "value": "3",
+            "suit": "H",
+            "color": "red",
+            "display": "3♥"
+          },
+          {
+            "id": "10C",
+            "value": "10",
+            "suit": "C",
+            "color": "black",
+            "display": "10♣"
+          }
+        ]
+      },
+      "away": {
+        "seat": "away",
+        "name": "Buckeyes",
+        "color": "black",
+        "rating": 6,
+        "kick_rating": 2,
+        "score": 26,
+        "mojo": 0,
+        "clutch": 0,
+        "clutch_used": true,
+        "hand_count": 3,
+        "segments": 27,
+        "fg_made": 4,
+        "fg_att": 5,
+        "punts": 1
+      },
+      "play_cards": {
+        "offense": {
+          "id": "9D",
+          "value": "9",
+          "suit": "D",
+          "color": "red",
+          "display": "9♦"
+        },
+        "defense": {
+          "id": "2D",
+          "value": "2",
+          "suit": "D",
+          "color": "red",
+          "display": "2♦"
+        },
+        "war": null,
+        "clutch": null
+      },
+      "legal_actions": [
+        {
+          "type": "post_move",
+          "choice": "P",
+          "enabled": true
+        },
+        {
+          "type": "post_move",
+          "choice": "F",
+          "enabled": true
+        },
+        {
+          "type": "post_move",
+          "choice": "C",
+          "enabled": true
+        },
+        {
+          "type": "post_move",
+          "choice": "S",
+          "enabled": true
+        }
+      ],
+      "log": [
+        "OFF: 5♣  vs  DEF: J♠",
+        "MOJO! Buckeyes won card battle (2/2)",
+        "Moved from 1 -> 3 (+2 segments)",
+        "PUNT! Roll 3 + Kick 2 = 5",
+        "-- Play 3/6 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... ",
+        "Wolverines plays 3♣",
+        "OFF: 7♦  vs  DEF: 3♣",
+        "MOJO CONVERTED to CLUTCH! Buckeyes",
+        "Moved from 1 -> 3 (+2 segments)",
+        "AI chooses: C",
+        "CLUTCH! Drew 2♠ (remaining: 0)",
+        "Clutch move 0 -> 3",
+        "AI chooses: P",
+        "PUNT! Roll 1 + Kick 2 = 3",
+        "-- Play 4/6 | OFF: Wolverines | Ball: 1",
+        "Wolverines plays 9♦",
+        "Buckeyes defends with 2♦",
+        "OFF: 9♦  vs  DEF: 2♦",
+        "Moved from 1 -> Z3 (+3 segments)"
+      ],
+      "message": "Moved from 1 -> Z3 (+3 segments)",
+      "result": null
+    },
+    "events": [
+      {
+        "seq": 0,
+        "type": "card_played",
+        "seat": "home",
+        "role": "offense",
+        "card": {
+          "id": "9D",
+          "value": "9",
+          "suit": "D",
+          "color": "red",
+          "display": "9♦"
+        },
+        "hand_count_after": 3
+      },
+      {
+        "seq": 1,
+        "type": "card_played",
+        "seat": "away",
+        "role": "defense",
+        "card": null,
+        "hand_count_after": 3
+      },
+      {
+        "seq": 2,
+        "type": "cards_revealed",
+        "offense_card": {
+          "id": "9D",
+          "value": "9",
+          "suit": "D",
+          "color": "red",
+          "display": "9♦"
+        },
+        "defense_card": {
+          "id": "2D",
+          "value": "2",
+          "suit": "D",
+          "color": "red",
+          "display": "2♦"
+        },
+        "offense_value": 9,
+        "defense_value": 2,
+        "winner": "offense"
+      },
+      {
+        "seq": 3,
+        "type": "ball_moved",
+        "seat": "home",
+        "from": "1",
+        "to": "Z3",
+        "segments": 3,
+        "reason": "drive_chart",
+        "is_touchdown": false,
+        "is_safety": false
+      }
+    ]
+  },
+  {
+    "revision": 23,
+    "snapshot": {
+      "game_id": "generated-seed-42",
+      "revision": 23,
+      "phase": "WAITING_DEFENSE_CARD",
+      "required_action": "play_card",
+      "acting_seat": "home",
+      "viewer_seat": "home",
+      "quarter": 3,
+      "play": 5,
+      "plays_in_quarter": 6,
+      "ball": "1",
+      "offense_seat": "away",
+      "defense_seat": "home",
+      "home": {
+        "seat": "home",
+        "name": "Wolverines",
+        "color": "red",
+        "rating": 7,
+        "kick_rating": 2,
+        "score": 0,
+        "mojo": 2,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 3,
+        "segments": 21,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 7,
+        "hand": [
+          {
+            "id": "QD",
+            "value": "Q",
+            "suit": "D",
+            "color": "red",
+            "display": "Q♦"
+          },
+          {
+            "id": "3H",
+            "value": "3",
+            "suit": "H",
+            "color": "red",
+            "display": "3♥"
+          },
+          {
+            "id": "10C",
+            "value": "10",
+            "suit": "C",
+            "color": "black",
+            "display": "10♣"
+          }
+        ]
+      },
+      "away": {
+        "seat": "away",
+        "name": "Buckeyes",
+        "color": "black",
+        "rating": 6,
+        "kick_rating": 2,
+        "score": 26,
+        "mojo": 0,
+        "clutch": 0,
+        "clutch_used": false,
+        "hand_count": 2,
+        "segments": 27,
+        "fg_made": 4,
+        "fg_att": 5,
+        "punts": 1
+      },
+      "play_cards": {
+        "offense": null,
+        "defense": null,
+        "war": null,
+        "clutch": null
+      },
+      "legal_actions": [
+        {
+          "type": "play_card",
+          "card_index": 0,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 1,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 2,
+          "enabled": true
+        }
+      ],
+      "log": [
+        "PUNT! Roll 3 + Kick 2 = 5",
+        "-- Play 3/6 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... ",
+        "Wolverines plays 3♣",
+        "OFF: 7♦  vs  DEF: 3♣",
+        "MOJO CONVERTED to CLUTCH! Buckeyes",
+        "Moved from 1 -> 3 (+2 segments)",
+        "AI chooses: C",
+        "CLUTCH! Drew 2♠ (remaining: 0)",
+        "Clutch move 0 -> 3",
+        "AI chooses: P",
+        "PUNT! Roll 1 + Kick 2 = 3",
+        "-- Play 4/6 | OFF: Wolverines | Ball: 1",
+        "Wolverines plays 9♦",
+        "Buckeyes defends with 2♦",
+        "OFF: 9♦  vs  DEF: 2♦",
+        "Moved from 1 -> Z3 (+3 segments)",
+        "PUNT! Roll 1 + Kick 2 = 3",
+        "-- Play 5/6 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... "
+      ],
+      "message": "PUNT! Roll 1 + Kick 2 = 3",
+      "result": null
+    },
+    "events": [
+      {
+        "seq": 0,
+        "type": "punt_resolved",
+        "seat": "home",
+        "kind": "punt",
+        "distance": 3,
+        "roll": 1,
+        "from": "Z3",
+        "to": "1",
+        "clamped": false
+      },
+      {
+        "seq": 1,
+        "type": "ball_moved",
+        "seat": "home",
+        "from": "Z3",
+        "to": "1",
+        "segments": -3,
+        "reason": "punt",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 2,
+        "type": "possession_changed",
+        "from_seat": "home",
+        "to_seat": "away",
+        "ball": "1",
+        "reason": "punt"
+      },
+      {
+        "seq": 3,
+        "type": "card_played",
+        "seat": "away",
+        "role": "offense",
+        "card": null,
+        "hand_count_after": 2
+      }
+    ]
+  },
+  {
+    "revision": 24,
+    "snapshot": {
+      "game_id": "generated-seed-42",
+      "revision": 24,
+      "phase": "WAITING_OFFENSE_CARD",
+      "required_action": "play_card",
+      "acting_seat": "home",
+      "viewer_seat": "home",
+      "quarter": 3,
+      "play": 6,
+      "plays_in_quarter": 6,
+      "ball": "1",
+      "offense_seat": "home",
+      "defense_seat": "away",
+      "home": {
+        "seat": "home",
+        "name": "Wolverines",
+        "color": "red",
+        "rating": 7,
+        "kick_rating": 2,
+        "score": 0,
+        "mojo": 2,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 2,
+        "segments": 21,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 7,
+        "hand": [
+          {
+            "id": "3H",
+            "value": "3",
+            "suit": "H",
+            "color": "red",
+            "display": "3♥"
+          },
+          {
+            "id": "10C",
+            "value": "10",
+            "suit": "C",
+            "color": "black",
+            "display": "10♣"
+          }
+        ]
+      },
+      "away": {
+        "seat": "away",
+        "name": "Buckeyes",
+        "color": "black",
+        "rating": 6,
+        "kick_rating": 2,
+        "score": 26,
+        "mojo": 0,
+        "clutch": 0,
+        "clutch_used": false,
+        "hand_count": 2,
+        "segments": 29,
+        "fg_made": 4,
+        "fg_att": 5,
+        "punts": 2
+      },
+      "play_cards": {
+        "offense": null,
+        "defense": null,
+        "war": null,
+        "clutch": null
+      },
+      "legal_actions": [
+        {
+          "type": "play_card",
+          "card_index": 0,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 1,
+          "enabled": true
+        }
+      ],
+      "log": [
+        "Moved from 1 -> 3 (+2 segments)",
+        "AI chooses: C",
+        "CLUTCH! Drew 2♠ (remaining: 0)",
+        "Clutch move 0 -> 3",
+        "AI chooses: P",
+        "PUNT! Roll 1 + Kick 2 = 3",
+        "-- Play 4/6 | OFF: Wolverines | Ball: 1",
+        "Wolverines plays 9♦",
+        "Buckeyes defends with 2♦",
+        "OFF: 9♦  vs  DEF: 2♦",
+        "Moved from 1 -> Z3 (+3 segments)",
+        "PUNT! Roll 1 + Kick 2 = 3",
+        "-- Play 5/6 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... ",
+        "Wolverines plays Q♦",
+        "OFF: 6♦  vs  DEF: Q♦",
+        "Moved from 1 -> 3 (+2 segments)",
+        "AI chooses: P",
+        "PUNT! Roll 1 + Kick 2 = 3",
+        "-- Play 6/6 | OFF: Wolverines | Ball: 1"
+      ],
+      "message": "PUNT! Roll 1 + Kick 2 = 3",
+      "result": null
+    },
+    "events": [
+      {
+        "seq": 0,
+        "type": "card_played",
+        "seat": "home",
+        "role": "defense",
+        "card": {
+          "id": "QD",
+          "value": "Q",
+          "suit": "D",
+          "color": "red",
+          "display": "Q♦"
+        },
+        "hand_count_after": 2
+      },
+      {
+        "seq": 1,
+        "type": "cards_revealed",
+        "offense_card": {
+          "id": "6D",
+          "value": "6",
+          "suit": "D",
+          "color": "red",
+          "display": "6♦"
+        },
+        "defense_card": {
+          "id": "QD",
+          "value": "Q",
+          "suit": "D",
+          "color": "red",
+          "display": "Q♦"
+        },
+        "offense_value": 6,
+        "defense_value": 12,
+        "winner": "defense"
+      },
+      {
+        "seq": 2,
+        "type": "ball_moved",
+        "seat": "away",
+        "from": "1",
+        "to": "3",
+        "segments": 2,
+        "reason": "drive_chart",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 3,
+        "type": "punt_resolved",
+        "seat": "away",
+        "kind": "punt",
+        "distance": 3,
+        "roll": 1,
+        "from": "3",
+        "to": "1",
+        "clamped": true
+      },
+      {
+        "seq": 4,
+        "type": "ball_moved",
+        "seat": "away",
+        "from": "3",
+        "to": "1",
+        "segments": -2,
+        "reason": "punt",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 5,
+        "type": "possession_changed",
+        "from_seat": "away",
+        "to_seat": "home",
+        "ball": "1",
+        "reason": "punt"
+      }
+    ]
+  },
+  {
+    "revision": 25,
+    "snapshot": {
+      "game_id": "generated-seed-42",
+      "revision": 25,
+      "phase": "WAITING_POST_MOVE",
+      "required_action": "post_move",
+      "acting_seat": "home",
+      "viewer_seat": "home",
+      "quarter": 3,
+      "play": 6,
+      "plays_in_quarter": 6,
+      "ball": "2",
+      "offense_seat": "home",
+      "defense_seat": "away",
+      "home": {
+        "seat": "home",
+        "name": "Wolverines",
+        "color": "red",
+        "rating": 7,
+        "kick_rating": 2,
+        "score": 0,
+        "mojo": 2,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 1,
+        "segments": 22,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 7,
+        "hand": [
+          {
+            "id": "10C",
+            "value": "10",
+            "suit": "C",
+            "color": "black",
+            "display": "10♣"
+          }
+        ]
+      },
+      "away": {
+        "seat": "away",
+        "name": "Buckeyes",
+        "color": "black",
+        "rating": 6,
+        "kick_rating": 2,
+        "score": 26,
+        "mojo": 1,
+        "clutch": 0,
+        "clutch_used": false,
+        "hand_count": 1,
+        "segments": 29,
+        "fg_made": 4,
+        "fg_att": 5,
+        "punts": 2
+      },
+      "play_cards": {
+        "offense": {
+          "id": "3H",
+          "value": "3",
+          "suit": "H",
+          "color": "red",
+          "display": "3♥"
+        },
+        "defense": {
+          "id": "4D",
+          "value": "4",
+          "suit": "D",
+          "color": "red",
+          "display": "4♦"
+        },
+        "war": null,
+        "clutch": null
+      },
+      "legal_actions": [
+        {
+          "type": "post_move",
+          "choice": "P",
+          "enabled": true
+        },
+        {
+          "type": "post_move",
+          "choice": "F",
+          "enabled": false,
+          "disabled_reason": "not_in_field_goal_range"
+        },
+        {
+          "type": "post_move",
+          "choice": "C",
+          "enabled": true
+        },
+        {
+          "type": "post_move",
+          "choice": "S",
+          "enabled": false,
+          "disabled_reason": "not_in_field_goal_range"
+        }
+      ],
+      "log": [
+        "PUNT! Roll 1 + Kick 2 = 3",
+        "-- Play 4/6 | OFF: Wolverines | Ball: 1",
+        "Wolverines plays 9♦",
+        "Buckeyes defends with 2♦",
+        "OFF: 9♦  vs  DEF: 2♦",
+        "Moved from 1 -> Z3 (+3 segments)",
+        "PUNT! Roll 1 + Kick 2 = 3",
+        "-- Play 5/6 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... ",
+        "Wolverines plays Q♦",
+        "OFF: 6♦  vs  DEF: Q♦",
+        "Moved from 1 -> 3 (+2 segments)",
+        "AI chooses: P",
+        "PUNT! Roll 1 + Kick 2 = 3",
+        "-- Play 6/6 | OFF: Wolverines | Ball: 1",
+        "Wolverines plays 3♥",
+        "Buckeyes defends with 4♦",
+        "OFF: 3♥  vs  DEF: 4♦",
+        "MOJO! Buckeyes won card battle (1/2)",
+        "Moved from 1 -> 2 (+1 segments)"
+      ],
+      "message": "Moved from 1 -> 2 (+1 segments)",
+      "result": null
+    },
+    "events": [
+      {
+        "seq": 0,
+        "type": "card_played",
+        "seat": "home",
+        "role": "offense",
+        "card": {
+          "id": "3H",
+          "value": "3",
+          "suit": "H",
+          "color": "red",
+          "display": "3♥"
+        },
+        "hand_count_after": 1
+      },
+      {
+        "seq": 1,
+        "type": "card_played",
+        "seat": "away",
+        "role": "defense",
+        "card": null,
+        "hand_count_after": 1
+      },
+      {
+        "seq": 2,
+        "type": "cards_revealed",
+        "offense_card": {
+          "id": "3H",
+          "value": "3",
+          "suit": "H",
+          "color": "red",
+          "display": "3♥"
+        },
+        "defense_card": {
+          "id": "4D",
+          "value": "4",
+          "suit": "D",
+          "color": "red",
+          "display": "4♦"
+        },
+        "offense_value": 3,
+        "defense_value": 4,
+        "winner": "defense"
+      },
+      {
+        "seq": 3,
+        "type": "mojo_changed",
+        "seat": "away",
+        "from": 0,
+        "to": 1,
+        "reason": "won_card_battle"
+      },
+      {
+        "seq": 4,
+        "type": "ball_moved",
+        "seat": "home",
+        "from": "1",
+        "to": "2",
+        "segments": 1,
+        "reason": "drive_chart",
+        "is_touchdown": false,
+        "is_safety": false
+      }
+    ]
+  },
+  {
+    "revision": 26,
+    "snapshot": {
+      "game_id": "generated-seed-42",
+      "revision": 26,
+      "phase": "WAITING_DEFENSE_CARD",
+      "required_action": "play_card",
+      "acting_seat": "home",
+      "viewer_seat": "home",
+      "quarter": 4,
+      "play": 1,
+      "plays_in_quarter": 8,
+      "ball": "1",
+      "offense_seat": "away",
+      "defense_seat": "home",
+      "home": {
+        "seat": "home",
+        "name": "Wolverines",
+        "color": "red",
+        "rating": 7,
+        "kick_rating": 2,
+        "score": 0,
+        "mojo": 2,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 9,
+        "segments": 22,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 8,
+        "hand": [
+          {
+            "id": "10C",
+            "value": "10",
+            "suit": "C",
+            "color": "black",
+            "display": "10♣"
+          },
+          {
+            "id": "AH",
+            "value": "A",
+            "suit": "H",
+            "color": "red",
+            "display": "A♥"
+          },
+          {
+            "id": "5D",
+            "value": "5",
+            "suit": "D",
+            "color": "red",
+            "display": "5♦"
+          },
+          {
+            "id": "QC",
+            "value": "Q",
+            "suit": "C",
+            "color": "black",
+            "display": "Q♣"
+          },
+          {
+            "id": "10H",
+            "value": "10",
+            "suit": "H",
+            "color": "red",
+            "display": "10♥"
+          },
+          {
+            "id": "9H",
+            "value": "9",
+            "suit": "H",
+            "color": "red",
+            "display": "9♥"
+          },
+          {
+            "id": "JOKER",
+            "value": "Joker",
+            "suit": null,
+            "color": null,
+            "display": "JOKER"
+          },
+          {
+            "id": "9C",
+            "value": "9",
+            "suit": "C",
+            "color": "black",
+            "display": "9♣"
+          },
+          {
+            "id": "7C",
+            "value": "7",
+            "suit": "C",
+            "color": "black",
+            "display": "7♣"
+          }
+        ]
+      },
+      "away": {
+        "seat": "away",
+        "name": "Buckeyes",
+        "color": "black",
+        "rating": 6,
+        "kick_rating": 2,
+        "score": 26,
+        "mojo": 1,
+        "clutch": 0,
+        "clutch_used": false,
+        "hand_count": 8,
+        "segments": 29,
+        "fg_made": 4,
+        "fg_att": 5,
+        "punts": 2
+      },
+      "play_cards": {
+        "offense": null,
+        "defense": null,
+        "war": null,
+        "clutch": null
+      },
+      "legal_actions": [
+        {
+          "type": "play_card",
+          "card_index": 0,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 1,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 2,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 3,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 4,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 5,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 6,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 7,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 8,
+          "enabled": true
+        }
+      ],
+      "log": [
+        "Moved from 1 -> Z3 (+3 segments)",
+        "PUNT! Roll 1 + Kick 2 = 3",
+        "-- Play 5/6 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... ",
+        "Wolverines plays Q♦",
+        "OFF: 6♦  vs  DEF: Q♦",
+        "Moved from 1 -> 3 (+2 segments)",
+        "AI chooses: P",
+        "PUNT! Roll 1 + Kick 2 = 3",
+        "-- Play 6/6 | OFF: Wolverines | Ball: 1",
+        "Wolverines plays 3♥",
+        "Buckeyes defends with 4♦",
+        "OFF: 3♥  vs  DEF: 4♦",
+        "MOJO! Buckeyes won card battle (1/2)",
+        "Moved from 1 -> 2 (+1 segments)",
+        "PUNT! Roll 2 + Kick 2 = 4",
+        "=== End Q3 | Wolverines: 0 - Buckeyes: 26 ===",
+        "=== QUARTER 4 === Buckeyes has ball",
+        "-- Play 1/8 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... "
+      ],
+      "message": "QUARTER 4 -- Buckeyes has ball",
+      "result": null
+    },
+    "events": [
+      {
+        "seq": 0,
+        "type": "punt_resolved",
+        "seat": "home",
+        "kind": "punt",
+        "distance": 4,
+        "roll": 2,
+        "from": "2",
+        "to": "1",
+        "clamped": true
+      },
+      {
+        "seq": 1,
+        "type": "ball_moved",
+        "seat": "home",
+        "from": "2",
+        "to": "1",
+        "segments": -1,
+        "reason": "punt",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 2,
+        "type": "possession_changed",
+        "from_seat": "home",
+        "to_seat": "away",
+        "ball": "1",
+        "reason": "punt"
+      },
+      {
+        "seq": 3,
+        "type": "quarter_ended",
+        "quarter": 3,
+        "home_score": 0,
+        "away_score": 26
+      },
+      {
+        "seq": 4,
+        "type": "quarter_started",
+        "quarter": 4,
+        "offense_seat": "away",
+        "dealt": 8,
+        "ball": "1"
+      },
+      {
+        "seq": 5,
+        "type": "card_played",
+        "seat": "away",
+        "role": "offense",
+        "card": null,
+        "hand_count_after": 8
+      }
+    ]
+  },
+  {
+    "revision": 27,
+    "snapshot": {
+      "game_id": "generated-seed-42",
+      "revision": 27,
+      "phase": "WAITING_OFFENSE_CARD",
+      "required_action": "play_card",
+      "acting_seat": "home",
+      "viewer_seat": "home",
+      "quarter": 4,
+      "play": 2,
+      "plays_in_quarter": 8,
+      "ball": "1",
+      "offense_seat": "home",
+      "defense_seat": "away",
+      "home": {
+        "seat": "home",
+        "name": "Wolverines",
+        "color": "red",
+        "rating": 7,
+        "kick_rating": 2,
+        "score": 0,
+        "mojo": 2,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 8,
+        "segments": 22,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 8,
+        "hand": [
+          {
+            "id": "AH",
+            "value": "A",
+            "suit": "H",
+            "color": "red",
+            "display": "A♥"
+          },
+          {
+            "id": "5D",
+            "value": "5",
+            "suit": "D",
+            "color": "red",
+            "display": "5♦"
+          },
+          {
+            "id": "QC",
+            "value": "Q",
+            "suit": "C",
+            "color": "black",
+            "display": "Q♣"
+          },
+          {
+            "id": "10H",
+            "value": "10",
+            "suit": "H",
+            "color": "red",
+            "display": "10♥"
+          },
+          {
+            "id": "9H",
+            "value": "9",
+            "suit": "H",
+            "color": "red",
+            "display": "9♥"
+          },
+          {
+            "id": "JOKER",
+            "value": "Joker",
+            "suit": null,
+            "color": null,
+            "display": "JOKER"
+          },
+          {
+            "id": "9C",
+            "value": "9",
+            "suit": "C",
+            "color": "black",
+            "display": "9♣"
+          },
+          {
+            "id": "7C",
+            "value": "7",
+            "suit": "C",
+            "color": "black",
+            "display": "7♣"
+          }
+        ]
+      },
+      "away": {
+        "seat": "away",
+        "name": "Buckeyes",
+        "color": "black",
+        "rating": 6,
+        "kick_rating": 2,
+        "score": 29,
+        "mojo": 1,
+        "clutch": 0,
+        "clutch_used": false,
+        "hand_count": 8,
+        "segments": 33,
+        "fg_made": 5,
+        "fg_att": 6,
+        "punts": 2
+      },
+      "play_cards": {
+        "offense": null,
+        "defense": null,
+        "war": null,
+        "clutch": null
+      },
+      "legal_actions": [
+        {
+          "type": "play_card",
+          "card_index": 0,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 1,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 2,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 3,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 4,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 5,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 6,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 7,
+          "enabled": true
+        }
+      ],
+      "log": [
+        "Moved from 1 -> 3 (+2 segments)",
+        "AI chooses: P",
+        "PUNT! Roll 1 + Kick 2 = 3",
+        "-- Play 6/6 | OFF: Wolverines | Ball: 1",
+        "Wolverines plays 3♥",
+        "Buckeyes defends with 4♦",
+        "OFF: 3♥  vs  DEF: 4♦",
+        "MOJO! Buckeyes won card battle (1/2)",
+        "Moved from 1 -> 2 (+1 segments)",
+        "PUNT! Roll 2 + Kick 2 = 4",
+        "=== End Q3 | Wolverines: 0 - Buckeyes: 26 ===",
+        "=== QUARTER 4 === Buckeyes has ball",
+        "-- Play 1/8 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... ",
+        "Wolverines plays 10♣",
+        "OFF: K♦  vs  DEF: 10♣",
+        "Moved from 1 -> Z2 (+4 segments)",
+        "AI chooses: F",
+        "FIELD GOAL GOOD! +3 (Buckeyes)",
+        "-- Play 2/8 | OFF: Wolverines | Ball: 1"
+      ],
+      "message": "FG GOOD! d6:[3] + Kick 2 = 5 (need 5) → +3",
+      "result": null
+    },
+    "events": [
+      {
+        "seq": 0,
+        "type": "card_played",
+        "seat": "home",
+        "role": "defense",
+        "card": {
+          "id": "10C",
+          "value": "10",
+          "suit": "C",
+          "color": "black",
+          "display": "10♣"
+        },
+        "hand_count_after": 8
+      },
+      {
+        "seq": 1,
+        "type": "cards_revealed",
+        "offense_card": {
+          "id": "KD",
+          "value": "K",
+          "suit": "D",
+          "color": "red",
+          "display": "K♦"
+        },
+        "defense_card": {
+          "id": "10C",
+          "value": "10",
+          "suit": "C",
+          "color": "black",
+          "display": "10♣"
+        },
+        "offense_value": 13,
+        "defense_value": 10,
+        "winner": "offense"
+      },
+      {
+        "seq": 2,
+        "type": "ball_moved",
+        "seat": "away",
+        "from": "1",
+        "to": "Z2",
+        "segments": 4,
+        "reason": "drive_chart",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 3,
+        "type": "field_goal_resolved",
+        "seat": "away",
+        "success": true,
+        "roll": 3,
+        "total": 5,
+        "target": 5,
+        "from": "Z2",
+        "points": 3,
+        "score_after": 29
+      },
+      {
+        "seq": 4,
+        "type": "ball_moved",
+        "seat": "away",
+        "from": "Z2",
+        "to": "1",
+        "segments": -4,
+        "reason": "kickoff",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 5,
+        "type": "possession_changed",
+        "from_seat": "away",
+        "to_seat": "home",
+        "ball": "1",
+        "reason": "field_goal_made"
+      }
+    ]
+  },
+  {
+    "revision": 28,
+    "snapshot": {
+      "game_id": "generated-seed-42",
+      "revision": 28,
+      "phase": "WAITING_EXTRA_POINT_CHOICE",
+      "required_action": "extra_point",
+      "acting_seat": "home",
+      "viewer_seat": "home",
+      "quarter": 4,
+      "play": 2,
+      "plays_in_quarter": 8,
+      "ball": "Z1",
+      "offense_seat": "home",
+      "defense_seat": "away",
+      "home": {
+        "seat": "home",
+        "name": "Wolverines",
+        "color": "red",
+        "rating": 7,
+        "kick_rating": 2,
+        "score": 6,
+        "mojo": 2,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 7,
+        "segments": 27,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 8,
+        "hand": [
+          {
+            "id": "5D",
+            "value": "5",
+            "suit": "D",
+            "color": "red",
+            "display": "5♦"
+          },
+          {
+            "id": "QC",
+            "value": "Q",
+            "suit": "C",
+            "color": "black",
+            "display": "Q♣"
+          },
+          {
+            "id": "10H",
+            "value": "10",
+            "suit": "H",
+            "color": "red",
+            "display": "10♥"
+          },
+          {
+            "id": "9H",
+            "value": "9",
+            "suit": "H",
+            "color": "red",
+            "display": "9♥"
+          },
+          {
+            "id": "JOKER",
+            "value": "Joker",
+            "suit": null,
+            "color": null,
+            "display": "JOKER"
+          },
+          {
+            "id": "9C",
+            "value": "9",
+            "suit": "C",
+            "color": "black",
+            "display": "9♣"
+          },
+          {
+            "id": "7C",
+            "value": "7",
+            "suit": "C",
+            "color": "black",
+            "display": "7♣"
+          }
+        ]
+      },
+      "away": {
+        "seat": "away",
+        "name": "Buckeyes",
+        "color": "black",
+        "rating": 6,
+        "kick_rating": 2,
+        "score": 29,
+        "mojo": 1,
+        "clutch": 0,
+        "clutch_used": false,
+        "hand_count": 7,
+        "segments": 33,
+        "fg_made": 5,
+        "fg_att": 6,
+        "punts": 2
+      },
+      "play_cards": {
+        "offense": {
+          "id": "AH",
+          "value": "A",
+          "suit": "H",
+          "color": "red",
+          "display": "A♥"
+        },
+        "defense": {
+          "id": "6C",
+          "value": "6",
+          "suit": "C",
+          "color": "black",
+          "display": "6♣"
+        },
+        "war": null,
+        "clutch": null
+      },
+      "legal_actions": [
+        {
+          "type": "extra_point",
+          "choice": "K",
+          "enabled": true
+        },
+        {
+          "type": "extra_point",
+          "choice": "2",
+          "enabled": true
+        }
+      ],
+      "log": [
+        "Buckeyes defends with 4♦",
+        "OFF: 3♥  vs  DEF: 4♦",
+        "MOJO! Buckeyes won card battle (1/2)",
+        "Moved from 1 -> 2 (+1 segments)",
+        "PUNT! Roll 2 + Kick 2 = 4",
+        "=== End Q3 | Wolverines: 0 - Buckeyes: 26 ===",
+        "=== QUARTER 4 === Buckeyes has ball",
+        "-- Play 1/8 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... ",
+        "Wolverines plays 10♣",
+        "OFF: K♦  vs  DEF: 10♣",
+        "Moved from 1 -> Z2 (+4 segments)",
+        "AI chooses: F",
+        "FIELD GOAL GOOD! +3 (Buckeyes)",
+        "-- Play 2/8 | OFF: Wolverines | Ball: 1",
+        "Wolverines plays A♥",
+        "Buckeyes defends with 6♣",
+        "OFF: A♥  vs  DEF: 6♣",
+        "Moved 1 -> END ZONE (+5) TOUCHDOWN!",
+        "TOUCHDOWN! Wolverines +6"
+      ],
+      "message": "TOUCHDOWN! Wolverines +6",
+      "result": null
+    },
+    "events": [
+      {
+        "seq": 0,
+        "type": "card_played",
+        "seat": "home",
+        "role": "offense",
+        "card": {
+          "id": "AH",
+          "value": "A",
+          "suit": "H",
+          "color": "red",
+          "display": "A♥"
+        },
+        "hand_count_after": 7
+      },
+      {
+        "seq": 1,
+        "type": "card_played",
+        "seat": "away",
+        "role": "defense",
+        "card": null,
+        "hand_count_after": 7
+      },
+      {
+        "seq": 2,
+        "type": "cards_revealed",
+        "offense_card": {
+          "id": "AH",
+          "value": "A",
+          "suit": "H",
+          "color": "red",
+          "display": "A♥"
+        },
+        "defense_card": {
+          "id": "6C",
+          "value": "6",
+          "suit": "C",
+          "color": "black",
+          "display": "6♣"
+        },
+        "offense_value": 14,
+        "defense_value": 6,
+        "winner": "offense"
+      },
+      {
+        "seq": 3,
+        "type": "ball_moved",
+        "seat": "home",
+        "from": "1",
+        "to": "Z1",
+        "segments": 5,
+        "reason": "drive_chart",
+        "is_touchdown": true,
+        "is_safety": false
+      },
+      {
+        "seq": 4,
+        "type": "touchdown_scored",
+        "seat": "home",
+        "points": 6,
+        "score_after": 6,
+        "cause": "color_bonus"
+      }
+    ]
+  },
+  {
+    "revision": 29,
+    "snapshot": {
+      "game_id": "generated-seed-42",
+      "revision": 29,
+      "phase": "WAITING_DEFENSE_CARD",
+      "required_action": "play_card",
+      "acting_seat": "home",
+      "viewer_seat": "home",
+      "quarter": 4,
+      "play": 3,
+      "plays_in_quarter": 8,
+      "ball": "1",
+      "offense_seat": "away",
+      "defense_seat": "home",
+      "home": {
+        "seat": "home",
+        "name": "Wolverines",
+        "color": "red",
+        "rating": 7,
+        "kick_rating": 2,
+        "score": 6,
+        "mojo": 2,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 7,
+        "segments": 27,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 8,
+        "hand": [
+          {
+            "id": "5D",
+            "value": "5",
+            "suit": "D",
+            "color": "red",
+            "display": "5♦"
+          },
+          {
+            "id": "QC",
+            "value": "Q",
+            "suit": "C",
+            "color": "black",
+            "display": "Q♣"
+          },
+          {
+            "id": "10H",
+            "value": "10",
+            "suit": "H",
+            "color": "red",
+            "display": "10♥"
+          },
+          {
+            "id": "9H",
+            "value": "9",
+            "suit": "H",
+            "color": "red",
+            "display": "9♥"
+          },
+          {
+            "id": "JOKER",
+            "value": "Joker",
+            "suit": null,
+            "color": null,
+            "display": "JOKER"
+          },
+          {
+            "id": "9C",
+            "value": "9",
+            "suit": "C",
+            "color": "black",
+            "display": "9♣"
+          },
+          {
+            "id": "7C",
+            "value": "7",
+            "suit": "C",
+            "color": "black",
+            "display": "7♣"
+          }
+        ]
+      },
+      "away": {
+        "seat": "away",
+        "name": "Buckeyes",
+        "color": "black",
+        "rating": 6,
+        "kick_rating": 2,
+        "score": 29,
+        "mojo": 1,
+        "clutch": 0,
+        "clutch_used": false,
+        "hand_count": 6,
+        "segments": 33,
+        "fg_made": 5,
+        "fg_att": 6,
+        "punts": 2
+      },
+      "play_cards": {
+        "offense": null,
+        "defense": null,
+        "war": null,
+        "clutch": null
+      },
+      "legal_actions": [
+        {
+          "type": "play_card",
+          "card_index": 0,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 1,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 2,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 3,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 4,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 5,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 6,
+          "enabled": true
+        }
+      ],
+      "log": [
+        "Moved from 1 -> 2 (+1 segments)",
+        "PUNT! Roll 2 + Kick 2 = 4",
+        "=== End Q3 | Wolverines: 0 - Buckeyes: 26 ===",
+        "=== QUARTER 4 === Buckeyes has ball",
+        "-- Play 1/8 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... ",
+        "Wolverines plays 10♣",
+        "OFF: K♦  vs  DEF: 10♣",
+        "Moved from 1 -> Z2 (+4 segments)",
+        "AI chooses: F",
+        "FIELD GOAL GOOD! +3 (Buckeyes)",
+        "-- Play 2/8 | OFF: Wolverines | Ball: 1",
+        "Wolverines plays A♥",
+        "Buckeyes defends with 6♣",
+        "OFF: A♥  vs  DEF: 6♣",
+        "Moved 1 -> END ZONE (+5) TOUCHDOWN!",
+        "TOUCHDOWN! Wolverines +6",
+        "PAT kick: PAT KICK Missed ! (+0)",
+        "-- Play 3/8 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... "
+      ],
+      "message": "PAT KICK Missed !",
+      "result": null
+    },
+    "events": [
+      {
+        "seq": 0,
+        "type": "extra_point_resolved",
+        "seat": "home",
+        "choice": "K",
+        "success": false,
+        "roll": null,
+        "points": 0,
+        "score_after": 6
+      },
+      {
+        "seq": 1,
+        "type": "ball_moved",
+        "seat": "home",
+        "from": "Z1",
+        "to": "1",
+        "segments": 0,
+        "reason": "kickoff",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 2,
+        "type": "possession_changed",
+        "from_seat": "home",
+        "to_seat": "away",
+        "ball": "1",
+        "reason": "touchdown"
+      },
+      {
+        "seq": 3,
+        "type": "card_played",
+        "seat": "away",
+        "role": "offense",
+        "card": null,
+        "hand_count_after": 6
+      }
+    ]
+  },
+  {
+    "revision": 30,
+    "snapshot": {
+      "game_id": "generated-seed-42",
+      "revision": 30,
+      "phase": "WAITING_OFFENSE_CARD",
+      "required_action": "play_card",
+      "acting_seat": "home",
+      "viewer_seat": "home",
+      "quarter": 4,
+      "play": 4,
+      "plays_in_quarter": 8,
+      "ball": "2",
+      "offense_seat": "home",
+      "defense_seat": "away",
+      "home": {
+        "seat": "home",
+        "name": "Wolverines",
+        "color": "red",
+        "rating": 7,
+        "kick_rating": 2,
+        "score": 6,
+        "mojo": 2,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 6,
+        "segments": 27,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 8,
+        "hand": [
+          {
+            "id": "QC",
+            "value": "Q",
+            "suit": "C",
+            "color": "black",
+            "display": "Q♣"
+          },
+          {
+            "id": "10H",
+            "value": "10",
+            "suit": "H",
+            "color": "red",
+            "display": "10♥"
+          },
+          {
+            "id": "9H",
+            "value": "9",
+            "suit": "H",
+            "color": "red",
+            "display": "9♥"
+          },
+          {
+            "id": "JOKER",
+            "value": "Joker",
+            "suit": null,
+            "color": null,
+            "display": "JOKER"
+          },
+          {
+            "id": "9C",
+            "value": "9",
+            "suit": "C",
+            "color": "black",
+            "display": "9♣"
+          },
+          {
+            "id": "7C",
+            "value": "7",
+            "suit": "C",
+            "color": "black",
+            "display": "7♣"
+          }
+        ]
+      },
+      "away": {
+        "seat": "away",
+        "name": "Buckeyes",
+        "color": "black",
+        "rating": 6,
+        "kick_rating": 2,
+        "score": 29,
+        "mojo": 0,
+        "clutch": 0,
+        "clutch_used": true,
+        "hand_count": 6,
+        "segments": 37,
+        "fg_made": 5,
+        "fg_att": 7,
+        "punts": 2
+      },
+      "play_cards": {
+        "offense": null,
+        "defense": null,
+        "war": null,
+        "clutch": null
+      },
+      "legal_actions": [
+        {
+          "type": "play_card",
+          "card_index": 0,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 1,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 2,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 3,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 4,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 5,
+          "enabled": true
+        }
+      ],
+      "log": [
+        "-- Play 2/8 | OFF: Wolverines | Ball: 1",
+        "Wolverines plays A♥",
+        "Buckeyes defends with 6♣",
+        "OFF: A♥  vs  DEF: 6♣",
+        "Moved 1 -> END ZONE (+5) TOUCHDOWN!",
+        "TOUCHDOWN! Wolverines +6",
+        "PAT kick: PAT KICK Missed ! (+0)",
+        "-- Play 3/8 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... ",
+        "Wolverines plays 5♦",
+        "OFF: K♣  vs  DEF: 5♦",
+        "MOJO! Buckeyes dominated by 8 (2/2)",
+        "MOJO CONVERTED to CLUTCH! Buckeyes",
+        "Moved from 1 -> Z2 (+4 segments)",
+        "AI chooses: C",
+        "CLUTCH! Drew 2♥ (remaining: 0)",
+        "Clutch move 0 -> Z2",
+        "AI chooses: F",
+        "FG missed! 3 < 5",
+        "-- Play 4/8 | OFF: Wolverines | Ball: 2"
+      ],
+      "message": "FG MISSED! d6:[1] + Kick 2 = 3 (need 5)",
+      "result": null
+    },
+    "events": [
+      {
+        "seq": 0,
+        "type": "card_played",
+        "seat": "home",
+        "role": "defense",
+        "card": {
+          "id": "5D",
+          "value": "5",
+          "suit": "D",
+          "color": "red",
+          "display": "5♦"
+        },
+        "hand_count_after": 6
+      },
+      {
+        "seq": 1,
+        "type": "cards_revealed",
+        "offense_card": {
+          "id": "KC",
+          "value": "K",
+          "suit": "C",
+          "color": "black",
+          "display": "K♣"
+        },
+        "defense_card": {
+          "id": "5D",
+          "value": "5",
+          "suit": "D",
+          "color": "red",
+          "display": "5♦"
+        },
+        "offense_value": 13,
+        "defense_value": 5,
+        "winner": "offense"
+      },
+      {
+        "seq": 2,
+        "type": "mojo_changed",
+        "seat": "away",
+        "from": 1,
+        "to": 2,
+        "reason": "dominant_win"
+      },
+      {
+        "seq": 3,
+        "type": "mojo_converted_to_clutch",
+        "seat": "away",
+        "clutch_after": 1,
+        "trigger": "pre_play"
+      },
+      {
+        "seq": 4,
+        "type": "ball_moved",
+        "seat": "away",
+        "from": "1",
+        "to": "Z2",
+        "segments": 4,
+        "reason": "drive_chart",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 5,
+        "type": "clutch_used",
+        "seat": "away",
+        "clutch_after": 0,
+        "card": {
+          "id": "2H",
+          "value": "2",
+          "suit": "H",
+          "color": "red",
+          "display": "2♥"
+        }
+      },
+      {
+        "seq": 6,
+        "type": "ball_moved",
+        "seat": "away",
+        "from": "Z2",
+        "to": "Z2",
+        "segments": 0,
+        "reason": "clutch",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 7,
+        "type": "field_goal_resolved",
+        "seat": "away",
+        "success": false,
+        "roll": 1,
+        "total": 3,
+        "target": 5,
+        "from": "Z2",
+        "points": 0,
+        "score_after": 29
+      },
+      {
+        "seq": 8,
+        "type": "ball_moved",
+        "seat": "away",
+        "from": "Z2",
+        "to": "2",
+        "segments": -3,
+        "reason": "turnover",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 9,
+        "type": "possession_changed",
+        "from_seat": "away",
+        "to_seat": "home",
+        "ball": "2",
+        "reason": "field_goal_missed"
+      }
+    ]
+  },
+  {
+    "revision": 31,
+    "snapshot": {
+      "game_id": "generated-seed-42",
+      "revision": 31,
+      "phase": "WAITING_POST_MOVE",
+      "required_action": "post_move",
+      "acting_seat": "home",
+      "viewer_seat": "home",
+      "quarter": 4,
+      "play": 4,
+      "plays_in_quarter": 8,
+      "ball": "Z3",
+      "offense_seat": "home",
+      "defense_seat": "away",
+      "home": {
+        "seat": "home",
+        "name": "Wolverines",
+        "color": "red",
+        "rating": 7,
+        "kick_rating": 2,
+        "score": 6,
+        "mojo": 2,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 5,
+        "segments": 29,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 8,
+        "hand": [
+          {
+            "id": "10H",
+            "value": "10",
+            "suit": "H",
+            "color": "red",
+            "display": "10♥"
+          },
+          {
+            "id": "9H",
+            "value": "9",
+            "suit": "H",
+            "color": "red",
+            "display": "9♥"
+          },
+          {
+            "id": "JOKER",
+            "value": "Joker",
+            "suit": null,
+            "color": null,
+            "display": "JOKER"
+          },
+          {
+            "id": "9C",
+            "value": "9",
+            "suit": "C",
+            "color": "black",
+            "display": "9♣"
+          },
+          {
+            "id": "7C",
+            "value": "7",
+            "suit": "C",
+            "color": "black",
+            "display": "7♣"
+          }
+        ]
+      },
+      "away": {
+        "seat": "away",
+        "name": "Buckeyes",
+        "color": "black",
+        "rating": 6,
+        "kick_rating": 2,
+        "score": 29,
+        "mojo": 0,
+        "clutch": 0,
+        "clutch_used": true,
+        "hand_count": 5,
+        "segments": 37,
+        "fg_made": 5,
+        "fg_att": 7,
+        "punts": 2
+      },
+      "play_cards": {
+        "offense": {
+          "id": "QC",
+          "value": "Q",
+          "suit": "C",
+          "color": "black",
+          "display": "Q♣"
+        },
+        "defense": {
+          "id": "QS",
+          "value": "Q",
+          "suit": "S",
+          "color": "black",
+          "display": "Q♠"
+        },
+        "war": {
+          "id": "5H",
+          "value": "5",
+          "suit": "H",
+          "color": "red",
+          "display": "5♥"
+        },
+        "clutch": null
+      },
+      "legal_actions": [
+        {
+          "type": "post_move",
+          "choice": "P",
+          "enabled": true
+        },
+        {
+          "type": "post_move",
+          "choice": "F",
+          "enabled": true
+        },
+        {
+          "type": "post_move",
+          "choice": "C",
+          "enabled": true
+        },
+        {
+          "type": "post_move",
+          "choice": "S",
+          "enabled": true
+        }
+      ],
+      "log": [
+        "TOUCHDOWN! Wolverines +6",
+        "PAT kick: PAT KICK Missed ! (+0)",
+        "-- Play 3/8 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... ",
+        "Wolverines plays 5♦",
+        "OFF: K♣  vs  DEF: 5♦",
+        "MOJO! Buckeyes dominated by 8 (2/2)",
+        "MOJO CONVERTED to CLUTCH! Buckeyes",
+        "Moved from 1 -> Z2 (+4 segments)",
+        "AI chooses: C",
+        "CLUTCH! Drew 2♥ (remaining: 0)",
+        "Clutch move 0 -> Z2",
+        "AI chooses: F",
+        "FG missed! 3 < 5",
+        "-- Play 4/8 | OFF: Wolverines | Ball: 2",
+        "Wolverines plays Q♣",
+        "Buckeyes defends with Q♠",
+        "OFF: Q♣  vs  DEF: Q♠",
+        "WAR! Drew 5♥ (red)",
+        "Offense advances to Z3"
+      ],
+      "message": "WAR! 5♥ - Offense to Z3!",
+      "result": null
+    },
+    "events": [
+      {
+        "seq": 0,
+        "type": "card_played",
+        "seat": "home",
+        "role": "offense",
+        "card": {
+          "id": "QC",
+          "value": "Q",
+          "suit": "C",
+          "color": "black",
+          "display": "Q♣"
+        },
+        "hand_count_after": 5
+      },
+      {
+        "seq": 1,
+        "type": "card_played",
+        "seat": "away",
+        "role": "defense",
+        "card": null,
+        "hand_count_after": 5
+      },
+      {
+        "seq": 2,
+        "type": "cards_revealed",
+        "offense_card": {
+          "id": "QC",
+          "value": "Q",
+          "suit": "C",
+          "color": "black",
+          "display": "Q♣"
+        },
+        "defense_card": {
+          "id": "QS",
+          "value": "Q",
+          "suit": "S",
+          "color": "black",
+          "display": "Q♠"
+        },
+        "offense_value": 12,
+        "defense_value": 12,
+        "winner": "tie"
+      },
+      {
+        "seq": 3,
+        "type": "war_started",
+        "tied_value": 12
+      },
+      {
+        "seq": 4,
+        "type": "war_card_revealed",
+        "card": {
+          "id": "5H",
+          "value": "5",
+          "suit": "H",
+          "color": "red",
+          "display": "5♥"
+        },
+        "matches_offense_color": true,
+        "outcome": "advance"
+      },
+      {
+        "seq": 5,
+        "type": "ball_moved",
+        "seat": "home",
+        "from": "2",
+        "to": "Z3",
+        "segments": 2,
+        "reason": "war",
+        "is_touchdown": false,
+        "is_safety": false
+      }
+    ]
+  },
+  {
+    "revision": 32,
+    "snapshot": {
+      "game_id": "generated-seed-42",
+      "revision": 32,
+      "phase": "WAITING_DEFENSE_CARD",
+      "required_action": "play_card",
+      "acting_seat": "home",
+      "viewer_seat": "home",
+      "quarter": 4,
+      "play": 5,
+      "plays_in_quarter": 8,
+      "ball": "1",
+      "offense_seat": "away",
+      "defense_seat": "home",
+      "home": {
+        "seat": "home",
+        "name": "Wolverines",
+        "color": "red",
+        "rating": 7,
+        "kick_rating": 2,
+        "score": 6,
+        "mojo": 2,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 5,
+        "segments": 29,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 9,
+        "hand": [
+          {
+            "id": "10H",
+            "value": "10",
+            "suit": "H",
+            "color": "red",
+            "display": "10♥"
+          },
+          {
+            "id": "9H",
+            "value": "9",
+            "suit": "H",
+            "color": "red",
+            "display": "9♥"
+          },
+          {
+            "id": "JOKER",
+            "value": "Joker",
+            "suit": null,
+            "color": null,
+            "display": "JOKER"
+          },
+          {
+            "id": "9C",
+            "value": "9",
+            "suit": "C",
+            "color": "black",
+            "display": "9♣"
+          },
+          {
+            "id": "7C",
+            "value": "7",
+            "suit": "C",
+            "color": "black",
+            "display": "7♣"
+          }
+        ]
+      },
+      "away": {
+        "seat": "away",
+        "name": "Buckeyes",
+        "color": "black",
+        "rating": 6,
+        "kick_rating": 2,
+        "score": 29,
+        "mojo": 0,
+        "clutch": 0,
+        "clutch_used": false,
+        "hand_count": 4,
+        "segments": 37,
+        "fg_made": 5,
+        "fg_att": 7,
+        "punts": 2
+      },
+      "play_cards": {
+        "offense": null,
+        "defense": null,
+        "war": null,
+        "clutch": null
+      },
+      "legal_actions": [
+        {
+          "type": "play_card",
+          "card_index": 0,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 1,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 2,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 3,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 4,
+          "enabled": true
+        }
+      ],
+      "log": [
+        "AI plays card ... ",
+        "Wolverines plays 5♦",
+        "OFF: K♣  vs  DEF: 5♦",
+        "MOJO! Buckeyes dominated by 8 (2/2)",
+        "MOJO CONVERTED to CLUTCH! Buckeyes",
+        "Moved from 1 -> Z2 (+4 segments)",
+        "AI chooses: C",
+        "CLUTCH! Drew 2♥ (remaining: 0)",
+        "Clutch move 0 -> Z2",
+        "AI chooses: F",
+        "FG missed! 3 < 5",
+        "-- Play 4/8 | OFF: Wolverines | Ball: 2",
+        "Wolverines plays Q♣",
+        "Buckeyes defends with Q♠",
+        "OFF: Q♣  vs  DEF: Q♠",
+        "WAR! Drew 5♥ (red)",
+        "Offense advances to Z3",
+        "PUNT! Roll 3 + Kick 2 = 5",
+        "-- Play 5/8 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... "
+      ],
+      "message": "PUNT! Roll 3 + Kick 2 = 5",
+      "result": null
+    },
+    "events": [
+      {
+        "seq": 0,
+        "type": "punt_resolved",
+        "seat": "home",
+        "kind": "punt",
+        "distance": 5,
+        "roll": 3,
+        "from": "Z3",
+        "to": "1",
+        "clamped": true
+      },
+      {
+        "seq": 1,
+        "type": "ball_moved",
+        "seat": "home",
+        "from": "Z3",
+        "to": "1",
+        "segments": -3,
+        "reason": "punt",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 2,
+        "type": "possession_changed",
+        "from_seat": "home",
+        "to_seat": "away",
+        "ball": "1",
+        "reason": "punt"
+      },
+      {
+        "seq": 3,
+        "type": "card_played",
+        "seat": "away",
+        "role": "offense",
+        "card": null,
+        "hand_count_after": 4
+      }
+    ]
+  },
+  {
+    "revision": 33,
+    "snapshot": {
+      "game_id": "generated-seed-42",
+      "revision": 33,
+      "phase": "WAITING_OFFENSE_CARD",
+      "required_action": "play_card",
+      "acting_seat": "home",
+      "viewer_seat": "home",
+      "quarter": 4,
+      "play": 6,
+      "plays_in_quarter": 8,
+      "ball": "3",
+      "offense_seat": "home",
+      "defense_seat": "away",
+      "home": {
+        "seat": "home",
+        "name": "Wolverines",
+        "color": "red",
+        "rating": 7,
+        "kick_rating": 2,
+        "score": 6,
+        "mojo": 2,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 4,
+        "segments": 29,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 9,
+        "hand": [
+          {
+            "id": "9H",
+            "value": "9",
+            "suit": "H",
+            "color": "red",
+            "display": "9♥"
+          },
+          {
+            "id": "JOKER",
+            "value": "Joker",
+            "suit": null,
+            "color": null,
+            "display": "JOKER"
+          },
+          {
+            "id": "9C",
+            "value": "9",
+            "suit": "C",
+            "color": "black",
+            "display": "9♣"
+          },
+          {
+            "id": "7C",
+            "value": "7",
+            "suit": "C",
+            "color": "black",
+            "display": "7♣"
+          }
+        ]
+      },
+      "away": {
+        "seat": "away",
+        "name": "Buckeyes",
+        "color": "black",
+        "rating": 6,
+        "kick_rating": 2,
+        "score": 29,
+        "mojo": 0,
+        "clutch": 0,
+        "clutch_used": false,
+        "hand_count": 4,
+        "segments": 40,
+        "fg_made": 5,
+        "fg_att": 8,
+        "punts": 2
+      },
+      "play_cards": {
+        "offense": null,
+        "defense": null,
+        "war": null,
+        "clutch": null
+      },
+      "legal_actions": [
+        {
+          "type": "play_card",
+          "card_index": 0,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 1,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 2,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 3,
+          "enabled": true
+        }
+      ],
+      "log": [
+        "AI chooses: C",
+        "CLUTCH! Drew 2♥ (remaining: 0)",
+        "Clutch move 0 -> Z2",
+        "AI chooses: F",
+        "FG missed! 3 < 5",
+        "-- Play 4/8 | OFF: Wolverines | Ball: 2",
+        "Wolverines plays Q♣",
+        "Buckeyes defends with Q♠",
+        "OFF: Q♣  vs  DEF: Q♠",
+        "WAR! Drew 5♥ (red)",
+        "Offense advances to Z3",
+        "PUNT! Roll 3 + Kick 2 = 5",
+        "-- Play 5/8 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... ",
+        "Wolverines plays 10♥",
+        "OFF: 8♦  vs  DEF: 10♥",
+        "Moved from 1 -> Z3 (+3 segments)",
+        "AI chooses: F",
+        "FG missed! 5 < 7",
+        "-- Play 6/8 | OFF: Wolverines | Ball: 3"
+      ],
+      "message": "FG MISSED! d6:[3] + Kick 2 = 5 (need 7)",
+      "result": null
+    },
+    "events": [
+      {
+        "seq": 0,
+        "type": "card_played",
+        "seat": "home",
+        "role": "defense",
+        "card": {
+          "id": "10H",
+          "value": "10",
+          "suit": "H",
+          "color": "red",
+          "display": "10♥"
+        },
+        "hand_count_after": 4
+      },
+      {
+        "seq": 1,
+        "type": "cards_revealed",
+        "offense_card": {
+          "id": "8D",
+          "value": "8",
+          "suit": "D",
+          "color": "red",
+          "display": "8♦"
+        },
+        "defense_card": {
+          "id": "10H",
+          "value": "10",
+          "suit": "H",
+          "color": "red",
+          "display": "10♥"
+        },
+        "offense_value": 8,
+        "defense_value": 10,
+        "winner": "defense"
+      },
+      {
+        "seq": 2,
+        "type": "ball_moved",
+        "seat": "away",
+        "from": "1",
+        "to": "Z3",
+        "segments": 3,
+        "reason": "drive_chart",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 3,
+        "type": "field_goal_resolved",
+        "seat": "away",
+        "success": false,
+        "roll": 3,
+        "total": 5,
+        "target": 7,
+        "from": "Z3",
+        "points": 0,
+        "score_after": 29
+      },
+      {
+        "seq": 4,
+        "type": "ball_moved",
+        "seat": "away",
+        "from": "Z3",
+        "to": "3",
+        "segments": -1,
+        "reason": "turnover",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 5,
+        "type": "possession_changed",
+        "from_seat": "away",
+        "to_seat": "home",
+        "ball": "3",
+        "reason": "field_goal_missed"
+      }
+    ]
+  },
+  {
+    "revision": 34,
+    "snapshot": {
+      "game_id": "generated-seed-42",
+      "revision": 34,
+      "phase": "WAITING_POST_MOVE",
+      "required_action": "post_move",
+      "acting_seat": "home",
+      "viewer_seat": "home",
+      "quarter": 4,
+      "play": 6,
+      "plays_in_quarter": 8,
+      "ball": "Z1",
+      "offense_seat": "home",
+      "defense_seat": "away",
+      "home": {
+        "seat": "home",
+        "name": "Wolverines",
+        "color": "red",
+        "rating": 7,
+        "kick_rating": 2,
+        "score": 6,
+        "mojo": 2,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 3,
+        "segments": 32,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 9,
+        "hand": [
+          {
+            "id": "JOKER",
+            "value": "Joker",
+            "suit": null,
+            "color": null,
+            "display": "JOKER"
+          },
+          {
+            "id": "9C",
+            "value": "9",
+            "suit": "C",
+            "color": "black",
+            "display": "9♣"
+          },
+          {
+            "id": "7C",
+            "value": "7",
+            "suit": "C",
+            "color": "black",
+            "display": "7♣"
+          }
+        ]
+      },
+      "away": {
+        "seat": "away",
+        "name": "Buckeyes",
+        "color": "black",
+        "rating": 6,
+        "kick_rating": 2,
+        "score": 29,
+        "mojo": 0,
+        "clutch": 0,
+        "clutch_used": false,
+        "hand_count": 3,
+        "segments": 40,
+        "fg_made": 5,
+        "fg_att": 8,
+        "punts": 2
+      },
+      "play_cards": {
+        "offense": {
+          "id": "9H",
+          "value": "9",
+          "suit": "H",
+          "color": "red",
+          "display": "9♥"
+        },
+        "defense": {
+          "id": "4C",
+          "value": "4",
+          "suit": "C",
+          "color": "black",
+          "display": "4♣"
+        },
+        "war": null,
+        "clutch": null
+      },
+      "legal_actions": [
+        {
+          "type": "post_move",
+          "choice": "P",
+          "enabled": true
+        },
+        {
+          "type": "post_move",
+          "choice": "F",
+          "enabled": true
+        },
+        {
+          "type": "post_move",
+          "choice": "C",
+          "enabled": true
+        },
+        {
+          "type": "post_move",
+          "choice": "S",
+          "enabled": true
+        }
+      ],
+      "log": [
+        "FG missed! 3 < 5",
+        "-- Play 4/8 | OFF: Wolverines | Ball: 2",
+        "Wolverines plays Q♣",
+        "Buckeyes defends with Q♠",
+        "OFF: Q♣  vs  DEF: Q♠",
+        "WAR! Drew 5♥ (red)",
+        "Offense advances to Z3",
+        "PUNT! Roll 3 + Kick 2 = 5",
+        "-- Play 5/8 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... ",
+        "Wolverines plays 10♥",
+        "OFF: 8♦  vs  DEF: 10♥",
+        "Moved from 1 -> Z3 (+3 segments)",
+        "AI chooses: F",
+        "FG missed! 5 < 7",
+        "-- Play 6/8 | OFF: Wolverines | Ball: 3",
+        "Wolverines plays 9♥",
+        "Buckeyes defends with 4♣",
+        "OFF: 9♥  vs  DEF: 4♣",
+        "Moved from 3 -> Z1 (+3 segments)"
+      ],
+      "message": "Moved from 3 -> Z1 (+3 segments)",
+      "result": null
+    },
+    "events": [
+      {
+        "seq": 0,
+        "type": "card_played",
+        "seat": "home",
+        "role": "offense",
+        "card": {
+          "id": "9H",
+          "value": "9",
+          "suit": "H",
+          "color": "red",
+          "display": "9♥"
+        },
+        "hand_count_after": 3
+      },
+      {
+        "seq": 1,
+        "type": "card_played",
+        "seat": "away",
+        "role": "defense",
+        "card": null,
+        "hand_count_after": 3
+      },
+      {
+        "seq": 2,
+        "type": "cards_revealed",
+        "offense_card": {
+          "id": "9H",
+          "value": "9",
+          "suit": "H",
+          "color": "red",
+          "display": "9♥"
+        },
+        "defense_card": {
+          "id": "4C",
+          "value": "4",
+          "suit": "C",
+          "color": "black",
+          "display": "4♣"
+        },
+        "offense_value": 9,
+        "defense_value": 4,
+        "winner": "offense"
+      },
+      {
+        "seq": 3,
+        "type": "ball_moved",
+        "seat": "home",
+        "from": "3",
+        "to": "Z1",
+        "segments": 3,
+        "reason": "drive_chart",
+        "is_touchdown": false,
+        "is_safety": false
+      }
+    ]
+  },
+  {
+    "revision": 35,
+    "snapshot": {
+      "game_id": "generated-seed-42",
+      "revision": 35,
+      "phase": "WAITING_DEFENSE_CARD",
+      "required_action": "play_card",
+      "acting_seat": "home",
+      "viewer_seat": "home",
+      "quarter": 4,
+      "play": 7,
+      "plays_in_quarter": 8,
+      "ball": "1",
+      "offense_seat": "away",
+      "defense_seat": "home",
+      "home": {
+        "seat": "home",
+        "name": "Wolverines",
+        "color": "red",
+        "rating": 7,
+        "kick_rating": 2,
+        "score": 6,
+        "mojo": 2,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 3,
+        "segments": 32,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 10,
+        "hand": [
+          {
+            "id": "JOKER",
+            "value": "Joker",
+            "suit": null,
+            "color": null,
+            "display": "JOKER"
+          },
+          {
+            "id": "9C",
+            "value": "9",
+            "suit": "C",
+            "color": "black",
+            "display": "9♣"
+          },
+          {
+            "id": "7C",
+            "value": "7",
+            "suit": "C",
+            "color": "black",
+            "display": "7♣"
+          }
+        ]
+      },
+      "away": {
+        "seat": "away",
+        "name": "Buckeyes",
+        "color": "black",
+        "rating": 6,
+        "kick_rating": 2,
+        "score": 29,
+        "mojo": 0,
+        "clutch": 0,
+        "clutch_used": false,
+        "hand_count": 2,
+        "segments": 40,
+        "fg_made": 5,
+        "fg_att": 8,
+        "punts": 2
+      },
+      "play_cards": {
+        "offense": null,
+        "defense": null,
+        "war": null,
+        "clutch": null
+      },
+      "legal_actions": [
+        {
+          "type": "play_card",
+          "card_index": 0,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 1,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 2,
+          "enabled": true
+        }
+      ],
+      "log": [
+        "Buckeyes defends with Q♠",
+        "OFF: Q♣  vs  DEF: Q♠",
+        "WAR! Drew 5♥ (red)",
+        "Offense advances to Z3",
+        "PUNT! Roll 3 + Kick 2 = 5",
+        "-- Play 5/8 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... ",
+        "Wolverines plays 10♥",
+        "OFF: 8♦  vs  DEF: 10♥",
+        "Moved from 1 -> Z3 (+3 segments)",
+        "AI chooses: F",
+        "FG missed! 5 < 7",
+        "-- Play 6/8 | OFF: Wolverines | Ball: 3",
+        "Wolverines plays 9♥",
+        "Buckeyes defends with 4♣",
+        "OFF: 9♥  vs  DEF: 4♣",
+        "Moved from 3 -> Z1 (+3 segments)",
+        "PUNT! Roll 3 + Kick 2 = 5",
+        "-- Play 7/8 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... "
+      ],
+      "message": "PUNT! Roll 3 + Kick 2 = 5",
+      "result": null
+    },
+    "events": [
+      {
+        "seq": 0,
+        "type": "punt_resolved",
+        "seat": "home",
+        "kind": "punt",
+        "distance": 5,
+        "roll": 3,
+        "from": "Z1",
+        "to": "1",
+        "clamped": false
+      },
+      {
+        "seq": 1,
+        "type": "ball_moved",
+        "seat": "home",
+        "from": "Z1",
+        "to": "1",
+        "segments": -5,
+        "reason": "punt",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 2,
+        "type": "possession_changed",
+        "from_seat": "home",
+        "to_seat": "away",
+        "ball": "1",
+        "reason": "punt"
+      },
+      {
+        "seq": 3,
+        "type": "card_played",
+        "seat": "away",
+        "role": "offense",
+        "card": null,
+        "hand_count_after": 2
+      }
+    ]
+  },
+  {
+    "revision": 36,
+    "snapshot": {
+      "game_id": "generated-seed-42",
+      "revision": 36,
+      "phase": "WAITING_OFFENSE_CARD",
+      "required_action": "play_card",
+      "acting_seat": "home",
+      "viewer_seat": "home",
+      "quarter": 4,
+      "play": 8,
+      "plays_in_quarter": 8,
+      "ball": "Z3",
+      "offense_seat": "home",
+      "defense_seat": "away",
+      "home": {
+        "seat": "home",
+        "name": "Wolverines",
+        "color": "red",
+        "rating": 7,
+        "kick_rating": 2,
+        "score": 6,
+        "mojo": 2,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 2,
+        "segments": 32,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 10,
+        "hand": [
+          {
+            "id": "9C",
+            "value": "9",
+            "suit": "C",
+            "color": "black",
+            "display": "9♣"
+          },
+          {
+            "id": "7C",
+            "value": "7",
+            "suit": "C",
+            "color": "black",
+            "display": "7♣"
+          }
+        ]
+      },
+      "away": {
+        "seat": "away",
+        "name": "Buckeyes",
+        "color": "black",
+        "rating": 6,
+        "kick_rating": 2,
+        "score": 29,
+        "mojo": 0,
+        "clutch": 0,
+        "clutch_used": false,
+        "hand_count": 2,
+        "segments": 40,
+        "fg_made": 5,
+        "fg_att": 8,
+        "punts": 2
+      },
+      "play_cards": {
+        "offense": null,
+        "defense": null,
+        "war": null,
+        "clutch": null
+      },
+      "legal_actions": [
+        {
+          "type": "play_card",
+          "card_index": 0,
+          "enabled": true
+        },
+        {
+          "type": "play_card",
+          "card_index": 1,
+          "enabled": true
+        }
+      ],
+      "log": [
+        "PUNT! Roll 3 + Kick 2 = 5",
+        "-- Play 5/8 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... ",
+        "Wolverines plays 10♥",
+        "OFF: 8♦  vs  DEF: 10♥",
+        "Moved from 1 -> Z3 (+3 segments)",
+        "AI chooses: F",
+        "FG missed! 5 < 7",
+        "-- Play 6/8 | OFF: Wolverines | Ball: 3",
+        "Wolverines plays 9♥",
+        "Buckeyes defends with 4♣",
+        "OFF: 9♥  vs  DEF: 4♣",
+        "Moved from 3 -> Z1 (+3 segments)",
+        "PUNT! Roll 3 + Kick 2 = 5",
+        "-- Play 7/8 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... ",
+        "Wolverines plays JOKER",
+        "OFF: 7♥  vs  DEF: JOKER",
+        "Defense Joker! Turnover to Z3",
+        "-- Play 8/8 | OFF: Wolverines | Ball: Z3"
+      ],
+      "message": "JOKER DEFENSE - Defense ball at Z3!",
+      "result": null
+    },
+    "events": [
+      {
+        "seq": 0,
+        "type": "card_played",
+        "seat": "home",
+        "role": "defense",
+        "card": {
+          "id": "JOKER",
+          "value": "Joker",
+          "suit": null,
+          "color": null,
+          "display": "JOKER"
+        },
+        "hand_count_after": 2
+      },
+      {
+        "seq": 1,
+        "type": "cards_revealed",
+        "offense_card": {
+          "id": "7H",
+          "value": "7",
+          "suit": "H",
+          "color": "red",
+          "display": "7♥"
+        },
+        "defense_card": {
+          "id": "JOKER",
+          "value": "Joker",
+          "suit": null,
+          "color": null,
+          "display": "JOKER"
+        },
+        "offense_value": 7,
+        "defense_value": 15,
+        "winner": "defense"
+      },
+      {
+        "seq": 2,
+        "type": "joker_resolved",
+        "played_by": "defense",
+        "opposing_value": 7,
+        "outcome": "turnover_z3"
+      },
+      {
+        "seq": 3,
+        "type": "ball_moved",
+        "seat": "away",
+        "from": "1",
+        "to": "Z3",
+        "segments": 3,
+        "reason": "turnover",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 4,
+        "type": "possession_changed",
+        "from_seat": "away",
+        "to_seat": "home",
+        "ball": "Z3",
+        "reason": "joker_turnover"
+      }
+    ]
+  },
+  {
+    "revision": 37,
+    "snapshot": {
+      "game_id": "generated-seed-42",
+      "revision": 37,
+      "phase": "WAITING_EXTRA_POINT_CHOICE",
+      "required_action": "extra_point",
+      "acting_seat": "home",
+      "viewer_seat": "home",
+      "quarter": 4,
+      "play": 8,
+      "plays_in_quarter": 8,
+      "ball": "Z3",
+      "offense_seat": "home",
+      "defense_seat": "away",
+      "home": {
+        "seat": "home",
+        "name": "Wolverines",
+        "color": "red",
+        "rating": 7,
+        "kick_rating": 2,
+        "score": 12,
+        "mojo": 2,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 1,
+        "segments": 35,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 10,
+        "hand": [
+          {
+            "id": "7C",
+            "value": "7",
+            "suit": "C",
+            "color": "black",
+            "display": "7♣"
+          }
+        ]
+      },
+      "away": {
+        "seat": "away",
+        "name": "Buckeyes",
+        "color": "black",
+        "rating": 6,
+        "kick_rating": 2,
+        "score": 29,
+        "mojo": 0,
+        "clutch": 0,
+        "clutch_used": false,
+        "hand_count": 1,
+        "segments": 40,
+        "fg_made": 5,
+        "fg_att": 8,
+        "punts": 2
+      },
+      "play_cards": {
+        "offense": {
+          "id": "9C",
+          "value": "9",
+          "suit": "C",
+          "color": "black",
+          "display": "9♣"
+        },
+        "defense": {
+          "id": "4S",
+          "value": "4",
+          "suit": "S",
+          "color": "black",
+          "display": "4♠"
+        },
+        "war": null,
+        "clutch": null
+      },
+      "legal_actions": [
+        {
+          "type": "extra_point",
+          "choice": "K",
+          "enabled": true
+        },
+        {
+          "type": "extra_point",
+          "choice": "2",
+          "enabled": true
+        }
+      ],
+      "log": [
+        "Moved from 1 -> Z3 (+3 segments)",
+        "AI chooses: F",
+        "FG missed! 5 < 7",
+        "-- Play 6/8 | OFF: Wolverines | Ball: 3",
+        "Wolverines plays 9♥",
+        "Buckeyes defends with 4♣",
+        "OFF: 9♥  vs  DEF: 4♣",
+        "Moved from 3 -> Z1 (+3 segments)",
+        "PUNT! Roll 3 + Kick 2 = 5",
+        "-- Play 7/8 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... ",
+        "Wolverines plays JOKER",
+        "OFF: 7♥  vs  DEF: JOKER",
+        "Defense Joker! Turnover to Z3",
+        "-- Play 8/8 | OFF: Wolverines | Ball: Z3",
+        "Wolverines plays 9♣",
+        "Buckeyes defends with 4♠",
+        "OFF: 9♣  vs  DEF: 4♠",
+        "Moved Z3 -> END ZONE (+3) TOUCHDOWN!",
+        "TOUCHDOWN! Wolverines +6"
+      ],
+      "message": "TOUCHDOWN! Wolverines +6",
+      "result": null
+    },
+    "events": [
+      {
+        "seq": 0,
+        "type": "card_played",
+        "seat": "home",
+        "role": "offense",
+        "card": {
+          "id": "9C",
+          "value": "9",
+          "suit": "C",
+          "color": "black",
+          "display": "9♣"
+        },
+        "hand_count_after": 1
+      },
+      {
+        "seq": 1,
+        "type": "card_played",
+        "seat": "away",
+        "role": "defense",
+        "card": null,
+        "hand_count_after": 1
+      },
+      {
+        "seq": 2,
+        "type": "cards_revealed",
+        "offense_card": {
+          "id": "9C",
+          "value": "9",
+          "suit": "C",
+          "color": "black",
+          "display": "9♣"
+        },
+        "defense_card": {
+          "id": "4S",
+          "value": "4",
+          "suit": "S",
+          "color": "black",
+          "display": "4♠"
+        },
+        "offense_value": 9,
+        "defense_value": 4,
+        "winner": "offense"
+      },
+      {
+        "seq": 3,
+        "type": "ball_moved",
+        "seat": "home",
+        "from": "Z3",
+        "to": "1",
+        "segments": 3,
+        "reason": "drive_chart",
+        "is_touchdown": true,
+        "is_safety": false
+      },
+      {
+        "seq": 4,
+        "type": "touchdown_scored",
+        "seat": "home",
+        "points": 6,
+        "score_after": 12,
+        "cause": "drive"
+      }
+    ]
+  },
+  {
+    "revision": 38,
+    "snapshot": {
+      "game_id": "generated-seed-42",
+      "revision": 38,
+      "phase": "GAME_OVER",
+      "required_action": "none",
+      "acting_seat": null,
+      "viewer_seat": "home",
+      "quarter": 5,
+      "play": 8,
+      "plays_in_quarter": 8,
+      "ball": "1",
+      "offense_seat": "away",
+      "defense_seat": "home",
+      "home": {
+        "seat": "home",
+        "name": "Wolverines",
+        "color": "red",
+        "rating": 7,
+        "kick_rating": 2,
+        "score": 13,
+        "mojo": 2,
+        "clutch": 2,
+        "clutch_used": false,
+        "hand_count": 1,
+        "segments": 35,
+        "fg_made": 0,
+        "fg_att": 0,
+        "punts": 10,
+        "hand": [
+          {
+            "id": "7C",
+            "value": "7",
+            "suit": "C",
+            "color": "black",
+            "display": "7♣"
+          }
+        ]
+      },
+      "away": {
+        "seat": "away",
+        "name": "Buckeyes",
+        "color": "black",
+        "rating": 6,
+        "kick_rating": 2,
+        "score": 29,
+        "mojo": 0,
+        "clutch": 0,
+        "clutch_used": false,
+        "hand_count": 1,
+        "segments": 40,
+        "fg_made": 5,
+        "fg_att": 8,
+        "punts": 2
+      },
+      "play_cards": {
+        "offense": {
+          "id": "9C",
+          "value": "9",
+          "suit": "C",
+          "color": "black",
+          "display": "9♣"
+        },
+        "defense": {
+          "id": "4S",
+          "value": "4",
+          "suit": "S",
+          "color": "black",
+          "display": "4♠"
+        },
+        "war": null,
+        "clutch": null
+      },
+      "legal_actions": [],
+      "log": [
+        "-- Play 6/8 | OFF: Wolverines | Ball: 3",
+        "Wolverines plays 9♥",
+        "Buckeyes defends with 4♣",
+        "OFF: 9♥  vs  DEF: 4♣",
+        "Moved from 3 -> Z1 (+3 segments)",
+        "PUNT! Roll 3 + Kick 2 = 5",
+        "-- Play 7/8 | OFF: Buckeyes | Ball: 1",
+        "AI plays card ... ",
+        "Wolverines plays JOKER",
+        "OFF: 7♥  vs  DEF: JOKER",
+        "Defense Joker! Turnover to Z3",
+        "-- Play 8/8 | OFF: Wolverines | Ball: Z3",
+        "Wolverines plays 9♣",
+        "Buckeyes defends with 4♠",
+        "OFF: 9♣  vs  DEF: 4♠",
+        "Moved Z3 -> END ZONE (+3) TOUCHDOWN!",
+        "TOUCHDOWN! Wolverines +6",
+        "PAT kick: PAT KICK! +1 pt (+1)",
+        "=== End Q4 | Wolverines: 13 - Buckeyes: 29 ===",
+        "FINAL: Wolverines 13 - Buckeyes 29 | Buckeyes WINS!"
+      ],
+      "message": "Buckeyes WINS!",
+      "result": {
+        "winner": "away",
+        "home_score": 13,
+        "away_score": 29,
+        "is_tie": false
+      },
+      "seed": 42
+    },
+    "events": [
+      {
+        "seq": 0,
+        "type": "extra_point_resolved",
+        "seat": "home",
+        "choice": "K",
+        "success": true,
+        "roll": null,
+        "points": 1,
+        "score_after": 13
+      },
+      {
+        "seq": 1,
+        "type": "ball_moved",
+        "seat": "home",
+        "from": "Z3",
+        "to": "1",
+        "segments": 0,
+        "reason": "kickoff",
+        "is_touchdown": false,
+        "is_safety": false
+      },
+      {
+        "seq": 2,
+        "type": "possession_changed",
+        "from_seat": "home",
+        "to_seat": "away",
+        "ball": "1",
+        "reason": "touchdown"
+      },
+      {
+        "seq": 3,
+        "type": "quarter_ended",
+        "quarter": 4,
+        "home_score": 13,
+        "away_score": 29
+      },
+      {
+        "seq": 4,
+        "type": "game_ended",
+        "winner": "away",
+        "home_score": 13,
+        "away_score": 29,
+        "is_tie": false
+      }
+    ]
+  }
+]

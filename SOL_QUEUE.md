@@ -191,6 +191,8 @@ possession handoff, empty-deck fallbacks.
 
 ### 10. A generated fixture dump for the frontend
 
+**Status: complete — deterministic 39-response seed-42 dump generated.**
+
 Once serializers and events are done, add a script that plays a seeded game and
 writes **contract-shaped** snapshot + event payloads as JSON to
 `web/src/api/__fixtures__/generated/`.
@@ -221,3 +223,8 @@ Append here. Do not delete anything.
   regenerated: `seed42-easy.json`, `seed42-medium.json`, and
   `human-seed42-hard.json`. Non-golden suite is 166 passed, 2 skipped. The
   drift is downstream score/decision branching after color-bonus touchdowns.
+- [x] Task 10 found one hand-authored fixture divergence: `shortPunt` in
+  `web/src/api/__fixtures__/scenarios.ts` omits `ball_moved`, although contract
+  5.2 requires it for every position change. The generated engine batch emits
+  `punt_resolved`, `ball_moved`, then `possession_changed`. I did not edit
+  Claude's fixture.
