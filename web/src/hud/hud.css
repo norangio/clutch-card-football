@@ -258,6 +258,7 @@ body {
 
 /* 3-D stage. Fixed aspect so the broadcast framing holds across widths. */
 .stage {
+  position: relative;
   padding: 0;
   overflow: hidden;
   height: min(46vh, 380px);

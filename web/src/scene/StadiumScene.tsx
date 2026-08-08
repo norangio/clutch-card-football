@@ -15,7 +15,9 @@ import { useFrame } from "@react-three/fiber";
 import { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 
-import type { Ball, CardColor } from "../api/types";
+import type { Ball, CardColor, GameEvent } from "../api/types";
+import { Confetti, DramaLight, SafetyDim, ScoreGlow } from "./effects";
+import { choreograph, type BallMode, type Shot } from "./choreograph";
 
 /** Playable segments, matching ccf/field.py minus the unused index 0. */
 const SEGMENTS: Ball[] = ["1", "2", "3", "Z3", "Z2", "Z1"];
@@ -35,7 +37,7 @@ const TEAM_HEX: Record<CardColor, string> = { red: "#c8443c", black: "#33333c" }
 
 // ---------------------------------------------------------------------- ball
 
-function Football({ target, arc }: { target: number; arc: boolean }) {
+function Football({ target, mode }: { target: number; mode: BallMode }) {
   const ref = useRef<THREE.Group>(null);
   const pos = useRef(target);
   const spin = useRef(0);
@@ -48,11 +50,11 @@ function Football({ target, arc }: { target: number; arc: boolean }) {
 
     if (dist > 0.002) {
       // Critically-damped-ish ease so the ball settles rather than snapping.
-      pos.current += delta * Math.min(1, dt * 4.2);
-      spin.current += dt * (arc ? 9 : 6) * Math.sign(delta || 1);
-      // Hop on the way. Punts and kicks get a taller arc.
+      pos.current += delta * Math.min(1, dt * (mode === "kick" ? 2.6 : 4.2));
+      spin.current += dt * (mode === "run" ? 6 : 9) * Math.sign(delta || 1);
       const travelled = 1 - Math.min(1, dist / Math.max(0.6, Math.abs(delta) + dist));
-      g.position.y = 0.3 + Math.sin(travelled * Math.PI) * (arc ? 1.5 : 0.42);
+      const height = mode === "kick" ? 2.6 : mode === "punt" ? 1.5 : 0.42;
+      g.position.y = 0.3 + Math.sin(travelled * Math.PI) * height;
     } else {
       pos.current = target;
       g.position.y += (0.3 - g.position.y) * Math.min(1, dt * 6);
@@ -199,12 +201,12 @@ function Crowd() {
  * Fixed broadcast shots, not free orbit (plan 3.3). The camera eases toward the
  * active shot so cuts never feel abrupt.
  */
-type Shot = "broadcast" | "endzone" | "wide";
 
 const SHOTS: Record<Shot, { pos: [number, number, number]; look: [number, number, number] }> = {
   broadcast: { pos: [0, 6.0, 8.0], look: [0, -0.15, 0] },
   endzone: { pos: [HALF + 4.2, 2.4, 0.2], look: [HALF - 1.5, 0.5, 0] },
   wide: { pos: [0, 9.4, 8.6], look: [0, -0.2, 0] },
+  drama: { pos: [0, 2.5, 4.6], look: [0, 0.5, 0] },
 };
 
 function CameraDirector({ shot, reduced }: { shot: Shot; reduced: boolean }) {
@@ -226,13 +228,80 @@ function CameraDirector({ shot, reduced }: { shot: Shot; reduced: boolean }) {
 export interface StadiumProps {
   ball: Ball;
   offense: CardColor;
-  /** Set while a kick is in flight so the ball takes a tall arc. */
-  arc?: boolean;
-  shot?: Shot;
+  /** The event currently on screen. Every effect keys off this, never off a
+      snapshot diff, so the scene can never disagree with the HUD. */
+  event?: GameEvent | null;
+  /** Bump to replay one-shot effects without remounting the canvas. */
+  replay?: number;
 }
 
-export default function StadiumScene({ ball, offense, arc = false, shot = "broadcast" }: StadiumProps) {
+/**
+ * Measures the container and renders the Canvas at an explicit pixel size.
+ *
+ * R3F's own measurement (react-use-measure) reads once on mount. If that read
+ * lands before layout settles it sees zero, and because the container's size
+ * never subsequently CHANGES the observer never fires again: the canvas stays
+ * at the 300x150 HTML default and the render loop never starts. It presents as
+ * an intermittently blank panel, and a dev-server restart "fixing" it is what
+ * makes it look like a build problem rather than a race.
+ *
+ * Holding the Canvas back until we have real pixels removes the race entirely.
+ */
+function SizedCanvas({ children }: { children: React.ReactNode }) {
+  const host = useRef<HTMLDivElement>(null);
+  const [size, setSize] = useState<{ w: number; h: number } | null>(null);
+
+  useEffect(() => {
+    const el = host.current;
+    if (!el) return;
+
+    const apply = (w: number, h: number) => {
+      if (w > 0 && h > 0) {
+        setSize((prev) =>
+          prev && Math.abs(prev.w - w) < 1 && Math.abs(prev.h - h) < 1
+            ? prev
+            : { w, h },
+        );
+      }
+    };
+
+    const rect = el.getBoundingClientRect();
+    apply(rect.width, rect.height);
+
+    const ro = new ResizeObserver((entries) => {
+      const box = entries[0]?.contentRect;
+      if (box) apply(box.width, box.height);
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  return (
+    <div ref={host} style={{ position: "absolute", inset: 0 }}>
+      {size && (
+        <Canvas
+          // Keyed on the measured size so the Canvas mounts only once the
+          // container has real pixels. R3F's `style` prop styles its OUTER
+          // div, not the canvas: the canvas is always sized from R3F's own
+          // measurement, so the only reliable fix is to not let it mount early.
+          key={`${Math.round(size.w)}x${Math.round(size.h)}`}
+          shadows
+          dpr={[1, 2]}
+          resize={{ debounce: 0, scroll: false }}
+          camera={{ position: SHOTS.broadcast.pos, fov: 34 }}
+          style={{ width: size.w, height: size.h, display: "block" }}
+        >
+          {children}
+        </Canvas>
+      )}
+    </div>
+  );
+}
+
+export default function StadiumScene({ ball, offense, event = null, replay = 0 }: StadiumProps) {
+  const cue = choreograph(event);
   const [reduced, setReduced] = useState(false);
+
   useEffect(() => {
     if (typeof matchMedia !== "function") return;
     const mq = matchMedia("(prefers-reduced-motion: reduce)");
@@ -243,31 +312,31 @@ export default function StadiumScene({ ball, offense, arc = false, shot = "broad
   }, []);
 
   return (
-    <Canvas
-      shadows
-      dpr={[1, 2]}
-      camera={{ position: SHOTS.broadcast.pos, fov: 34 }}
-      style={{ width: "100%", height: "100%", display: "block" }}
-    >
+    <SizedCanvas>
       <color attach="background" args={["#0e2b20"]} />
       <fog attach="fog" args={["#0e2b20", 14, 30]} />
 
       {/* Warm key from the offense's side, cool rim opposite. Tabletop tone
           comes from lighting and material, not polygon count. */}
-      <ambientLight intensity={0.42} />
+      <ambientLight intensity={cue.dramatic ? 0.08 : 0.42} />
       <directionalLight
         position={[-4, 7.5, 5]}
-        intensity={1.5}
+        intensity={cue.dramatic ? 0.25 : 1.5}
         color="#ffe6c2"
         castShadow
-        shadow-mapSize={[1024, 1024]}
+        shadow-mapSize={[512, 512]}
       />
       <directionalLight position={[5, 4, -5]} intensity={0.55} color="#8fc8ff" />
       <pointLight position={[0, 3.4, 0]} intensity={14} distance={13} color="#ffd9a0" />
 
-      <CameraDirector shot={shot} reduced={reduced} />
+      <CameraDirector shot={cue.shot} reduced={reduced} />
       <Field offense={offense} />
-      <Football target={xFor(ball)} arc={arc} />
-    </Canvas>
+      <Football target={xFor(ball)} mode={cue.mode} />
+
+      <DramaLight active={cue.dramatic} color={cue.dramaColor} reduced={reduced} />
+      <ScoreGlow active={cue.celebrating} x={HALF - SEG_W / 2} color={offense} reduced={reduced} />
+      <Confetti key={`confetti-${replay}`} active={cue.celebrating && !reduced} origin={HALF - SEG_W / 2} color={offense} />
+      <SafetyDim active={cue.safety} reduced={reduced} />
+    </SizedCanvas>
   );
 }

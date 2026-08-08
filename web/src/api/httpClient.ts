@@ -44,6 +44,16 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 
   if (res.ok) return (await res.json()) as T;
 
+  // Vite proxies /api, so a stopped backend surfaces as a gateway error rather
+  // than a contract error. "Bad Gateway" tells the player nothing actionable.
+  if (res.status >= 502 && res.status <= 504) {
+    throw new ApiRequestError(
+      "network",
+      "The game server is not running. Start it with ./run-local.sh",
+      res.status,
+    );
+  }
+
   const error = await parseError(res);
 
   // Contract 7.2: a 409 is not a failure. The server hands back current state

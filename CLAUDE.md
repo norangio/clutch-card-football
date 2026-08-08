@@ -196,3 +196,44 @@ THREE_D_WEB_PLAN.md section 1.6.
 - `AGENTS.md` is a **symlink to this file**. Always edit `CLAUDE.md`. Never
   create or overwrite `AGENTS.md`.
 - No em-dashes in prose.
+
+---
+
+## Known issue: 3-D canvas blank after a page reload
+
+**Status: diagnosed, NOT fixed. 2026-08-08.**
+
+Reproduction, with a freshly started dev server:
+
+1. Load `http://localhost:5173` → canvas is `1142x329`, scene renders correctly.
+2. Reload the page → canvas is `300x150` (the HTML default), scene never draws.
+3. Restart the dev server → correct again on first load.
+
+The game itself is unaffected: the HUD, the API, actions and resume all work.
+Only the 3-D panel goes blank.
+
+**What is happening.** R3F sizes its canvas from `react-use-measure`, which
+reads the container once on mount. If that read returns zero the canvas keeps
+the 300x150 default, and because the container's size never subsequently
+*changes*, the ResizeObserver never fires again, so it never recovers. No
+console error is produced, which is what makes it look like a build problem.
+
+**Ruled out** (each tested and reverted):
+
+- The scene effects. Bisected all four out; still reproduces.
+- The loading placeholder / wrapper div. Fully reverted; still reproduces.
+- `choreograph` breaking Fast Refresh. Real problem, now fixed by moving it to
+  `scene/choreograph.ts`, but not the cause.
+- Dispatching a synthetic `resize` after mount.
+- Gating the Canvas behind a measured size, keying it on those dimensions, and
+  `resize={{ debounce: 0, scroll: false }}`. **Note:** R3F's `style` prop styles
+  its outer div, *not* the canvas, so sizing that div does not size the canvas.
+
+**Important caveat.** Every measurement was taken through the automated browser
+pane, which was reported hidden during some runs. A hidden window can legitimately
+report zero layout, so this may be partly an artefact of the harness rather than
+something a person with a visible window would hit. **Check it in a normal
+Safari/Chrome window before spending more time on it.**
+
+**Next thing to try:** an explicit `<canvas>` handed to R3F via the `gl` prop, or
+forcing a remount keyed on `document.visibilityState`.

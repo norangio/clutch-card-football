@@ -148,25 +148,14 @@ export default function GamePage({ client = defaultClient }: { client?: GameClie
   // than already applied. Contract 5.2 guarantees a ball_moved for every
   // position change, which is what makes this the single animation path.
   const playing = queue.current;
-  const sceneBall =
-    playing?.type === "ball_moved" ? playing.to : snapshot.ball;
-  const arc =
-    playing?.type === "punt_resolved" || playing?.type === "field_goal_resolved" ||
-    (playing?.type === "ball_moved" &&
-      (playing.reason === "punt" || playing.reason === "short_punt"));
-  const shot: "broadcast" | "endzone" | "wide" =
-    playing?.type === "field_goal_resolved" || playing?.type === "touchdown_scored"
-      ? "endzone"
-      : playing?.type === "punt_resolved"
-        ? "wide"
-        : "broadcast";
+  const sceneBall = playing?.type === "ball_moved" ? playing.to : snapshot.ball;
 
   return (
     <div className="app">
       <Scoreboard snapshot={snapshot} />
 
       <div className="panel stage">
-        <StadiumScene ball={sceneBall} offense={offenseColor} arc={arc} shot={shot} />
+        <StadiumScene ball={sceneBall} offense={offenseColor} event={playing} />
       </div>
 
       <div className="message" aria-live="polite">
