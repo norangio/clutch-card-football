@@ -1,7 +1,7 @@
 # CCF Web Edition: Interface Contract
 
 **Status:** FROZEN. Handoff H1 complete.
-**Version:** 1
+**Version:** 2
 **Owner:** Claude drafts, Sol reviews, then both code against it.
 
 This is the only interface between the Python engine and the browser. Once
@@ -272,7 +272,7 @@ Common envelope:
 | `possession_changed` | `from_seat`, `to_seat`, `ball`, `reason` (`punt`\|`short_punt`\|`field_goal_made`\|`field_goal_missed`\|`war_turnover`\|`joker_turnover`\|`touchdown`\|`safety`\|`quarter_start`) |
 | `punt_resolved` | `seat`, `kind` (`punt`\|`short_punt`), `distance`, `roll` (**null for `short_punt`**), `from`, `to`, `clamped` |
 | `field_goal_resolved` | `seat`, `success`, `roll`, `total`, `target`, `from`, `points`, `score_after` |
-| `touchdown_scored` | `seat`, `points`, `score_after`, `cause` (`drive`\|`joker`\|`clutch`\|`defensive_joker`) |
+| `touchdown_scored` | `seat`, `points`, `score_after`, `cause` (`drive`\|`joker`\|`clutch`\|`defensive_joker`\|`color_bonus`) |
 | `safety_scored` | `seat` (the seat **awarded** the 2), `points`, `score_after` |
 | `extra_point_resolved` | `seat`, `choice` (`K`\|`2`), `success`, `roll` (**null when `choice` is `K`**), `points`, `score_after` |
 | `quarter_ended` | `quarter`, `home_score`, `away_score` |
@@ -444,5 +444,6 @@ hand), WebSocket push (same payloads, different transport).
 
 | Version | Date | Change |
 | --- | --- | --- |
+| 2 | 2026-08-07 | Adds `color_bonus` to `touchdown_scored.cause`. The orange/green auto-touchdown is being implemented (plan 3.2), and it deserves its own celebration since it is the rarest scoring path in the game. Additive only: no existing field changed. |
 | 1 | 2026-08-07 | **Frozen.** All eight of Sol's review findings applied: seed withheld until game over (and `/replay` gated the same way), `score_after` on `field_goal_resolved`, `possession_changed.reason` enumerated, event invariant scoped to presentation-relevant state, `roll` nullable on short punt and PAT kick, clutch visibility clarified, restart returns a new `game_id`. |
 | 0 | 2026-08-07 | Initial draft. |

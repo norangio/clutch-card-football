@@ -170,6 +170,7 @@ wrong engine.
 | 1.7 | `tests/test_redaction.py` | For every phase, no card the viewer is not entitled to see appears anywhere in the payload |
 | 1.8 | Update `ui/app.py` to the new contract | Pygame plays a full game; 59 tests green |
 | 1.9 | ~~Characterization fixtures for the section 3 defects~~ | **DONE.** `tests/test_engine_characterization.py`, 84 passed. |
+| 1.10 | **Implement the orange/green auto-touchdown** (plan 3.2, now decided) | Color-matched orange/green card landing **exactly on** Z1 is an automatic TD. Green keeps its `+1`. Flip the two `test_engine_characterization.py` cases from "currently stops at Z1" to "scores". Emit `touchdown_scored` with `cause: "color_bonus"` (contract v2). **Expect the golden transcripts to fail**: that is correct here. Do not regenerate them, tell Claude, who owns that script and will review the diff. |
 
 **Task 1.6 is the one to get right.** Two known leaks, both in plan section 3.1:
 `Team.hand` rides along inside the snapshot, and `_off_card` holds the AI's

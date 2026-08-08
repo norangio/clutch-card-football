@@ -190,10 +190,10 @@ The fix is not "never expose an AI card". It is **redaction driven by phase**:
 a serializer that takes a viewer identity and the current phase and decides what
 is legal to reveal. This needs its own test file.
 
-### 3.2 Orange and green auto-touchdowns are never awarded (decision needed)
+### 3.2 Orange and green auto-touchdowns: DECIDED, implement them
 
-`rules.apply_bonus()` is **dead code**. It is defined and never imported or
-called anywhere in the repo. `drive_chart.get_drive_result()` returns:
+`rules.apply_bonus()` is **dead code**, never imported or called.
+`drive_chart.get_drive_result()` returns:
 
 ```python
 elif bonus_type == "orange":
@@ -203,17 +203,36 @@ elif bonus_type == "green":
 ```
 
 "Handled elsewhere" does not exist. Green's `+1` is applied; **neither auto-TD
-is**. A color-matched Ace from a rating-5/6/9/10 team (orange) or rating-7/8/11/12
-team (green) should be an automatic touchdown from Z1 and currently is not.
-
-The structural reason it was missed: `get_card_result()` is called in
+is**. The structural reason it was missed: `get_card_result()` is called in
 `_resolve_play()` *before* `move()`, so `end_pos` is unknown at that point.
 
-**Do not fix this silently.** It changes game balance and would diverge from the
-build your dad is playing. Options: (a) leave as-is and delete the dead function,
-(b) implement it and treat it as a rules change both editions adopt. This is a
-call for the humans, not the agents. Capture current behavior in a fixture either
-way.
+**Decision (2026-08-07): implement it.** Reasoning:
+
+1. It is **designed intent, not a house rule.** The drive chart carries explicit
+   `bonus: "orange"` and `bonus: "green"` data, and `apply_bonus()` exists and
+   documents the behavior. This is an unfinished feature, not a deliberate
+   simplification. The alternative is deleting a designed mechanic.
+2. **It is a highlight moment**, which directly serves the 3-D presentation.
+   Landing exactly on Z1 with a color-matched Ace becoming an instant touchdown
+   is the rarest and most dramatic scoring path in the game. That is worth
+   animating and worth having exist.
+3. **Divergence is no longer a real cost.** Both editions now come from this
+   trunk, and dad's repo gets a matching branch, so the change carries to him
+   rather than splitting the rules.
+
+Rule as implemented: when a **color-matched** card whose drive-chart entry
+carries an `orange` or `green` bonus produces a move that **lands exactly on
+Z1**, the play is an automatic touchdown. Green keeps its existing `+1`. A move
+that runs past Z1 is already a touchdown by normal rules and is unaffected.
+
+**This is a behavior change**, so it is the one place the golden transcripts are
+expected to break. Process: Sol implements and flips the two characterization
+tests; Claude then regenerates the transcripts and reviews the diff to confirm
+only auto-touchdown plays moved. Regenerating without reading the diff defeats
+the fixtures.
+
+Contract v2 adds `color_bonus` to `touchdown_scored.cause` so the celebration
+can be distinct.
 
 ### 3.3 Minor issues
 
