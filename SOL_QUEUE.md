@@ -293,6 +293,8 @@ merge it.
 
 ## 13. A safety in a real game
 
+**Status: complete — seeded HTTP game proves safety on the wire.**
+
 The full-game run hit 17 of 18 event types. The only one missing was
 `safety_scored`, because it is rare. You have unit coverage, but add a seeded
 **HTTP-level** test that actually reaches a safety, so the whole path
