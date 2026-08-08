@@ -442,6 +442,9 @@ and `ai_vs_ai`, and that the new id differs and revision resets to 0.
 
 ## 22. Redaction fuzz
 
+**Status: complete — 30 seeded games serialize every boundary for both seats
+against recursive ground truth and hidden-card canaries.**
+
 `test_redaction.py` checks the phases we thought of. Add a fuzz pass: play many
 seeded games, serialize at **every** step for both viewer seats, and assert the
 JSON never contains a card the viewer is not entitled to see.
