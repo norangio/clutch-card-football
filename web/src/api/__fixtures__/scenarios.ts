@@ -130,6 +130,7 @@ export const patKick: GameResponse = response(
   snapshot({ revision: 7, ball: "1", home: seat({ seat: "home", hand: HAND, score: 7 }), offense_seat: "away", defense_seat: "home", acting_seat: "away", required_action: "none" }),
   [
     { type: "extra_point_resolved", seat: "home", choice: "K", success: true, roll: null, points: 1, score_after: 7 },
+    { type: "ball_moved", seat: "away", from: "Z1", to: "1", segments: 0, reason: "kickoff", is_touchdown: false, is_safety: false },
     { type: "possession_changed", from_seat: "home", to_seat: "away", ball: "1", reason: "touchdown" },
   ],
 );
@@ -180,6 +181,7 @@ export const shortPunt: GameResponse = response(
   snapshot({ revision: 10, ball: "3", offense_seat: "away", defense_seat: "home", acting_seat: "away", required_action: "none" }),
   [
     { type: "punt_resolved", seat: "home", kind: "short_punt", distance: 2, roll: null, from: "Z2", to: "3", clamped: false },
+    { type: "ball_moved", seat: "home", from: "Z2", to: "3", segments: -2, reason: "short_punt", is_touchdown: false, is_safety: false },
     { type: "possession_changed", from_seat: "home", to_seat: "away", ball: "3", reason: "short_punt" },
   ],
 );
@@ -189,6 +191,7 @@ export const fieldGoalGood: GameResponse = response(
   snapshot({ revision: 11, ball: "1", home: seat({ seat: "home", hand: HAND, score: 3, fg_made: 1, fg_att: 1 }), offense_seat: "away", defense_seat: "home", acting_seat: "away", required_action: "none" }),
   [
     { type: "field_goal_resolved", seat: "home", success: true, roll: 5, total: 7, target: 7, from: "Z3", points: 3, score_after: 3 },
+    { type: "ball_moved", seat: "away", from: "Z3", to: "1", segments: 0, reason: "kickoff", is_touchdown: false, is_safety: false },
     { type: "possession_changed", from_seat: "home", to_seat: "away", ball: "1", reason: "field_goal_made" },
   ],
 );
@@ -197,6 +200,7 @@ export const fieldGoalMissed: GameResponse = response(
   snapshot({ revision: 11, ball: "3", home: seat({ seat: "home", hand: HAND, fg_att: 1 }), offense_seat: "away", defense_seat: "home", acting_seat: "away", required_action: "none" }),
   [
     { type: "field_goal_resolved", seat: "home", success: false, roll: 2, total: 4, target: 7, from: "Z3", points: 0, score_after: 0 },
+    { type: "ball_moved", seat: "away", from: "Z3", to: "3", segments: 0, reason: "turnover", is_touchdown: false, is_safety: false },
     { type: "possession_changed", from_seat: "home", to_seat: "away", ball: "3", reason: "field_goal_missed" },
   ],
 );

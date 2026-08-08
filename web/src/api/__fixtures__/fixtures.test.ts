@@ -109,3 +109,29 @@ describe("contract field rules", () => {
     expect(revisions).toEqual(sorted);
   });
 });
+
+describe("one animation path for the ball (contract 5.2)", () => {
+  // "ball_moved is emitted for every position change including punts and
+  // turnovers." Sol's engine does this consistently; the hand-authored
+  // fixtures drifted from it, which is what this guards.
+  it("precedes every possession_changed with a ball_moved", () => {
+    for (const [name, res] of Object.entries(ALL_SCENARIOS)) {
+      const types = res.events.map((e) => e.type);
+      const handover = types.indexOf("possession_changed");
+      if (handover === -1) continue;
+      const moved = types.indexOf("ball_moved");
+      expect(
+        moved !== -1 && moved < handover,
+        `${name}: possession_changed with no preceding ball_moved -> the ball would teleport`,
+      ).toBe(true);
+    }
+  });
+
+  it("pairs every punt_resolved with a ball_moved", () => {
+    for (const [name, res] of Object.entries(ALL_SCENARIOS)) {
+      const types = res.events.map((e) => e.type);
+      if (!types.includes("punt_resolved")) continue;
+      expect(types, `${name}: punt with no ball_moved`).toContain("ball_moved");
+    }
+  });
+});
