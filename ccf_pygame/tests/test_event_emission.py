@@ -31,6 +31,17 @@ def test_seeded_game_emits_every_contract_event_type():
     assert {event.type for event in events} == set(ALL_EVENT_TYPES)
 
 
+def test_full_game_reports_contract_deal_sizes_for_all_four_quarters():
+    _, events = play_seeded_game()
+
+    quarters = [
+        (event.quarter, event.dealt)
+        for event in events
+        if event.type == "quarter_started"
+    ]
+    assert quarters == [(1, 7), (2, 6), (3, 7), (4, 8)]
+
+
 def test_card_event_order_is_play_play_reveal():
     _, events = play_seeded_game()
 

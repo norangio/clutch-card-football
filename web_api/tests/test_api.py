@@ -261,6 +261,47 @@ def test_completed_replay_returns_seed_and_full_event_log():
     )
 
 
+def test_full_game_can_be_driven_only_through_http_actions():
+    app, _ = make_app()
+    response = create_game(app)
+    game_id = response["snapshot"]["game_id"]
+    accepted_actions = 0
+
+    while response["snapshot"]["phase"] != "GAME_OVER":
+        legal = next(
+            action
+            for action in response["snapshot"]["legal_actions"]
+            if action["enabled"]
+        )
+        action = {
+            "revision": response["revision"],
+            "type": legal["type"],
+        }
+        if "card_index" in legal:
+            action["card_index"] = legal["card_index"]
+        if "choice" in legal:
+            action["choice"] = legal["choice"]
+
+        status, response = request(
+            app,
+            "POST",
+            f"/api/games/{game_id}/actions",
+            action,
+        )
+        assert status == 200
+        accepted_actions += 1
+        assert response["revision"] == accepted_actions
+        assert accepted_actions < 100
+
+    replay_status, replay = request(
+        app, "GET", f"/api/games/{game_id}/replay"
+    )
+    assert replay_status == 200
+    assert response["snapshot"]["result"] is not None
+    assert response["snapshot"]["seed"] == 42
+    assert replay["events"][-1]["type"] == "game_ended"
+
+
 def test_unknown_game_and_advance_route_are_404():
     app, _ = make_app()
 

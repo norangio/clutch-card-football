@@ -181,6 +181,8 @@ contract. The desktop game must still play a full four quarters.
 
 ### 9. Expand engine test coverage
 
+**Status: complete — special-play matrix and full HTTP game covered.**
+
 From plan section 8, anything not yet covered: color bonuses as implemented
 after task 5, both joker directions across all value ranges, war both outcomes,
 field goals made and missed at each of Z1/Z2/Z3, clutch including the
