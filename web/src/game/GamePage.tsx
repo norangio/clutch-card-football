@@ -1,19 +1,32 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { createMockClient, StaleRevisionError, type GameClient } from "../api/mockClient";
+import { createHttpClient } from "../api/httpClient";
 import type { Action, GameResponse, LegalAction, UnversionedAction } from "../api/types";
 import { ActionBar, CardBattle, GameLog, Hand, Scoreboard } from "../hud/components";
 import StadiumScene from "../scene/StadiumScene";
 import { useAnimationQueue, type Speed } from "./useAnimationQueue";
 
 const SPEEDS: Speed[] = ["normal", "fast", "instant"];
+const STORAGE_KEY = "ccf.game_id";
 
 /**
  * Module-level, NOT a default parameter. `client = createMockClient()` in the
  * signature builds a new client on every render, so the bootstrap effect keyed
  * on [client] re-fires forever and re-enqueues the opening events.
  */
-const defaultClient = createMockClient();
+const defaultClient = pickClient();
+
+/**
+ * Real API by default. `?mock=1` forces the fixtures, which is how the scene
+ * and animations stay workable when the backend is not running.
+ */
+function pickClient(): GameClient {
+  const useMock =
+    typeof location !== "undefined" &&
+    new URLSearchParams(location.search).has("mock");
+  return useMock ? createMockClient() : createHttpClient();
+}
 
 const prefersReducedMotion = () =>
   typeof matchMedia === "function" &&
@@ -28,19 +41,31 @@ export default function GamePage({ client = defaultClient }: { client?: GameClie
 
   useEffect(() => {
     let cancelled = false;
-    client
-      .createGame({
+    const stored = localStorage.getItem(STORAGE_KEY);
+
+    // Resume first, fall back to a new game if the id is unknown or expired.
+    const start = stored
+      ? client.getGame(stored).catch(() => createFresh())
+      : createFresh();
+
+    function createFresh() {
+      return client.createGame({
         home: { name: "Wolverines", rating: 7, kick_rating: 2, color: "red", clutch: 2 },
         away: { name: "Buckeyes", rating: 6, kick_rating: 2, clutch: 2 },
         difficulty: "hard",
         seed: null,
-      })
+      });
+    }
+
+    start
       .then((res) => {
         if (cancelled) return;
+        localStorage.setItem(STORAGE_KEY, res.snapshot.game_id);
         setState(res);
         queue.enqueue(res.events);
       })
-      .catch((e: unknown) => !cancelled && setError(String(e)));
+      .catch((e: unknown) =>
+        !cancelled && setError(e instanceof Error ? e.message : String(e)));
     return () => { cancelled = true; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [client]);
