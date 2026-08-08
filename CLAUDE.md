@@ -15,9 +15,9 @@ Pygame desktop UI, with a browser 3-D edition in progress.
 | **Active branch** | `web-edition` (trunk for all new work) |
 | **`main`** | Old CRT UI + retired pygbag deploy. Do not build on it. |
 | **Desktop UI** | Broadcast presentation, 960x720. Playable. |
-| **Web 3-D edition** | Phase 0 done. Contract frozen at v2.1. Engine seeded + redacting serializers landed. Frontend HUD playable on fixtures. |
+| **Web 3-D edition** | **Playable end to end.** Setup, 3-D tabletop with per-event choreography, live FastAPI + SQLite, resume on refresh, game over with play-again. Contract v2.2. |
 | **Hosting** | **None.** `ccf.norangio.dev` was taken down 2026-08-07. Local-only. |
-| **Tests** | 127 passed, 2 skipped |
+| **Tests** | 204 engine, 57 API, 20 frontend |
 
 ### What changed in Phase 0
 
@@ -124,10 +124,20 @@ If you need a file you do not own, ask. Do not edit it. `docs/CONTRACT.md` is th
 frozen interface (**v2.1**); changing a payload shape is its own commit, made
 before any consumer changes.
 
-> **Claude is paused (2026-08-07).** Sol holds git for the duration and works
-> from **[SOL_QUEUE.md](SOL_QUEUE.md)**. Rules and the one permitted red-suite
-> commit are described there. `web/` remains off-limits except
-> `web/src/api/__fixtures__/generated/`.
+> **Sol holds git and works from [SOL_QUEUE.md](SOL_QUEUE.md)** (round 3 open).
+> `web/` is off-limits except `web/src/api/__fixtures__/generated/`. Contract
+> changes go in `docs/CONTRACT_PROPOSALS.md` for review, never straight into
+> the frozen doc.
+
+### Where the web edition stands
+
+Playable start to finish: pick teams and difficulty, play four quarters against
+the AI, watch the 3-D tabletop react per event, refresh and resume mid-game,
+finish, and play again. Run it with `./run-local.sh`.
+
+**Still to build:** card meshes on the table for the reveal, sound, a
+low-quality graphics mode, and phone portrait layout. Hosting remains
+deliberately out of scope (plan section 1).
 
 ### ~~FIRST THING WHEN CLAUDE RESUMES: the actual 3-D field~~ DONE 2026-08-08
 
