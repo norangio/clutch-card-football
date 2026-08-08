@@ -277,6 +277,8 @@ Add `tests/test_setup_validation.py` covering each boundary.
 
 ## 12. Session retention and cleanup
 
+**Status: complete — 14-day inactivity TTL implemented and proposed.**
+
 Contract section 8 has no retention policy and the store grows forever. Add:
 
 - `created_at` / `updated_at` already exist; add a documented TTL

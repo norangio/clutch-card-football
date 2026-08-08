@@ -1,7 +1,8 @@
 import sqlite3
+from datetime import datetime, timedelta, timezone
 
 from web_api.app import create_app
-from web_api.store import SQLiteSessionStore
+from web_api.store import SESSION_TTL_DAYS, SQLiteSessionStore
 from web_api.tests.test_api import SETUP, create_game, request
 
 
@@ -85,3 +86,39 @@ def test_sqlite_row_contains_required_internal_state_and_timestamps(tmp_path):
     assert len(row[4]) > 20
     assert row[5]
     assert row[6]
+
+
+def test_expired_session_is_swept_while_recent_session_survives(tmp_path):
+    now = datetime(2026, 8, 8, 12, 0, tzinfo=timezone.utc)
+    database = tmp_path / "sessions.sqlite3"
+    ids = iter(["expired-game", "recent-game"])
+    store = SQLiteSessionStore(database, clock=lambda: now)
+    app = create_app(store=store, id_factory=lambda: next(ids))
+
+    expired = create_game(app)["snapshot"]["game_id"]
+    recent = create_game(app)["snapshot"]["game_id"]
+    stale_timestamp = (
+        now - timedelta(days=SESSION_TTL_DAYS, seconds=1)
+    ).isoformat()
+    connection = sqlite3.connect(database)
+    connection.execute(
+        "UPDATE sessions SET updated_at = ? WHERE game_id = ?",
+        (stale_timestamp, expired),
+    )
+    connection.commit()
+    connection.close()
+
+    removed = store.cleanup_expired(now=now)
+    expired_status, expired_payload = request(
+        app, "GET", f"/api/games/{expired}"
+    )
+    recent_status, recent_payload = request(
+        app, "GET", f"/api/games/{recent}"
+    )
+
+    assert removed == 1
+    assert expired_status == 404
+    assert expired_payload["error"]["code"] == "game_not_found"
+    assert recent_status == 200
+    assert recent_payload["snapshot"]["game_id"] == recent
+    store.close()

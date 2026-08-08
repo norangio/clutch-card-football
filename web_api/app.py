@@ -92,7 +92,14 @@ def create_app(
     api = FastAPI(title="Clutch Card Football API", version="2.1")
     api.state.session_store = session_store
 
+    def cleanup_expired_sessions() -> int:
+        cleanup = getattr(session_store, "cleanup_expired", None)
+        return cleanup() if cleanup is not None else 0
+
+    cleanup_expired_sessions()
+
     def require_session(game_id: str) -> GameSession:
+        cleanup_expired_sessions()
         session = session_store.get(game_id)
         if session is None:
             raise ApiError("game_not_found", "game not found", 404)
@@ -114,6 +121,7 @@ def create_app(
         }
 
     def create_session(setup: dict, requested_seed: int | None) -> tuple[GameSession, list]:
+        cleanup_expired_sessions()
         seed = requested_seed if requested_seed is not None else next_seed()
         game = _build_game(setup, seed)
         events = game.pump()

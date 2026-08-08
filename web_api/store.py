@@ -9,9 +9,12 @@ from pathlib import Path
 import pickle
 import sqlite3
 from threading import RLock
+from collections.abc import Callable
 
 from ccf_pygame.ccf.events import GameEvent
 from ccf_pygame.ccf.state_machine import GameStateMachine
+
+SESSION_TTL_DAYS = 14
 
 
 @dataclass
@@ -49,8 +52,14 @@ class SQLiteSessionStore:
     through the viewer-scoped serializers.
     """
 
-    def __init__(self, path: str | Path):
+    def __init__(
+        self,
+        path: str | Path,
+        *,
+        clock: Callable[[], datetime] | None = None,
+    ):
         self.path = Path(path)
+        self._clock = clock or (lambda: datetime.now(timezone.utc))
         self.path.parent.mkdir(parents=True, exist_ok=True)
         self._lock = RLock()
         self._connection = sqlite3.connect(
@@ -77,9 +86,8 @@ class SQLiteSessionStore:
         )
         self._connection.commit()
 
-    @staticmethod
-    def _now() -> str:
-        return datetime.now(timezone.utc).isoformat()
+    def _now(self) -> str:
+        return self._clock().astimezone(timezone.utc).isoformat()
 
     @staticmethod
     def _engine_blob(session: GameSession) -> bytes:
@@ -154,6 +162,19 @@ class SQLiteSessionStore:
             )
             if cursor.rowcount != 1:
                 raise KeyError(f"unknown game_id: {session.game_id}")
+
+    def cleanup_expired(self, *, now: datetime | None = None) -> int:
+        """Delete sessions inactive for at least ``SESSION_TTL_DAYS`` days."""
+        reference = now or self._clock()
+        reference = reference.astimezone(timezone.utc)
+        cutoff = reference.timestamp() - (SESSION_TTL_DAYS * 24 * 60 * 60)
+        cutoff_text = datetime.fromtimestamp(cutoff, timezone.utc).isoformat()
+        with self._lock, self._connection:
+            cursor = self._connection.execute(
+                "DELETE FROM sessions WHERE updated_at <= ?",
+                (cutoff_text,),
+            )
+            return cursor.rowcount
 
     def close(self) -> None:
         with self._lock:
