@@ -127,6 +127,14 @@ export type MoveReason =
   | "drive_chart" | "joker" | "clutch" | "punt"
   | "short_punt" | "war" | "turnover" | "kickoff";
 
+/**
+ * `color_bonus` is the orange/green auto-touchdown (contract v2, plan 3.2): a
+ * color-matched card landing exactly on Z1. Rarest scoring path in the game, so
+ * it gets its own celebration.
+ */
+export type TouchdownCause =
+  | "drive" | "joker" | "clutch" | "defensive_joker" | "color_bonus";
+
 export type PossessionReason =
   | "punt" | "short_punt" | "field_goal_made" | "field_goal_missed"
   | "war_turnover" | "joker_turnover" | "touchdown" | "safety" | "quarter_start";
@@ -152,7 +160,7 @@ export type GameEvent =
   /** `roll` is null for short_punt: the engine folds it into distance (contract 5.2). */
   | (EventBase<"punt_resolved"> & { seat: Seat; kind: "punt" | "short_punt"; distance: number; roll: number | null; from: Ball; to: Ball; clamped: boolean })
   | (EventBase<"field_goal_resolved"> & { seat: Seat; success: boolean; roll: number; total: number; target: number; from: Ball; points: number; score_after: number })
-  | (EventBase<"touchdown_scored"> & { seat: Seat; points: number; score_after: number; cause: "drive" | "joker" | "clutch" | "defensive_joker" })
+  | (EventBase<"touchdown_scored"> & { seat: Seat; points: number; score_after: number; cause: TouchdownCause })
   | (EventBase<"safety_scored"> & { seat: Seat; points: number; score_after: number })
   /** `roll` is null when choice is "K": pat_kick() discards it (contract 5.2). */
   | (EventBase<"extra_point_resolved"> & { seat: Seat; choice: ExtraPointChoice; success: boolean; roll: number | null; points: number; score_after: number })
@@ -188,11 +196,21 @@ export type _NoExtraEventTypes = Assert<
 
 // ----------------------------------------------------------------- transport
 
+/**
+ * A plain `Omit<Union, K>` collapses a discriminated union to its common keys,
+ * which silently accepts payloads that mix variants. Distribute instead.
+ */
+export type DistributiveOmit<T, K extends PropertyKey> =
+  T extends unknown ? Omit<T, K> : never;
+
 export interface GameResponse {
   revision: number;
   snapshot: Snapshot;
   events: GameEvent[];
 }
+
+/** An action before the client stamps its revision on it. */
+export type UnversionedAction = DistributiveOmit<Action, "revision">;
 
 export type Action =
   | { revision: number; type: "play_card"; card_index: number }
